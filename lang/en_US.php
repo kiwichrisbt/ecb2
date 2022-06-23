@@ -37,6 +37,8 @@ $lang['none_selected'] = '--- none ---';
 
 
 
+
+
 ###    ###   #########   ###        #########
 ###    ###   #########   ###        #########
 ###    ###   ###         ###        ###   ###
@@ -86,8 +88,19 @@ $lang['general_c'] = '
 
 $lang['about'] = 'About';
 $lang['about_c'] = '
-   <h3>Upgrade from ECB</h3>
-   <p>Install ECB2 module and change all "module" parameters, in content_module tags to be module="ECB2" (was "ECB"). Then ECB can be uninstalled.</p><br>
+    <h3>Upgrading from ECB</h3>
+    <p>Install ECB2 module and change all "module" parameters, in content_module tags to be module="ECB2" (was "ECB"). Then ECB can be uninstalled.</p><br>
+
+    <h3>Upgrading from CGContentUtils</h3>
+    <p>Install ECB2 and change all "module" parameters, in content_module tags to be module=ECB2 (was "CGContentUtils").</p>
+    <p>Parameters:</p>
+    <ul>
+        <li>block (required) - must stay the same</li>
+        <li>field (required) - choose the appropriate ECB2 field
+        <li>other parameters will be required depending on the field and preiovuis options set in CGContentUtils</li>
+    </ul>
+    <p>Check all are working as expected, then CGContentUtils can be uninstalled.</p>
+    <br>
 
 
     <h3>Support</h3>

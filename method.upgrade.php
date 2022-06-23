@@ -30,5 +30,14 @@ if ( version_compare($oldversion, '1.8') < 0 ) {
     foreach ($filesToRemove as $delFile) @unlink($module_path.$delFile);
 }
 
+if ( version_compare($oldversion, '2.0') < 0 ) {
+    // individual files to remove
+    $filesToRemove = [
+        '/test/ecb2_sortable_udt_test.php'
+    ];
+    foreach ($filesToRemove as $delFile) @unlink($module_path.$delFile);
+}
+
+
 
 ?>

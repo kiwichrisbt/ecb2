@@ -29,25 +29,11 @@ class ECB2 extends \CMSModule {
 
     const MODULE_VERSION = '1.8';
 
-    // public $is_datepicker_lib_load = false;
-    // public $is_colorpicker_lib_load = false;
-
-    public function __construct() {
-        parent::__construct();
-
-        \CMSMS\HookManager::add_hook( 'Core::ContentEditPre', [ $this, 'ContentEditPre' ] );
-    }
-
     public function GetName() { return 'ECB2';  }
     public function GetFriendlyName() { return $this->Lang('friendlyname'); }
     public function GetVersion() { return self::MODULE_VERSION; }
     public function MinimumCMSVersion() { return '2.0'; }
     public function LazyLoadFrontend() { return true; }
-    public function GetHelp() {
-        $smarty = \CmsApp::get_instance()->GetSmarty();
-        $smarty->assign('mod', $this);
-        return $this->ProcessTemplate('_help.tpl');
-    }
     public function GetAuthor() { return 'Chris Taylor (twitter.com/KiwiChrisBT)'; }
     public function GetAuthorEmail() { return 'chris@binnovative.co.uk'; }
     public function GetChangeLog() { return $this->ProcessTemplate('_changelog.tpl'); }
@@ -57,9 +43,24 @@ class ECB2 extends \CMSModule {
     public function UninstallPostMessage() { return $this->Lang('postuninstall');}
     public function UninstallPreMessage() { return $this->Lang('really_uninstall');}
 
+    public function GetHelp() 
+    {
+        $smarty = \CmsApp::get_instance()->GetSmarty();
+        $smarty->assign('mod', $this);
+        return $this->ProcessTemplate('_help.tpl');
+    }
+
+    public function __construct() 
+    {
+        parent::__construct();
+
+        \CMSMS\HookManager::add_hook( 'Core::ContentEditPre', [ $this, 'ContentEditPre' ] );
+    }
+
     public function InitializeFrontend() {
         $this->RegisterModulePlugin();
-        $this->RestrictUnknownParams();
+
+// move all this into each field class
         $this->SetParameterType('block_name', CLEAN_STRING);
         $this->SetParameterType('value', CLEAN_STRING);
         $this->SetParameterType('adding', CLEAN_STRING);
@@ -88,18 +89,10 @@ class ECB2 extends \CMSModule {
 
 
 
-    public function InitializeAdmin() 
-    { 
-        // $this->AddImageDir('icons'); 
-//        \CMSMS\HookManager::add_hook('Core::ContentEditPre','ECB2::ContentEditPre');
-    }
 
 
-
-    function HasCapability($capability, $params = array()) {
-    //***********************************************************************************************
-    // http://www.cmsmadesimple.org/apidoc/CMS/CMSModule.html#HasCapability
-    //***********************************************************************************************
+    function HasCapability( $capability, $params = [] ) 
+    {
         switch ($capability) {
             case 'contentblocks':
                 return TRUE;
@@ -110,11 +103,28 @@ class ECB2 extends \CMSModule {
     }
 
 
+    /**
+     * Get page content representing the UI for a module-content-block
+     * @param string $blockName
+     * @param mixed $value Might be null
+     * @param array $params
+     * @param boolean $adding flag whether this a new page is being processed
+     * @param object $content_obj the page properties
+     * @return string
+     */
+    public function GetContentBlockFieldInput($blockName, $value, $params, $adding, $content_obj) {
 
-    public function GetContentBlockFieldInput($blockName, $value, $params, $adding=false, ContentBase $content_obj) {
-    //***********************************************************************************************
-    // http://www.cmsmadesimple.org/APIDOC2_0/classes/CMSModule.html#method_GetContentBlockFieldInput
-    //***********************************************************************************************
+// !!!
+// consider adding in Tom's changes to use:
+//      protected $utils; // fields-generator class object
+
+
+
+        if (!$adding && version_compare(CMS_VERSION, '2.1') < 0 && $content_obj->Id() == 0) {
+            // workaround $adding not set in ContentManager v1.0 action admin_editcontent
+            $adding = true;
+        }
+
         $ecb2 = new ecb2_tools($blockName, $value, $params, $adding);
 
         return $ecb2->get_content_block_input();
@@ -128,12 +138,8 @@ class ECB2 extends \CMSModule {
         $props = $params['content']->GetEditableProperties();
         $new_props = $params['content']->Properties();
         $clear_css_cache = false;
-        // $ECB2_props = [];
 
         foreach ($props as $prop) {
-            // if ( isset($prop->extra) && isset($prop->extra['module']) && $prop->extra['module']=='ECB2') {
-            //     $ECB2_props[ $prop->name ] = $prop;
-            // }
             if ( !$clear_css_cache && isset($prop->extra) && isset($prop->extra['module']) && 
                  $prop->extra['module']=='ECB2' && isset($prop->extra['params']['clear_css_cache']) ) {
                 // test if value has changed

@@ -1,0 +1,22 @@
+ECB2 Development Testing
+========================
+
+1. Install the module
+
+2. Create 'ECB2 Test' page:
+    - Create a new Page Template 'ECB2_Test' that only contains:
+        {include file='module_file_tpl:ECB2;ECB2_Test_Template.tpl'}
+    - Create 'ECB2 Test' page, using the above template.  
+
+3. Create 'ecb2_test_udt_options' UDT:
+    - create a new UDT called 'ecb2_test_udt_options', copy in contents from:
+        /test/ecb2_test_udt_options.php
+
+
+
+=== TO DO ===
+
+4. Create 'ECB2_Test_Options_Template':
+    - 
+
+    

@@ -101,11 +101,11 @@
 
 
 <h2>Test4: dropdown_from_udt</h2>
-<p>Section 1 Layout Style:'{content_module module='ECB2' field='dropdown_from_udt' block='test4' label='Test 4: dropdown_from_udt' udt='ecb2_sortable_udt_test' description="Test description (optional) can be shown here"}'</p>
+<p>Section 1 Layout Style:'{content_module module='ECB2' field='dropdown_from_udt' block='test4' label='Test 4: dropdown_from_udt' udt='ecb2_test_udt_options' description="Test description (optional) can be shown here"}'</p>
 
-<p>4A: Section 1 Layout Style (with first_value):'{content_module module='ECB2' field='dropdown_from_udt' block='test4a' label='Test 4a: dropdown_from_udt (with first_value)' udt='ecb2_sortable_udt_test' first_value="=select=" multiple=1 description="Test description (optional) can be shown here"}'</p>
+<p>4A: Section 1 Layout Style (with first_value):'{content_module module='ECB2' field='dropdown_from_udt' block='test4a' label='Test 4a: dropdown_from_udt (with first_value)' udt='ecb2_test_udt_options' first_value="=select=" multiple=1 description="Test description (optional) can be shown here"}'</p>
 
-<p>4B: Section 1 Layout Style - compact:'{content_module module='ECB2' field='dropdown_from_udt' block='test4b' label='Test 4b: dropdown_from_udt - compact' udt='ecb2_sortable_udt_test' multiple=1 compact=1 description="Test description (optional) can be shown here"}'</p>
+<p>4B: Section 1 Layout Style - compact:'{content_module module='ECB2' field='dropdown_from_udt' block='test4b' label='Test 4b: dropdown_from_udt - compact' udt='ecb2_test_udt_options' multiple=1 compact=1 description="Test description (optional) can be shown here"}'</p>
 
 
 
@@ -166,7 +166,7 @@
 
 
 <h2>16: sortablelist - using udt</h2>
-{content_module module='ECB2' field='sortablelist' block='test16' udt='ecb2_sortable_udt_test' label='test16:sortablelist' label_left='Selected Widgets' label_right='Available Widgets' description="Test description (optional) can be shown here, using 'udt' option"}
+{content_module module='ECB2' field='sortablelist' block='test16' udt='ecb2_test_udt_options' label='test16:sortablelist' label_left='Selected Widgets' label_right='Available Widgets' description="Test description (optional) can be shown here, using 'udt' option"}
 
 <h2>16a: sortablelist - using values</h2>
 {content_module module='ECB2' field='sortablelist' block='test16a' values='apple=Apple,orange=Orange,green=Green,value=Label' label='test16a:sortablelist' description="Test using default labels, 2nd sortable - so should be no lib output, uses values (not udt)"}
