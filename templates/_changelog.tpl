@@ -1,6 +1,6 @@
 {* ECB2 _changelog.tpl *}
 
-<h3>Version 1.8.1... - 23Jun22...</h3>
+<h3>Version 1.8.1... - 23Jun22.....</h3>
 <ul>
    <li>add sample LISE template into help</li>
    <li></li>
