@@ -1,9 +1,16 @@
 {* ECB2 _changelog.tpl *}
 
-<h3>Version 1.8.1... - 23Jun22.....</h3>
+<h3>Version 1.99... - 23Jun22.....</h3>
 <ul>
-   <li>add sample LISE template into help</li>
+   <li>Significantly refactored module, to enable future development of the module and simpify use. Is fully compatible with all previous usage. Please report any issues you may find.</li>
+   <li>Expanded help content, with example tags</li>
+   <li>'textinput' field replaces 'input', field=input is a fully supported alias</li>
+   <li>'textarea' field replaces 'editor', with a wysiwyg option added (default=false). field=editor is a fully supported alias</li>
+   <li>'dropdown' field now replaces 'dropdown_from_module', 'dropdown_from_udt', 'dropdown_from_customgs' & 'dropdown_from_gbc', plus has a new alias 'select'. A new 'template' parameter enables dropdown values to be retrieved from a smarty template (alias for 'gcb' field).</li>
    <li></li>
+   <li></li>
+   <li></li>
+   <li>added sample LISE template into help</li>
 </ul>
 <br>
 

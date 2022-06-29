@@ -96,9 +96,6 @@
 
 
 
-<h2>Test 3D: CGContentUtils dropdown - using smarty values</h2>
-<p>{content_module module=CGContentUtils block="CGUTILS_dropdown"}</p>
-
 
 <h2>Test4: dropdown_from_udt</h2>
 <p>Section 1 Layout Style:'{content_module module='ECB2' field='dropdown_from_udt' block='test4' label='Test 4: dropdown_from_udt' udt='ecb2_test_udt_options' description="Test description (optional) can be shown here"}'</p>

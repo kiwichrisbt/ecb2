@@ -36,13 +36,13 @@
 
 class ecb2_tools {
 
-   private $block_name = '';
-   private $value = '';
-   private $adding = false;
-   private $options = array();
-   private $alias = '';
-   private $field = '';
-   private $txt = '';
+    private $block_name = '';
+    private $value = '';
+    private $adding = false;
+    private $options = array();
+    private $alias = '';
+    private $field = '';
+    private $txt = '';
 
 
    
@@ -479,7 +479,7 @@ class ecb2_tools {
     */    
     private function get_dropdown() 
     {
-        if ( $this->options['mod'] ) {
+        if ( isset($this->options['mod']) ) {
             // call module to get values
             $exclude_options = ['size','multiple','values','default_value','first_value','description',
                 'compact','field','mod','flip_values'];
@@ -915,12 +915,12 @@ class ecb2_tools {
                 $default_options["cols"] = 80;
                 $default_options["description"] = '';
                 break;
-            case "input":
-                $default_options["default_value"] = '';
-                $default_options["size"] = 30;
-                $default_options["max_length"] = 255;
-                $default_options["description"] = '';
-                break;
+            // case "input":
+            //     $default_options["default_value"] = '';
+            //     $default_options["size"] = 30;
+            //     $default_options["max_length"] = 255;
+            //     $default_options["description"] = '';
+            //     break;
             case "sortablelist":
                 $default_options["values"] = '';
                 $default_options["first_value"] = '';
