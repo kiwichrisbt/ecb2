@@ -148,6 +148,29 @@ abstract class ecb2_FieldDefBase
 
 
     /**
+     *  @return array of 'value' => 'Text'
+     *  @param string $comma_separated_list of 'Text' or 'Text=value' e.g. 'Apple=apple,Orange=orange,...'
+     */
+    protected function get_array_from_csl( $comma_separated_list )
+    {
+        $value_options = [];
+        if ( !empty($comma_separated_list) ) {
+            $tmpOptions = explode(',', $comma_separated_list);
+            foreach ($tmpOptions as $opt) {
+                $key_val = explode( '=', trim($opt) );
+                if ( count($key_val)>1 ) {
+                    $value_options[$key_val[1]] = $key_val[0];
+                } else {
+                    $value_options[$key_val[0]] = $key_val[0];
+                }
+            }    
+        }
+        return $value_options;
+    }
+
+
+
+    /**
      *  @return array $options of 'value' => 'Text'
      *  @param string $module_name
      *  @param array $module_params  - if provided an array of all paramaters to be passed to the module
@@ -174,7 +197,7 @@ abstract class ecb2_FieldDefBase
 
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $module_values = trim(strip_tags($smarty->fetch('string:'.$cms_module_call.'}')));
-        $options = $smarty->get_template_vars('options');
+        $options = $smarty->getTemplateVars('options');
 
         if ( !empty($options) && is_array($options) ) {   // first see if $options array set 
             return $options;
@@ -183,28 +206,6 @@ abstract class ecb2_FieldDefBase
             return $this->get_array_from_csl( $module_values );
         }
 
-    }
-
-
-    /**
-     *  @return array of 'value' => 'Text'
-     *  @param string $comma_separated_list of 'Text' or 'Text=value' e.g. 'Apple=apple,Orange=orange,...'
-     */
-    protected function get_array_from_csl( $comma_separated_list )
-    {
-        $value_options = [];
-        if ( !empty($comma_separated_list) ) {
-            $tmpOptions = explode(',', $comma_separated_list);
-            foreach ($tmpOptions as $opt) {
-                $key_val = explode('=', $opt);
-                if ( count($key_val)>1 ) {
-                    $value_options[$key_val[1]] = $key_val[0];
-                } else {
-                    $value_options[$key_val[0]] = $key_val[0];
-                }
-            }    
-        }
-        return $value_options;
     }
 
 
@@ -239,7 +240,7 @@ abstract class ecb2_FieldDefBase
      *  @return array $options array of 'value' => 'Text'
      *  @param string $template_name - template needs to either:
      *                      - set $options array of 'value' => 'Text' with scope=global, or 
-     *                      - a comma separated list of 'Text,...' or 'Text=value,...'                            
+     *                      - a comma separated list of 'Text,...' or 'Text=value,...'   
      */
     protected function get_values_from_template($template_name)
     {
@@ -251,7 +252,7 @@ abstract class ecb2_FieldDefBase
         }
 
         $template_values = trim( $smarty->fetch( 'cms_template:'.$template_name ) );
-        $options = $smarty->get_template_vars('options');
+        $options = $smarty->getTemplateVars('options');
 
         if ( !empty($options) && is_array($options) ) {   // first see if $options array set 
             return $options;

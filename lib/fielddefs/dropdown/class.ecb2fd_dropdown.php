@@ -78,7 +78,6 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
 
         } elseif ( $this->options['customgs_field'] ) {  
             // CustomGS field to get values from (newline or comma separated list)
-
             $options = $this->get_values_from_customgs( $this->options['customgs_field'] );
             if ($this->error) return $this->mod->error_msg($this->error);
 
@@ -103,7 +102,6 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign( 'mod', $this->mod );
         $tpl->assign( 'block_name', $this->block_name );
-        // $tpl->assign( 'value', $this->value );
         $tpl->assign( 'description', $this->options['description'] );
         $tpl->assign( 'multiple', $this->options['multiple'] );
         $tpl->assign( 'compact', $this->options['compact'] );

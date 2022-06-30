@@ -1,5 +1,6 @@
 {* ECB2_test_template_options *}
 {* either set the var $options & scope=global (important!) *}
+{$options=[]}
 {$options=[
    'option1' => 'Test Option 1',
    'option2' => 'Test 2222222',
@@ -9,6 +10,6 @@
 {* OR use the following format to return a comma separated list *}
 {*
 {foreach $options2 as $opt_value => $opt_text}
-{$opt_value}={$opt_text}{if !$opt_text@last},{/if}
+{$opt_text}={$opt_value}{if !$opt_text@last},{/if}
 {/foreach}
 *}

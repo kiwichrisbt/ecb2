@@ -34,7 +34,7 @@ class ECB2 extends \CMSModule {
         'textarea',
         'dropdown',
         'sortablelist',
-//         'checkbox',
+        'checkbox',
 //         'radio',
 //         'color_picker',
 //         'timepicker',
