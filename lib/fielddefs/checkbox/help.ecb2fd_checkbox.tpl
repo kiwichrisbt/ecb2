@@ -7,5 +7,6 @@
 <ul>
     <li>field (required) - 'checkbox'</li>
     <li>default_value (optional) - initial value when creating a new page</li>
+    <li>inline_label (optional) - adds a clickable inline label to the checkbox. Tip: If you add label='&amp;nbsp;' the label above the checkbox will be hidden</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

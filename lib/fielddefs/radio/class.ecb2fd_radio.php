@@ -8,7 +8,7 @@
 #---------------------------------------------------------------------------------------------------
 
 
-class ecb2fd_checkbox extends ecb2_FieldDefBase 
+class ecb2fd_radio extends ecb2_FieldDefBase 
 {
 
 	public function __construct($mod, $blockName, $value, $params, $adding) 
@@ -30,7 +30,9 @@ class ecb2fd_checkbox extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            'inline_label'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'values'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'inline'        => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
+            'flip_values'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
@@ -45,11 +47,18 @@ class ecb2fd_checkbox extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        $options = $this->get_array_from_csl( $this->options['values'] );
+        if ( $this->options['flip_values'] && !empty($options) ) { 
+            $options = array_flip($options);
+        }
+        $separator = ($this->options['inline']) ? '&nbsp;&nbsp;&nbsp;&nbsp;' : '<br>';
+
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign('block_name', $this->block_name );
         $tpl->assign('value', $this->value );
-        $tpl->assign('inline_label', $this->options['inline_label'] );
+        $tpl->assign('options', $options );
+        $tpl->assign('separator', $separator );
         $tpl->assign('description', $this->options['description'] );
         return $tpl->fetch();
    

@@ -98,7 +98,6 @@ abstract class ecb2_FieldDefBase
                 }
             }
         }
-        // $this->parameter_aliases = [ 'alias' => 'parameter' ];
 
         if ( empty($params) ) return;
 

@@ -8,7 +8,7 @@
 #---------------------------------------------------------------------------------------------------
 
 
-class ecb2fd_checkbox extends ecb2_FieldDefBase 
+class ecb2fd_ZZZ extends ecb2_FieldDefBase 
 {
 
 	public function __construct($mod, $blockName, $value, $params, $adding) 
@@ -30,7 +30,8 @@ class ecb2fd_checkbox extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            'inline_label'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
@@ -45,11 +46,16 @@ class ecb2fd_checkbox extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+
+
+
+    
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign('block_name', $this->block_name );
         $tpl->assign('value', $this->value );
-        $tpl->assign('inline_label', $this->options['inline_label'] );
+
+
         $tpl->assign('description', $this->options['description'] );
         return $tpl->fetch();
    

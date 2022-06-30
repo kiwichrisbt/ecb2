@@ -4,7 +4,7 @@
 {literal}
 <p>Parameters:</p>
 <ul>
-    <li>field (required) - 'dropdown', or alias: 'select', 'dropdown_from_module', 'dropdown_from_udt', 'dropdown_from_gbc', 'dropdown_from_customgs'</li>
+    <li>field (required) - '<b>dropdown</b>', or alias: '<b>select</b>', '<b>dropdown_from_module</b>', '<b>dropdown_from_udt</b>', '<b>dropdown_from_gbc</b>', '<b>dropdown_from_customgs</b>'</li>
     <li>values (*) - comma separated string of 'Text' or 'Text=value'. Example: 'Apple=apple,Orange=orange,Green=green'<br>
         <pre>{content_module module=ECB2 block=test5 field=dropdown1 values="Apple=apple,Orange=orange" first_value="select fruit" label="Fruit"}</pre>
     </li>
@@ -21,7 +21,7 @@
         <pre>{content_module module=ECB2 block=dropdown3 field=dropdown customgs_field='Section Styles'  label="Dropdown - from CustomGS"}</pre>
     </li>
     <li>first_value (optional) - sets an text sting for the first blank value, e.g. '--- select one ---'</li>
-    <li>flip_values (optional) - swaps the dropdowns values <-> text.</li>
+    <li>flip_values (optional) - swaps the dropdowns values <-> text</li>
     <li>multiple (optional) - add multiple option select support</li>
     <li>size (optional) - multiple enabled only</li>
     <li>description (optional) - adds additional text explanation for editor</li>

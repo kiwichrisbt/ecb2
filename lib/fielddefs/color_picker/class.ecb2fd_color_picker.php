@@ -8,7 +8,7 @@
 #---------------------------------------------------------------------------------------------------
 
 
-class ecb2fd_ZZZ extends ecb2_FieldDefBase 
+class ecb2fd_color_picker extends ecb2_FieldDefBase 
 {
 
 	public function __construct($mod, $blockName, $value, $params, $adding) 
@@ -30,10 +30,11 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'size'              => ['default' => 10,    'filter' => FILTER_VALIDATE_INT],
+            'no_hash'           => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
+            'clear_css_cache'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
+            'default_value'     => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'description'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true
@@ -50,8 +51,10 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign('block_name', $this->block_name );
         $tpl->assign('value', $this->value );
-
-
+        $tpl->assign('class', 'colorpicker');
+        $tpl->assign('alias', $this->alias);
+        $tpl->assign('size', $this->options['size']);
+        $tpl->assign('no_hash', $this->options['no_hash']);
         $tpl->assign('description', $this->options['description'] );
         return $tpl->fetch();
    

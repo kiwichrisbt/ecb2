@@ -1,7 +1,7 @@
-{* input.ecb2fd_textinput.tpl - v1.0 - 25Jun22 
+{* input.ecb2fd_radio.tpl - v1.0 - 25Jun22 
 
 ***************************************************************************************************}
 {if !empty($description)}
         {$description}<br>
 {/if}
-        <input type="text" name="{$block_name}" value="{$value}"/>
+        {html_radios name=$block_name options=$options separator=$separator selected=$value} 

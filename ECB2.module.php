@@ -35,11 +35,10 @@ class ECB2 extends \CMSModule {
         'dropdown',
         'sortablelist',
         'checkbox',
-//         'radio',
-//         'color_picker',
-//         'timepicker',
-//         'datepicker',
-//         'image_picker',
+        'radio',
+        'color_picker',
+        'date_time_picker',     // 'timepicker', datepicker
+        'image_picker',
 //         'file_selector',
 //         'pages',            // page_picker
 //         'gallery_picker',
@@ -61,7 +60,9 @@ class ECB2 extends \CMSModule {
         'dropdown_from_module' => 'dropdown', 
         'dropdown_from_udt' => 'dropdown',
         'dropdown_from_gbc' => 'dropdown', 
-        'dropdown_from_customgs' => 'dropdown'
+        'dropdown_from_customgs' => 'dropdown',
+        'timepicker' => 'date_time_picker',
+        'datepicker' => 'date_time_picker'
     ];
 
     const FIELD_DEF_PREFIX = 'ecb2fd_';

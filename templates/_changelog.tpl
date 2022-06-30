@@ -6,7 +6,10 @@
    <li>Expanded help content, with example tags</li>
    <li>'textinput' field replaces 'input', field=input is a fully supported alias</li>
    <li>'textarea' field replaces 'editor', with a wysiwyg option added (default=false). field=editor is a fully supported alias</li>
-   <li>'dropdown' field now replaces 'dropdown_from_module', 'dropdown_from_udt', 'dropdown_from_customgs' & 'dropdown_from_gbc', plus has a new alias 'select'. A new 'template' parameter enables dropdown values to be retrieved from a smarty template (alias for 'gcb' field).</li>
+   <li>'dropdown' field now replaces 'dropdown_from_module', 'dropdown_from_udt', 'dropdown_from_customgs' & 'dropdown_from_gbc', plus has a new alias 'select'. A new 'template' parameter enables dropdown values to be retrieved from a smarty template (alias for 'gcb' field). A sample LISE module template added into help</li>
+   <li>'checkbox' - added an inline_label option</li>
+   <li>'radio' - added 'flip_values' option - swaps the dropdowns values <-> text</li>
+   <li>'date_time_picker' field replaces 'datepicker' and 'timepicker' with both fully supported as aliases</li>
    <li></li>
    <li></li>
    <li></li>

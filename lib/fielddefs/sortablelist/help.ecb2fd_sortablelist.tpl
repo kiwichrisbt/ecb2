@@ -26,6 +26,7 @@
     <li>label_right (optional) - default: 'Available'</li>
     <li>max_number (optional) - limits the maximum number of items that can be selected</li>
     <li>required_number (optional) - sets a specific number of items that must be selected (or none)</li>
+    <li>flip_values (optional) - swaps the dropdowns values <-> text</li>
     <li>default_value (optional) - initial value when creating a new page</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
