@@ -1,7 +1,10 @@
-{* input.ecb2fd_ZZZ.tpl - v1.0 - 25Jun22 
+{* input.ecb2fd_page_picker.tpl - v1.0 - 25Jun22 
 
 ***************************************************************************************************}
 {if !empty($description)}
         {$description}<br>
 {/if}
-        <input type="text" name="{$block_name}" value="{$value}"/>
+        {$contentOps->CreateHierarchyDropdown('', $value, $block_name, 1, 1)}
+<pre>
+$value:{$value}
+</pre>

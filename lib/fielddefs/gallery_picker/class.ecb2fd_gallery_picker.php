@@ -8,7 +8,7 @@
 #---------------------------------------------------------------------------------------------------
 
 
-class ecb2fd_ZZZ extends ecb2_FieldDefBase 
+class ecb2fd_gallery_picker extends ecb2_FieldDefBase 
 {
 
 	public function __construct($mod, $blockName, $value, $params, $adding) 
@@ -30,9 +30,7 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'dir'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
@@ -46,16 +44,40 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        $dir = $this->options['dir'].'/';    // default dir (needs '/' at end)
+        $GalleryModule = cms_utils::get_module('Gallery');
+        if (!is_object($GalleryModule)) {
+            $this->error = $this->mod->Lang('gallery_module_error');
+            return $this->mod->error_msg($this->error);
+        }
 
+        $galleries = Gallery_utils::GetGalleries();
+        $galleryArray = array('' => $this->mod->Lang('none_selected') );
 
+        foreach ($galleries as $gallery) {
+            if ($gallery['filename']!='') {    // ignores default gallery
+                if ($dir!='/') {
+                // only select sub-galleries of $dir
+                $isSubDir = stripos($gallery['filepath'], $dir);
 
-    
+                if ($isSubDir!==FALSE && $isSubDir==0) {
+                    $gallery_dir = $gallery['filepath'].rtrim($gallery['filename'], '/');
+                    $galleryArray[$gallery_dir] = $gallery['title'];
+                }
+
+                } else {
+                // select all galleries
+                $gallery_dir = $gallery['filepath'].rtrim($gallery['filename'], '/');
+                $galleryArray[$gallery_dir] = $gallery['title'];
+                }
+            }
+        }
+  
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign('block_name', $this->block_name );
         $tpl->assign('value', $this->value );
-
-
+        $tpl->assign('galleryArray', $galleryArray );
         $tpl->assign('description', $this->options['description'] );
         return $tpl->fetch();
    
