@@ -2,6 +2,8 @@
 
 $lang['about'] = 'About';
 $lang['add_line'] = 'Add line';
+$lang['admin_only_help'] = 'Admin only help';
+$lang['admin_only_help_intro'] = 'The following fields are only used to format and add content to the admin pages. They do not provide any useful content for the frontend website pages.';
 
 $lang['content_block_label_selected'] = 'Selected';
 $lang['content_block_label_available'] = 'Available';

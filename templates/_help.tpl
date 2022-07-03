@@ -24,6 +24,9 @@
             <h3 class="border-bottom m_top_15 p_bottom_5">{$mod->Lang('field_types')}</h3>
             <ul>
             {foreach $field_types as $field_type}
+                {if $field_type==$first_admin_only_field}
+                    <h5 class="border-bottom m_top_15 p_bottom_5">{$mod->Lang('admin_only_help')}</h5>
+                {/if}
                 <ul><a class="smooth-scroll" href="#{$field_type}">{$field_type}</a></ul>   
             {/foreach}
             </ul>
@@ -35,6 +38,11 @@
             <h2 class="border-bottom p_bottom_5 m_bottom_15">{$mod->Lang('field_types')}</h2>
 
         {foreach $field_help as $field_type => $help_content}
+            {if $field_type==$first_admin_only_field}
+            <h2 class="border-bottom m_top_15 p_bottom_5">{$mod->Lang('admin_only_help')}</h2>
+            <p>{$mod->Lang('admin_only_help_intro')}</p>
+            <br>
+            {/if}
             <h2 id="{$field_type}" class="m_bottom_5">{$field_type}</h2>
             {eval var=$help_content}
             <br>

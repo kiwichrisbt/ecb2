@@ -1,7 +1,7 @@
-{* input.ecb2fd_gallery_picker.tpl - v1.0 - 25Jun22 
+{* input.ecb2fd_admin_hr.tpl - v1.0 - 25Jun22 
 
 ***************************************************************************************************}
 {if !empty($description)}
         {$description}<br>
 {/if}
-        {html_options name=$block_name options=$galleryArray selected=$value}
+        <hr style="display:block; border:0 none; background:#ccc;" />

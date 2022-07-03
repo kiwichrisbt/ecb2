@@ -42,20 +42,20 @@ class ECB2 extends \CMSModule {
         'file_selector',
         'page_picker',          // 'pages'
         'gallery_picker',
+        'module_picker',        // 'module' - undocumented & Toms mods
+        'hidden',
+        'input_repeater',
 
-
-//         'module',           // module_picker - undocumented & Toms mods
-//         'hidden',
-//         'input_repeater',
-// // admin only fields
-//         'fieldset_start',
-//         'fieldset_end',
-//         'hr',               // admin_hr
-//         'text',             // admin_text
-//         'link',             // admin_link
-//         'module_link',      // admin_module_link
+        // admin only fields below here... (only because of a help subheading)
+        'fieldset_start',
+        'fieldset_end',
+        'admin_hr',            // hr
+        'admin_text',          // text
+        'admin_link',          // link
+        'admin_module_link',   // 
 //         'image',            // admin_image
     ];
+    const FIRST_ADMIN_ONLY_FIELD = 'fieldset_start';    // only to trigger help subheading
     const FIELD_ALIASES = [
         'input' => 'textinput',
         'editor' => 'textarea',
@@ -65,7 +65,12 @@ class ECB2 extends \CMSModule {
         'dropdown_from_customgs' => 'dropdown',
         'timepicker' => 'date_time_picker',
         'datepicker' => 'date_time_picker',
-        'pages' => 'page_picker'
+        'pages' => 'page_picker',
+        'module' => 'module_picker',
+        'hr' => 'admin_hr',
+        'text' => 'admin_text',
+        'link' => 'admin_link',
+        'module_link' => 'admin_module_link'
     ];
 
     const FIELD_DEF_PREFIX = 'ecb2fd_';
@@ -177,6 +182,7 @@ class ECB2 extends \CMSModule {
         $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('_help.tpl'), null, null, $smarty );
         $tpl->assign('mod', $this);
         $tpl->assign('field_types', self::FIELD_TYPES);
+        $tpl->assign('first_admin_only_field', self::FIRST_ADMIN_ONLY_FIELD);
         $tpl->assign('field_help', $field_help);
         return $tpl->fetch();
     }
