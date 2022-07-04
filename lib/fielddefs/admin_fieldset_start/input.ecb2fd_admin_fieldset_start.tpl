@@ -1,4 +1,4 @@
-{* input.ecb2fd_fieldset_start.tpl - v1.0 - 25Jun22 
+{* input.ecb2fd_admin_fieldset_start.tpl - v1.0 - 25Jun22 
 
 ***************************************************************************************************}
     </p>
@@ -8,7 +8,7 @@
             <legend>{$legend}</legend>
         {/if}
 {if !empty($description)}
-        {$description}<br>
+            {$description}<br>
 {/if} 
         <div>
     <p>

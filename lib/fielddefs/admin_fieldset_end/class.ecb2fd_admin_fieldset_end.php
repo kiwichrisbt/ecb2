@@ -8,7 +8,7 @@
 #---------------------------------------------------------------------------------------------------
 
 
-class ecb2fd_fieldset_end extends ecb2_FieldDefBase 
+class ecb2fd_admin_fieldset_end extends ecb2_FieldDefBase 
 {
 
 	public function __construct($mod, $blockName, $value, $params, $adding) 

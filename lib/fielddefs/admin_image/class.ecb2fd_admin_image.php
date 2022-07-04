@@ -8,7 +8,7 @@
 #---------------------------------------------------------------------------------------------------
 
 
-class ecb2fd_fieldset_start extends ecb2_FieldDefBase 
+class ecb2fd_admin_image extends ecb2_FieldDefBase 
 {
 
 	public function __construct($mod, $blockName, $value, $params, $adding) 
@@ -30,7 +30,7 @@ class ecb2fd_fieldset_start extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            'legend'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'image'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
@@ -44,10 +44,13 @@ class ecb2fd_fieldset_start extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        $config = cmsms()->GetConfig();
+        $img_url = cms_join_path( $config['uploads_url'], $this->options['image'] );
+    
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign('block_name', $this->block_name );
-        $tpl->assign('legend', $this->options['legend'] );
+        $tpl->assign('img_url', $img_url );
         $tpl->assign('description', $this->options['description'] );
         return $tpl->fetch();
    

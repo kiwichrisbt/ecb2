@@ -30,32 +30,30 @@ class ECB2 extends \CMSModule {
     const MODULE_VERSION = '1.99';
 
     const FIELD_TYPES = [
-        'textinput',                    // input
+        'textinput',
         'textarea',
         'dropdown',
         'sortablelist',
         'checkbox',
         'radio',
         'color_picker',
-        'date_time_picker',     // 'timepicker', datepicker
-                                // 'image_picker', - DOESN'T EXIST !!!
+        'date_time_picker',
         'file_selector',
-        'page_picker',          // 'pages'
+        'page_picker',
         'gallery_picker',
-        'module_picker',        // 'module' - undocumented & Toms mods
+        'module_picker',
         'hidden',
         'input_repeater',
-
-        // admin only fields below here... (only because of a help subheading)
-        'fieldset_start',
-        'fieldset_end',
-        'admin_hr',            // hr
-        'admin_text',          // text
-        'admin_link',          // link
-        'admin_module_link',   // 
-//         'image',            // admin_image
+            // admin only fields below here... (only because of a help subheading)
+        'admin_fieldset_start',
+        'admin_fieldset_end',
+        'admin_hr',
+        'admin_image',
+        'admin_link',
+        'admin_module_link',
+        'admin_text'
     ];
-    const FIRST_ADMIN_ONLY_FIELD = 'fieldset_start';    // only to trigger help subheading
+    const FIRST_ADMIN_ONLY_FIELD = 'admin_fieldset_start';    // only to trigger help subheading
     const FIELD_ALIASES = [
         'input' => 'textinput',
         'editor' => 'textarea',
@@ -67,10 +65,13 @@ class ECB2 extends \CMSModule {
         'datepicker' => 'date_time_picker',
         'pages' => 'page_picker',
         'module' => 'module_picker',
+        'fieldset_start' => 'admin_fieldset_start',
+        'fieldset_end' => 'admin_fieldset_end',
         'hr' => 'admin_hr',
         'text' => 'admin_text',
         'link' => 'admin_link',
-        'module_link' => 'admin_module_link'
+        'module_link' => 'admin_module_link',
+        'image' => 'admin_image'
     ];
 
     const FIELD_DEF_PREFIX = 'ecb2fd_';

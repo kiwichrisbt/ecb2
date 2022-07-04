@@ -2,7 +2,7 @@
 
 $lang['about'] = 'About';
 $lang['add_line'] = 'Add line';
-$lang['admin_only_help'] = 'Admin only help';
+$lang['admin_only_help'] = 'Admin only fields';
 $lang['admin_only_help_intro'] = 'The following fields are only used to format and add content to the admin pages. They do not provide any useful content for the frontend website pages.';
 
 $lang['content_block_label_selected'] = 'Selected';
@@ -70,23 +70,25 @@ $lang['upgraded'] = 'Module upgraded to version %s.';
 
 
 $lang['general_c'] = <<<'EOD'
-<p>Use the Extended Content Blocks 2 (ECB2) module to give you more control over page editing options. Many aditional content block types are available to use in each page template. e.g. dropdown, colour picker, checkbox, radio button, and many more.</p>
+<p>The Extended Content Blocks 2 (ECB2) module to give you more page editing options. Many aditional content block types are available to use in each page template. e.g. dropdown, colour picker, checkbox, radio button, and many more.</p>
 <br>
 
 <h3>Usage</h3>
 <p>Use the CMSMS core <b>{content_module}</b> tag to add all ECB2 content blocks to any page template.</p>
-<p>The parameters module=ECB2, field and block are required for all ECB2 content blocks:</p>
 <pre>{content_module module=ECB2 field=some_field_type block='some name' ...}</pre>
-<p>The core content_module tag provides the following parameters that can be used with ALL of the ECB2 content blocks:</p>
+<p>The core content_module tag provides the following parameters for ALL of the ECB2 content blocks:</p>
 <ul>
-    <li>label (optional)- A label for the content block for use when editing the page.</li>
+    <li>module (required) - 'ECB2'</li>
+    <li>field (required) - one of ECB2 field types below</li>
+    <li>block (required) - the name of the content block</li>
+    <li>label (optional) - A label for the content block for use when editing the page.</li>
     <li>required (optional) - Allows specifying that the content block must contain some text.</li>
     <li>tab (optional) - The desired tab to display this field on in the edit form.</li>
     <li>priority (optional) integer - Allows specifying an integer priority for the block within the tab.</li>
     <li>assign (optional) string - Assign the results to a smarty variable with that name.</li>
 </ul>
 
-<p>Smarty tip: parameter values that are single-word strings do not have to be quoted e.g. field=checkbox is the same as field='checkbox'.</p>
+<p><b>Smarty tip</b>: parameter values that are single-word strings do not have to be quoted e.g. field=checkbox is the same as field='checkbox'.</p>
 
 <br><br>
 EOD;
