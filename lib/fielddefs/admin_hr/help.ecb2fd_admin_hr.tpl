@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'admin_hr', alias: '<b>hr</b>'</li>
+    <li>block (required) - the name of the content block</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
 

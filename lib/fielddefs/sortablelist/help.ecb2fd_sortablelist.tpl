@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'sortablelist'</li>
+    <li>block (required) - the name of the content block</li>
     <li>values (*) - comma separated string of 'Text' or 'value=Text'. (Note: this is reversed compared to 'dropdown' values - use flip_values if necessary) e.g:<br>
         <pre>{content_module module=ECB2 field=sortablelist block=test4 label="Fruit" values='apple=Apple,orange=Orange,green=Green,value=Label'}</pre>
     </li>   

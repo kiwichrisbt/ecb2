@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'admin_image', alias: '<b>image</b>'</li>
+    <li>block (required) - the name of the content block</li>
     <li>image (required) - path and filename relative to the uploads directory</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

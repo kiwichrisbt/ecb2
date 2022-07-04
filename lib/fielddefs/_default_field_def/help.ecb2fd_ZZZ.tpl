@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'ZZZ'</li>
+    <li>block (required) - the name of the content block</li>
     <li></li>
     <li></li>
     <li>default_value (optional) - initial value when creating a new page</li>

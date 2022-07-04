@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'date_time_picker', or alias: '<b>datepicker</b>', '<b>timepicker</b>'</li>
+    <li>block (required) - the name of the content block</li>
     <li>size (optional) - sets the width of the html input - default: 20</li>
     <li>max_length (optional) - maximum number of characters - default: 10</li>
     <li>show_time (optional) - (alias: time) add time picker - default: true</li>

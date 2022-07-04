@@ -6,7 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'file_selector'</li>
-    
+    <li>block (required) - the name of the content block</li>
     <li>filetypes (required) - comma separated list of file extensions to display, e.g. 'jpg,gif,png'</li>
     <li>dir (optional) - specify a sub directory of 'uploads' to use</li>
     <li>excludeprefix (optional) - exclude any files that have this prefix, e.g. 'thumb_'</li>

@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'radio'</li>
+    <li>block (required) - the name of the content block</li>
     <li>values (required) - comma separated list of 'Text' or 'Text=value'. Example: 'Apple=apple,Orange=orange,Kiwifruit=kiwifruit'</li>
     <li>flip_values (optional) - swaps the dropdowns values <-> text</li>
     <li>inline (optional) - if set displays admin radio buttons inline</li>

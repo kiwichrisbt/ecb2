@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - '<b>textarea</b>', or alias: '<b>editor</b>' (sets wysiwyg=true)</li>
+    <li>block (required) - the name of the content block</li>
     <li>rows (optional) - sets the height of the textarea. May be overridden by css - default 20</li>
     <li>cols (optional) - sets the width of the textarea. May be overridden by css - default 80</li>
     <li>wysiwyg (optional) - enables a wysiwyg editor on the textarea - default false</li>

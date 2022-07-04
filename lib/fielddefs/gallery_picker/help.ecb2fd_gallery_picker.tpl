@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'gallery_picker'</li>
+    <li>block (required) - the name of the content block</li>
     <li>dir (optional) - only returns galleries that are sub-galleries of this gallery dir, default is all galleries, excluding default top level gallery</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

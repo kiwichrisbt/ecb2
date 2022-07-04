@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'admin_module_link', alias: '<b>module_link</b>'</li>
+    <li>block (required) - the name of the content block</li>
     <li>mod (required) - name of the module to link to<br>
     <li>text (optional) - text to use in the link</li>
     <li>target (optional) - default: '_self'</li>

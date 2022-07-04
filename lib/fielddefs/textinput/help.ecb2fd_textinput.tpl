@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - '<b>textinput</b>', or alias: '<b>input</b>'</li>
+    <li>block (required) - the name of the content block</li>
     <li>size (optional) - sets the width of the html input. May be overridden by css - default 30</li>
     <li>max_length (optional) - maximum number of characters - default 255 </li>
     <li>default_value (optional) - initial value when creating a new page</li>

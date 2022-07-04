@@ -5,6 +5,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - '<b>dropdown</b>', or alias: '<b>select</b>', '<b>dropdown_from_module</b>', '<b>dropdown_from_udt</b>', '<b>dropdown_from_gbc</b>', '<b>dropdown_from_customgs</b>'</li>
+    <li>block (required) - the name of the content block</li>
     <li>values (*) - comma separated string of 'Text' or 'Text=value'. Example: 'Apple=apple,Orange=orange,Green=green'<br>
         <pre>{content_module module=ECB2 block=test5 field=dropdown1 values="Apple=apple,Orange=orange" first_value="select fruit" label="Fruit"}</pre>
     </li>

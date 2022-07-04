@@ -8,6 +8,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'admin_fieldset_start', alias: '<b>fieldset_start</b>'</li>
+    <li>block (required) - the name of the content block</li>
     <li>legend (optional) - text to show as fieldset legend - default: ''</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

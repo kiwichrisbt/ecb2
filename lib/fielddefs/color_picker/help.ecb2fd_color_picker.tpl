@@ -6,6 +6,7 @@
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'color_picker'</li>
+    <li>block (required) - the name of the content block</li>
     <li>size (optional) - default 10</li>
     <li>no_hash (optional) - if set the hex value displayed and returned does not include a '#'</li>
     <li>clear_css_cache (optional) - if set the css cache is refreshed if the color is changed</li>
