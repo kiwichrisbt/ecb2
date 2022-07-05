@@ -29,8 +29,11 @@ class ecb2fd_page_picker extends ecb2_FieldDefBase
      */
     public function set_field_parameters() 
     {
+        $this->parameter_aliases = [
+            'default_value' => 'default'
+        ];
         $this->default_parameters = [
-            'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];

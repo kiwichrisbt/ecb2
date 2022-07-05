@@ -31,11 +31,12 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
     {
         $this->restrict_params = FALSE;    // default: TRUE - needed for module call
         $this->parameter_aliases = [
-            'gcb' => 'template'
+            'gcb' => 'template',
+            'default_value' => 'default'
         ];
         $this->default_parameters = [
             'values'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'size'          => ['default' => 5,     'filter' => FILTER_VALIDATE_INT],
             'multiple'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'first_value'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],

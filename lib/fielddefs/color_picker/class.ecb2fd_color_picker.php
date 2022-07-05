@@ -29,14 +29,16 @@ class ecb2fd_color_picker extends ecb2_FieldDefBase
      */
     public function set_field_parameters() 
     {
+        $this->parameter_aliases = [
+            'default_value' => 'default'
+        ];
         $this->default_parameters = [
             'size'              => ['default' => 10,    'filter' => FILTER_VALIDATE_INT],
             'no_hash'           => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'clear_css_cache'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
-            'default_value'     => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'default'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'description'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
-        // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true
 
     }

@@ -15,7 +15,7 @@
     <li>udt (*) - specifies the name of a User Defined Tag to call to get the option values. The UDT should either return an array of 'Text' => 'value', or return a comma separated string of 'Text' or 'Text=value'.<br>
         <pre>{content_module module=ECB2 block=dropdown3 field=dropdown udt='ecb2_test_udt_options' label="Dropdown - from udt"}</pre>
     </li>
-    <li>template (*) - (alias: gcb) - specifies the name of a smarty template from Design Manager to call to get the option values. The template call needs to either: set an array $options of 'value' => 'Text' with scope=global, or return a comma separated list of 'Text,...' or 'Text=value,...'. <br>
+    <li>template (*) - (alias: '<b>gcb</b>') - specifies the name of a smarty template from Design Manager to call to get the option values. The template call needs to either: set an array $options of 'value' => 'Text' with scope=global, or return a comma separated list of 'Text,...' or 'Text=value,...'. <br>
         <pre>{content_module module=ECB2 block=dropdown4 field=dropdown template='ECB2_test_template_options' label="Dropdown - from template"}</pre>
     </li>
     <li>customgs_field (*) - name of customgs_field to retrieve (with spaces, not underscores) e.g. 'Section Styles'. This needs to be a CustomGS 'textarea' containing a set of 'Text' or 'Text=value', either on separate lines or separated by commas.<br>
@@ -27,7 +27,7 @@
     <li>size (optional) - multiple enabled only</li>
     <li>description (optional) - adds additional text explanation for editor</li>
     <li>compact (optional) - default:false - if set, for multiple only, a summary of the selected options is displayed and the full select is shown/hidden when 'edit/hide' is clicked</li>
-    <li>default_value (optional) - initial value when creating a new page</li>
+    <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
 </ul>
 <br>
 <p>Sample template for 'mod' parameter for a LISE Instance summary template. Similar can also be used with the 'template' parameter.</p>

@@ -1,7 +1,7 @@
 {* help.ecb2fd_sortablelist.tpl *}
 <p>Creates a sortablelist that the editor can drag-and-drop to select from the list. The options can be created from a: comma separated list (values), module call (mod), User Defined Tag (udt), or a smarty template (template / udt). One of these parameters must be used (*).</p>
 {literal}
-<pre>{content_module module=ECB2 field=textinput block="test5" label="Text" size=55 max_length=55 default_value="fill it"}</pre>
+<pre>{content_module module=ECB2 field=textinput block="test5" label="Text" size=55 max_length=55 default="fill it"}</pre>
 
 <p>Parameters:</p>
 <ul>
@@ -28,7 +28,7 @@
     <li>max_number (optional) - limits the maximum number of items that can be selected</li>
     <li>required_number (optional) - sets a specific number of items that must be selected (or none)</li>
     <li>flip_values (optional) - swaps the dropdowns values <-> text</li>
-    <li>default_value (optional) - initial value when creating a new page</li>
+    <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
 <br>

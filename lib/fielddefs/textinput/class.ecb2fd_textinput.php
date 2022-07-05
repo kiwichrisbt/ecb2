@@ -30,9 +30,11 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         // $this->restrict_params = FALSE;    // default: true
-        // $this->parameter_aliases = [ 'alias' => 'parameter' ];
+        $this->parameter_aliases = [
+            'default_value' => 'default'
+        ];
         $this->default_parameters = [
-            'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'size'          => ['default' => 30,    'filter' => FILTER_VALIDATE_INT],
             'max_length'    => ['default' => 255,   'filter' => FILTER_VALIDATE_INT],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]

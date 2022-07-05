@@ -137,31 +137,6 @@ class ECB2 extends \CMSModule {
     {
         $this->RegisterModulePlugin();
 
-// move all this into each field class
-        $this->SetParameterType('block_name', CLEAN_STRING);
-        $this->SetParameterType('value', CLEAN_STRING);
-        $this->SetParameterType('adding', CLEAN_STRING);
-        $this->SetParameterType('sortfiles', CLEAN_STRING);
-        $this->SetParameterType('excludeprefix', CLEAN_STRING);
-        $this->SetParameterType('recurse', CLEAN_STRING);
-        $this->SetParameterType('filetypes', CLEAN_STRING);
-        $this->SetParameterType('field', CLEAN_STRING);
-        $this->SetParameterType('dir', CLEAN_STRING);
-        $this->SetParameterType('preview', CLEAN_STRING);
-        $this->SetParameterType('date_format', CLEAN_STRING);
-        $this->SetParameterType('description', CLEAN_STRING);
-        $this->SetParameterType('default_value', CLEAN_STRING);
-        $this->SetParameterType('max_number', CLEAN_INT);
-        $this->SetParameterType('maxnumber', CLEAN_INT);
-        $this->SetParameterType('legend', CLEAN_STRING);
-        $this->SetParameterType('compact', CLEAN_STRING);
-        $this->SetParameterType('size', CLEAN_INT);
-        $this->SetParameterType('change_month', CLEAN_INT);
-        $this->SetParameterType('change_year', CLEAN_INT);
-        $this->SetParameterType('year_range', CLEAN_STRING);
-        $this->SetParameterType('no_hash', CLEAN_INT);
-        $this->SetParameterType('clear_css_cache', CLEAN_INT);
-        $this->SetParameterType('flip_values', CLEAN_INT);
     }
 
 
@@ -237,20 +212,13 @@ class ECB2 extends \CMSModule {
             $params['field'] = self::FIELD_ALIASES[$params['field']];
         }
         
-// when all converted to v2 code - can remove this if statement
-        if ( in_array($params["field"], self::FIELD_TYPES ) ) {
-// new style v2+
-            $type = self::FIELD_DEF_PREFIX.$params["field"];
-            $ecb2 = new $type($this, $blockName, $value, $params, $adding);
-            return $ecb2->get_content_block_input();
-
-        } else {
-// old - remove when all field types converted into classes & generate warning/error if not in FIELD_TYPES
-            $ecb2 = new ecb2_tools($blockName, $value, $params, $adding);      
-            return $ecb2->get_content_block_input();
-// when all using v2 code >>>  ??? or tweak conditional logic 
-            // return $this->error_msg( $this->Lang('field_error', $blockName) );
+        if ( !in_array($params["field"], self::FIELD_TYPES ) ) {
+            return $this->error_msg( $this->Lang('field_error', $blockName) );
         }
+
+        $type = self::FIELD_DEF_PREFIX.$params["field"];
+        $ecb2 = new $type($this, $blockName, $value, $params, $adding);
+        return $ecb2->get_content_block_input();
 
     }
 
@@ -302,6 +270,19 @@ class ECB2 extends \CMSModule {
     public function error_msg($msg)
     {
         return '<div class="pagewarning">'.$msg.'</div><br>';
+    }
+
+
+
+    /**
+     *  @return array ??????????????????? $options array of 'value' => 'Text'
+     *  @param string ?????????? $customgs_field - needs to be a 'textarea' containing a set of 'Text' or 'Text=value',
+     *      either on separate lines or separated by commas
+     */
+    public function get_demo_input($params = [])
+    {
+
+        echo '<pre>output the demo input here...</pre>';
     }
 
 

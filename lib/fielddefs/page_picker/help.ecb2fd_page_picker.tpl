@@ -6,8 +6,8 @@
 
 <p>Parameters:</p>
 <ul>
-    <li>field (required) - 'page_picker'or alias: '<b>pages</b>'</li>
+    <li>field (required) - 'page_picker', alias: '<b>pages</b>'</li>
     <li>block (required) - the name of the content block</li>
-    <li>default_value (optional) - initial value when creating a new page</li>
+    <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

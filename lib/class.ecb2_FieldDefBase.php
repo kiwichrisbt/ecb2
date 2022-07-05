@@ -119,8 +119,8 @@ abstract class ecb2_FieldDefBase
         }
 
         // set default value if adding
-        if ( $this->adding && $this->value===NULL && isset($this->options['default_value']) ) {
-            $this->value = $this->options['default_value'];
+        if ( $this->adding && $this->value===NULL && isset($this->options['default']) ) {
+            $this->value = $this->options['default'];
         }
 
     }
@@ -263,6 +263,7 @@ abstract class ecb2_FieldDefBase
     }
 
 
+
     /**
      *  @return array $options array of 'value' => 'Text'
      *  @param string $customgs_field - needs to be a 'textarea' containing a set of 'Text' or 'Text=value',
@@ -286,6 +287,7 @@ abstract class ecb2_FieldDefBase
         $CGS_field = str_replace(PHP_EOL, ',', $CGS_field['value']);
         return $this->get_array_from_csl( $CGS_field );
     }
+
 
 
 }

@@ -29,11 +29,6 @@ class ecb2fd_admin_text extends ecb2_FieldDefBase
      */
     public function set_field_parameters() 
     {
-
-                    $default_options["text"] = '';
-                $default_options["execute"] = '';
-                $default_options["description"] = '';
-
         $this->default_parameters = [
             'text'          => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]

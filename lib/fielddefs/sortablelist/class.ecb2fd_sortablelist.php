@@ -30,22 +30,24 @@ class ecb2fd_sortablelist extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->restrict_params = FALSE;    // default: TRUE - needed for module call
-        // $this->parameter_aliases = [ 'alias' => 'parameter' ];
+        $this->parameter_aliases = [
+            'default_value' => 'default'
+        ];
         $this->default_parameters = [
             'values'            => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'default_value'     => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'default'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'allowduplicates'   => ['default' => FALSE,    'filter' => FILTER_SANITIZE_STRING],
             'max_selected'      => ['default' => -1,    'filter' => FILTER_VALIDATE_INT],
             'max_number'        => ['default' => '',    'filter' => FILTER_VALIDATE_INT], 
             'required_number'   => ['default' => '',    'filter' => FILTER_VALIDATE_INT], 
             'label_left'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'label_right'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'flip_values'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
-            'mod'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'udt'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'template'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'customgs_field'=> ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'flip_values'       => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
+            'mod'               => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'udt'               => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'template'          => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'customgs_field'    => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'description'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
 
     }
@@ -65,8 +67,6 @@ class ecb2fd_sortablelist extends ecb2_FieldDefBase
             $exclude_options = ['values','udt','default_value','first_value','description','label_left','label_right','max_number','required_number','mod','flip_values','compact','field','allowduplicates','max_selected'];
             
             $options = $this->get_values_from_module($this->options['mod'], [], $exclude_options);            
-// format reversed in module output for sortablelist - ALREADY DONE???
-//     $options = array_flip($options);
 
 
         } elseif ( $this->options['udt'] ) {  

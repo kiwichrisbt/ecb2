@@ -29,13 +29,16 @@ class ecb2fd_admin_module_link extends ecb2_FieldDefBase
      */
     public function set_field_parameters() 
     {
+        $this->parameter_aliases = [
+            'default_value' => 'default'
+        ];
         $this->default_parameters = [
             'mod'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'text'          => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'target'        => ['default' => '_self',    'filter' => FILTER_SANITIZE_STRING],
             'size'          => ['default' => 30,    'filter' => FILTER_SANITIZE_STRING],
             'max_length'    => ['default' => 255,    'filter' => FILTER_SANITIZE_STRING],
-            'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
@@ -58,15 +61,6 @@ class ecb2fd_admin_module_link extends ecb2_FieldDefBase
                 return $this->mod->error_msg($this->error);
             }
         }
-
-        // $userid = get_userid();
-        // $userops = cmsms()->GetUserOperations();
-        // $adminuser = $userops->UserInGroup($userid, 1);
-
-        // $tmp = '<input id="mt_' . $this->block_name . '" ' . ( $adminuser ? 'type="text"' : 'type="hidden"') . ' name="' . $this->block_name . '" value="' . ($this->value ? $this->value : $this->options["default_value"]) . '"  size="%d" maxlength="%d" />';
-        // $tmp = sprintf($tmp, $this->options["size"], $this->options["max_length"]);
-        // original CT edit
-        // return $this->options['description'].(is_object($mod) ? $mod->CreateLink('', 'defaultadmin', '', $this->options["text"], array(), '', false, 0, 'target="' . $this->options["target"] . '"') : $this->options["text"]); // . '<br />' . $tmp; // CT comment out
 
         $addtext = 'target="'.$this->options['target'].'"';
     

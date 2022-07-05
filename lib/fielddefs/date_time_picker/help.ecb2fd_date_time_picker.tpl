@@ -9,7 +9,7 @@
     <li>block (required) - the name of the content block</li>
     <li>size (optional) - sets the width of the html input - default: 20</li>
     <li>max_length (optional) - maximum number of characters - default: 10</li>
-    <li>show_time (optional) - (alias: time) add time picker - default: true</li>
+    <li>show_time (optional) - (alias: '<b>time</b>') add time picker - default: true</li>
     <li>date_only (optional) - only show date picker - default: false</li>
     <li>time_only (optional) - only show time picker - default: false</li>
     <li>date_format (optional) - default: 'yy-mm-dd'</li>

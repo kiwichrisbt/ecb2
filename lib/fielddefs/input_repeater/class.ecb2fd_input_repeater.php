@@ -29,13 +29,15 @@ class ecb2fd_input_repeater extends ecb2_FieldDefBase
      */
     public function set_field_parameters() 
     {
+        $this->parameter_aliases = [
+            'default_value' => 'default'
+        ];
         $this->default_parameters = [
             'size'              => ['default' => 50,    'filter' => FILTER_SANITIZE_STRING],
-            'max_length'              => ['default' => 255,    'filter' => FILTER_SANITIZE_STRING],
-            'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'max_length'        => ['default' => 255,    'filter' => FILTER_SANITIZE_STRING],
+            'default'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'description'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
-        // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true
 
     }

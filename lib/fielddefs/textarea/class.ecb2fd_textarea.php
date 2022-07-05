@@ -34,9 +34,11 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         // $this->restrict_params = FALSE;    // default: true
-        // $this->parameter_aliases = [ 'alias' => 'parameter' ];
+        $this->parameter_aliases = [
+            'default_value' => 'default'
+        ];
         $this->default_parameters = [
-            'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'rows'          => ['default' => 20,    'filter' => FILTER_VALIDATE_INT],
             'cols'          => ['default' => 80,   'filter' => FILTER_VALIDATE_INT],
             'wysiwyg'       => ['default' => FALSE,   'filter' => FILTER_VALIDATE_BOOLEAN],

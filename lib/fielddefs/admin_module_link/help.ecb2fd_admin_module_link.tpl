@@ -1,7 +1,7 @@
 {* help.ecb2fd_admin_module_link.tpl *}
 <p>The admin_module_link field creates a link on the admin page to the specified module.</p>
 
-<pre>{literal}{content_module module=ECB2 field=admin_module_link block="test18" label="Test" default_value="fill it"}{/literal}</pre>
+<pre>{literal}{content_module module=ECB2 field=admin_module_link block="test18" label="Test" default="fill it"}{/literal}</pre>
 
 <p>Parameters:</p>
 <ul>
@@ -10,5 +10,6 @@
     <li>mod (required) - name of the module to link to<br>
     <li>text (optional) - text to use in the link</li>
     <li>target (optional) - default: '_self'</li>
+    <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
