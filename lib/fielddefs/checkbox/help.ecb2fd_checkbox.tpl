@@ -1,6 +1,11 @@
 {* help.ecb2fd_checkbox.tpl *}
 <p>The checkbox field creates a simple check-able input.</p>
 
+<fieldset>
+    <p class="pagetext">Test checkbox</p>
+    {$fielddef->get_demo_input(['default'=>1])}
+</fieldset>
+
 <pre>{literal}{content_module module=ECB2 field=checkbox block="test5" label="Test checkbox" default="1"}{/literal}</pre>
 
 <p>Parameters:</p>
@@ -11,3 +16,8 @@
     <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
+
+<fieldset>
+    <legend>Sample checkbox with inline_label - use 'inline_label="inline label for checkbox" label="&amp;nbsp;"' </legend>
+    {$fielddef->get_demo_input(['inline_label'=>"inline label for checkbox", 'label'=>"&amp;nbsp;", 'default'=>1])}
+</fieldset>

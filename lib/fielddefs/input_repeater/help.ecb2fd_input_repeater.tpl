@@ -2,6 +2,10 @@
 <p>The input_repeater field creates one or more text inputs that can be added or removed by the editor.</p>
 <p>The content block output is a string with each input field's contents delimiter by '||'. To make the output a more useful array use 'explode', e.g. {literal}{"||"|explode:$content_block_name}{/literal}</p>
 
+<fieldset>
+    {$fielddef->get_demo_input(['default_value'=>'Apples||Kiwifruit'])}
+</fieldset>
+
 <pre>{literal}{$input_repeater_test="||"|explode:"{content_module module='ECB2' field='input_repeater' label='Test 22: input_repeater' block='test22' size=50 max_length=255 description='Press (+) and (-) to add and remove additional input fields'}" scope=global}{/literal}</pre>
 
 <p>Parameters:</p>

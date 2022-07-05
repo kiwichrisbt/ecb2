@@ -1,5 +1,5 @@
 {* help.ecb2fd_admin_fieldset_end.tpl *}
-<p>Simply the admin_fieldset_end to close a fieldset_start.</p>
+<p>Simply the admin_fieldset_end to close an admin_fieldset_start. See above for demo.</p>
 
 <pre>{literal}{content_module module=ECB2 field=admin_fieldset_end block="test16" label='&amp;nbsp;'}{/literal}</pre>
 

@@ -1,6 +1,10 @@
 {* help.ecb2fd_admin_hr.tpl *}
 <p>Displays an 'hr' on the admin page.</p>
 
+<fieldset>
+    {$fielddef->get_demo_input()}
+</fieldset>
+
 <pre>{literal}{content_module module=ECB2 field=admin_hr block="test17" description='Can also add a description in here :)'}{/literal}</pre>
 
 <p>Parameters:</p>

@@ -3,7 +3,7 @@
 <h3>Version 1.99... - 23Jun22.....</h3>
 <ul>
    <li>Significantly refactored module, to enable future development of the module and simpify use. Is fully compatible with all previous usage. Please report any issues you may find.</li>
-   <li>Expanded help content, with example tags</li>
+   <li>Expanded help content, with example tags and demo content blocks for all field types.</li>
    <li>Some field types have been renamed, to make their use more obvious. All previous field types are fully supported as an alias for the new field name</li>
    <li>'textinput' field replaces 'input', field=input is a fully supported alias</li>
    <li>'textarea' field replaces 'editor', with a wysiwyg option added (default=false). field=editor is a fully supported alias</li>
@@ -12,7 +12,6 @@
    <li>'radio' - added 'flip_values' option - swaps the dropdowns values <-> text</li>
    <li>'date_time_picker' field replaces 'datepicker' and 'timepicker' with both fully supported as aliases</li>
    <li>parameter 'default' now used instead of 'default_value', ('default_value' parameter is an alias) - for all fields that can have a default</li>
-   
    <li>'page_picker', renamed from the now alias: 'pages'</li>
    <li>'module_picker', renamed from the now alias: 'module'</li>
    <li>'admin_fieldset_start', renamed from the now alias: 'fieldset_start'</li>
@@ -22,7 +21,6 @@
    <li>'admin_link', renamed from the now alias: 'link'</li>
    <li>'admin_module_link', renamed from the now alias: 'module_link'</li>
    <li>'admin_text', renamed from the now alias: 'text'</li>
-   
    <li>added sample LISE template into help</li>
 </ul>
 <br>

@@ -20,6 +20,7 @@ abstract class ecb2_FieldDefBase
     protected $field_alias_used;
     protected $restrict_params;
     protected $parameter_aliases;
+    protected $demo_count;
     protected $error;
 
    
@@ -43,6 +44,7 @@ abstract class ecb2_FieldDefBase
         $this->restrict_params = TRUE;
         if ( isset($params['field_alias_used']) ) $this->field_alias_used = $params['field_alias_used'];
         $this->parameter_aliases = [];
+        $this->demo_count = 0;
 
         $this->set_field_parameters();
         $this->initialise_options($params);
@@ -287,6 +289,44 @@ abstract class ecb2_FieldDefBase
         $CGS_field = str_replace(PHP_EOL, ',', $CGS_field['value']);
         return $this->get_array_from_csl( $CGS_field );
     }
+
+
+
+    /**
+     *  @return string formatted html from smarty help template
+     */
+    public function get_field_help()
+    {
+        $help_filename = $this->mod->GetModulePath() .DIRECTORY_SEPARATOR. 'lib' .DIRECTORY_SEPARATOR. 
+            'fielddefs' .DIRECTORY_SEPARATOR. $this->field .DIRECTORY_SEPARATOR. 
+            $this->mod::HELP_TEMPLATE_PREFIX . $this->mod::FIELD_DEF_PREFIX . $this->field . '.tpl';
+        $field_help = (is_readable($help_filename)) ? @file_get_contents($help_filename) : '';
+
+        $smarty = \CmsApp::get_instance()->GetSmarty();
+        $tpl = $smarty->CreateTemplate( 'string:'.$field_help, null, null, $smarty );
+        $tpl->assign('fielddef', $this);
+        return $tpl->fetch();
+    }
+
+
+
+    /**
+     *  @return string formatted html from smarty help template
+     */
+    public function get_demo_input( $params=[] )
+    {
+        $params['field'] = $this->field;
+        $this->value = NULL;
+        $this->demo_count++;
+        $this->block_name = $this->mod::DEMO_BLOCK_PREFIX.$this->field.$this->demo_count; 
+
+        // re-initialise with new $params from help call
+        $this->initialise_options($params);
+
+        return $this->get_content_block_input();
+
+    }
+
 
 
 

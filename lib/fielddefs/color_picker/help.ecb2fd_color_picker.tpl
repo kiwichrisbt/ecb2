@@ -1,7 +1,11 @@
 {* help.ecb2fd_color_picker.tpl *}
 <p>The color_picker field provides a simple option for selecting a HEX color code.</p>
 
-<pre>{literal}{content_module module=ECB2 field=color_picker block="test7" label="Color" default="#000000"}{/literal}</pre>
+<fieldset>
+    {$fielddef->get_demo_input([ 'default'=>'#3338c4'])}
+</fieldset>
+
+<pre>{literal}{content_module module=ECB2 field=color_picker block="test7" label="Color" default="#3338c4"}{/literal}</pre>
 
 <p>Parameters:</p>
 <ul>

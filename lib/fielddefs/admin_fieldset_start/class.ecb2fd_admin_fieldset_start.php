@@ -49,6 +49,7 @@ class ecb2fd_admin_fieldset_start extends ecb2_FieldDefBase
         $tpl->assign('block_name', $this->block_name );
         $tpl->assign('legend', $this->options['legend'] );
         $tpl->assign('description', $this->options['description'] );
+        $tpl->assign('is_demo', $this->demo_count>0 );
         return $tpl->fetch();
    
     }

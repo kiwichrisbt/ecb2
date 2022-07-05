@@ -1,10 +1,11 @@
 {* help.ecb2fd_textinput.tpl *}
 <p>The textinput field creates a simple text input, for storing a single string.</p>
 
-<pre>{literal}{content_module module=ECB2 field=textinput block="test5" label="Text" size=55 max_length=55 default="fill it"}{/literal}</pre>
+<fieldset>
+{$fielddef->get_demo_input(['size'=>55, 'max_length'=>55, 'default'=>"a sample textinput"])}
+</fieldset>
 
-{$mod->get_demo_input()}
-
+<pre>{literal}{content_module module=ECB2 field=textinput block="test5" label="Text" size=55 max_length=55 default="a sample textinput"}{/literal}</pre>
 
 <p>Parameters:</p>
 <ul>

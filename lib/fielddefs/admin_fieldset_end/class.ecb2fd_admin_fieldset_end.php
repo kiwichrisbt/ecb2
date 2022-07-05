@@ -43,6 +43,7 @@ class ecb2fd_admin_fieldset_end extends ecb2_FieldDefBase
     {   
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
+        $tpl->assign('is_demo', $this->demo_count>0 );
         return $tpl->fetch();
    
     }

@@ -1,7 +1,11 @@
 {* help.ecb2fd_admin_image.tpl *}
 <p>Displays an image on an admin page only. Usefully to provide extra guidance to editors.</p>
 
-<pre>{literal}{content_module module=ECB2 field=admin_image label="19: admin_image" block="test19" image='images/photo-coming-soon-4-3.jpg' description="This is an admin only image"}{/literal}</pre>
+<fieldset>
+    {$fielddef->get_demo_input(['image'=>'images/logo1.gif', 'description'=>"This is an admin only image"])}
+</fieldset>
+
+<pre>{literal}{content_module module=ECB2 field=admin_image label="19: admin_image" block="test19" image='images/logo1.gif' description="This is an admin only image"}{/literal}</pre>
 
 <p>Parameters:</p>
 <ul>

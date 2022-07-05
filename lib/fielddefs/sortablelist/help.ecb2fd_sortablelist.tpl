@@ -1,8 +1,11 @@
 {* help.ecb2fd_sortablelist.tpl *}
 <p>Creates a sortablelist that the editor can drag-and-drop to select from the list. The options can be created from a: comma separated list (values), module call (mod), User Defined Tag (udt), or a smarty template (template / udt). One of these parameters must be used (*).</p>
-{literal}
-<pre>{content_module module=ECB2 field=textinput block="test5" label="Text" size=55 max_length=55 default="fill it"}</pre>
 
+<fieldset>
+{$fielddef->get_demo_input(['values'=>'apple=Apple,orange=Orange,green=Green,value=Label', 'default'=>'orange'])}
+</fieldset>
+
+{literal}
 <p>Parameters:</p>
 <ul>
     <li>field (required) - 'sortablelist'</li>

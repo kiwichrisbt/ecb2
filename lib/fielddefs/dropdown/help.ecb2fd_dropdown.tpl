@@ -1,6 +1,10 @@
 {* help.ecb2fd_dropdown.tpl *}
 <p>Creates a dropdown (or select) that the editor can choose from the provided options. The dropdown options can be from a: comma separated list (values), module call (mod), User Defined Tag (udt), or a smarty template (template / udt). One of these parameters must be used (*).</p>
 
+<fieldset>
+{$fielddef->get_demo_input(['values'=>'Apple=apple,Orange=orange,Kiwifruit=kiwifruit', 'first_value'=>'select fruit'])}
+</fieldset>
+
 {literal}
 <p>Parameters:</p>
 <ul>
@@ -44,5 +48,17 @@
 {$item->title}={$item->alias}{if !$item@last},{/if}
 {/foreach}
 *}
-{/literal}</pre>
-<br><br>
+</pre>
+{/literal}
+
+<fieldset>
+    <legend>Sample dropdown with multiple select - use 'multiple=1' </legend>
+    {$fielddef->get_demo_input(['values'=>'Apple=apple,Orange=orange,Kiwifruit=kiwifruit', 'multiple'=>1, 'size'=>4, default=>'orange'])}
+</fieldset>
+
+<fieldset>
+<legend>Sample dropdown with compact, multiple select - use 'multiple=1' </legend>
+{$fielddef->get_demo_input(['values'=>'Apple=apple,Orange=orange,Kiwifruit=kiwifruit', 'multiple'=>1, 'compact'=>1, 'size'=>4, default=>'apple,kiwifruit'])}
+</fieldset>
+
+<br>

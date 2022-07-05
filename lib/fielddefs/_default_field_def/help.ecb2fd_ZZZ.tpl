@@ -1,7 +1,11 @@
 {* help.ecb2fd_ZZZ.tpl *}
 <p>The ZZZ field creates a simple text input, for storing a single string.</p>
 
-<pre>{literal}{content_module module=ECB2 field=ZZZ block="test" label="Test"  default="fill it"}{/literal}</pre>
+<fieldset>
+    {$fielddef->get_demo_input([])}
+</fieldset>
+
+<pre>{literal}{content_module module=ECB2 field=ZZZ block="test" label="Test" default="a sample ZZZ"}{/literal}</pre>
 
 <p>Parameters:</p>
 <ul>

@@ -1,7 +1,11 @@
 {* help.ecb2fd_textarea.tpl *}
 <p>The textarea field creates either a simple textarea input, for paragraphs of text, or optionally a full WYSIWYG editor to create formatted html.</p>
 
-<pre>{literal}{content_module module="ECB2" field="textarea" label="Textarea" block="test6" rows=10 cols=40 default="fill it"}{/literal}</pre>
+<fieldset>
+{$fielddef->get_demo_input(['rows'=>3, 'cols'=>100, 'default'=>'a sample textarea'])}
+</fieldset>
+
+<pre>{literal}{content_module module="ECB2" field="textarea" label="Textarea" block="test6" rows=3 cols=100 default="a sample textarea"}{/literal}</pre>
 
 <p>Parameters:</p>
 <ul>

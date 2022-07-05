@@ -1,6 +1,10 @@
 {* help.ecb2fd_gallery_picker.tpl *}
 <p>The gallery_picker creates a dropdown to choose from a selection of galleries in the Gallery module.</p>
 
+<fieldset>
+    {$fielddef->get_demo_input()}
+</fieldset>
+
 <pre>{literal}{content_module module=ECB2 field=gallery_picker block=pageTopGallery label='Page Top Gallery' dir='page-top-galleries'}{/literal}</pre>
 
 <p>Parameters:</p>

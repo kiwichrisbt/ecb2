@@ -1,7 +1,11 @@
 {* help.ecb2fd_admin_text.tpl *}
 <p>The admin_text field just adds text into the admin page.</p>
 
-<pre>{literal}{content_module module=ECB2 field=textblock="test16" label="16: Text" text="Hello word!"}{/literal}</pre>
+<fieldset>
+    {$fielddef->get_demo_input(['text'=>'Simply add some text into the admin pages to give some guidance to the editors, or whatever else you want really :).'])}
+</fieldset>
+
+<pre>{literal}{content_module module=ECB2 field=admin_text text='Simply add some text into the admin pages to give some guidance to the editors, or whatever else you want really :).' block="test16" label="16: Text"}{/literal}</pre>
 
 <p>Parameters:</p>
 <ul>

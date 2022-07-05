@@ -78,6 +78,7 @@ class ECB2 extends \CMSModule {
     const FIELD_DEF_CLASS_PREFIX = 'class.';
     const INPUT_TEMPLATE_PREFIX = 'input.';
     const HELP_TEMPLATE_PREFIX = 'help.';
+    const DEMO_BLOCK_PREFIX = 'demo_';
 
     public function GetName() { return 'ECB2';  }
     public function GetFriendlyName() { return $this->Lang('friendlyname'); }
@@ -142,18 +143,18 @@ class ECB2 extends \CMSModule {
 
 
     /**
-     *  returns help content - now uses smarty templates
+     *  @return string help content - now uses smarty templates
      */
     public function get_help()
     {
+        echo $this->output_admin_css_js();
         $field_help = [];
         foreach(self::FIELD_TYPES as $field_type) {
-            $help_filename = $this->GetModulePath() .DIRECTORY_SEPARATOR. 'lib' .DIRECTORY_SEPARATOR. 
-                'fielddefs' .DIRECTORY_SEPARATOR. $field_type .DIRECTORY_SEPARATOR. 
-                self::HELP_TEMPLATE_PREFIX . self::FIELD_DEF_PREFIX . $field_type . '.tpl';
-            $field_help[$field_type] = (is_readable($help_filename)) ? @file_get_contents($help_filename) : '';
-        }      
-        echo $this->output_admin_css_js();
+            $type = self::FIELD_DEF_PREFIX.$field_type;
+            $ecb2 = new $type($this, $this::DEMO_BLOCK_PREFIX.$field_type, NULL, ['field' => $field_type], TRUE);
+            $field_help[$field_type] = $ecb2->get_field_help();
+        }
+
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('_help.tpl'), null, null, $smarty );
         $tpl->assign('mod', $this);
@@ -161,8 +162,8 @@ class ECB2 extends \CMSModule {
         $tpl->assign('first_admin_only_field', self::FIRST_ADMIN_ONLY_FIELD);
         $tpl->assign('field_help', $field_help);
         return $tpl->fetch();
-    }
 
+    }
 
 
 
@@ -270,19 +271,6 @@ class ECB2 extends \CMSModule {
     public function error_msg($msg)
     {
         return '<div class="pagewarning">'.$msg.'</div><br>';
-    }
-
-
-
-    /**
-     *  @return array ??????????????????? $options array of 'value' => 'Text'
-     *  @param string ?????????? $customgs_field - needs to be a 'textarea' containing a set of 'Text' or 'Text=value',
-     *      either on separate lines or separated by commas
-     */
-    public function get_demo_input($params = [])
-    {
-
-        echo '<pre>output the demo input here...</pre>';
     }
 
 

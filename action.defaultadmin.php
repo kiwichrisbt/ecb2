@@ -7,10 +7,7 @@
 #          see /ECB2/lang/LICENCE.txt or <http://www.gnu.org/licenses/>
 #---------------------------------------------------------------------------------------------------
 
+if ( !isset($gCms) ) exit;
 
-if (!isset($gCms))
-    exit;
+echo $this->get_help();
 
-## nothing - should not get here
-
-?>

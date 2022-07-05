@@ -113,7 +113,8 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
             $selected_values = explode(',', $this->value);
             $selected_text = [];
             foreach ($selected_values as $value) {
-                $selected_text[] = array_search( $value, $options );
+                // $selected_text[] = array_search( $value, $options );
+                $selected_text[] = isset($options[$value]) ? $options[$value] : '';
             }
             $selected_text = implode(', ', $selected_text);
             $tpl->assign( 'selected_values', $selected_values );  // array

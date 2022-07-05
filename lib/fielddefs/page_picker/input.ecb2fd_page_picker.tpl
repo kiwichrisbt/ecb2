@@ -5,6 +5,3 @@
         {$description}<br>
 {/if}
         {$contentOps->CreateHierarchyDropdown('', $value, $block_name, 1, 1)}
-<pre>
-$value:{$value}
-</pre>

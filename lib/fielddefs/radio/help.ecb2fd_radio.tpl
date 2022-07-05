@@ -1,7 +1,11 @@
 {* help.ecb2fd_radio.tpl *}
 <p>The radio field creates a simple text input, for storing a single string.</p>
 
-<pre>{literal}{content_module module="ECB2" field="radio" block="test17" label="Fruit" values="Apple=apple,Orange=orange,Kiwifruit=kiwifruit" default="Orange"}{/literal}</pre>
+<fieldset>
+    {$fielddef->get_demo_input(['values'=>"Apple=apple,Orange=orange,Kiwifruit=kiwifruit", 'default'=>"orange"])}
+</fieldset>
+
+<pre>{literal}{content_module module=ECB2 field=radio block="test17" label="Fruit" values="Apple=apple,Orange=orange,Kiwifruit=kiwifruit" default="orange"}{/literal}</pre>
 
 <p>Parameters:</p>
 <ul>
@@ -13,3 +17,8 @@
     <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
+
+<fieldset>
+    <legend>radio with inline buttons - use 'inline=1'</legend>
+    {$fielddef->get_demo_input(['values'=>'Apple=apple,Orange=orange,Kiwifruit=kiwifruit', 'inline'=>1, 'default'=>'orange'])}
+</fieldset>

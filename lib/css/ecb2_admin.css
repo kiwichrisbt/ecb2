@@ -20,8 +20,9 @@
 .ecb_compact:not(.show) .ecb_select_edit::before {content:'Edit';}
 .ecb_compact:not(.show) select {display:none;}
 
-.ecb2-help .help-toc {position:-webkit-sticky; position:sticky; right:0; top:0; float:right; width:20%;}
-.ecb2-help .help-content {width:77%;}
+.ecb2-help .help-toc {position:-webkit-sticky; position:sticky; right:0; top:0; float:right; width:20%;
+    height:calc(100vh - 3rem); overflow-y:auto;}
+.ecb2-help .help-content {width:77%; overflow:hidden;}
 .ecb2-help h1, .ecb2-help h2, .ecb2-help h3, .ecb2-help h4, .ecb2-help h5, .ecb2-help h6 {
     margin-top:0; margin-bottom:.5rem;}
 .ecb2-help p {margin-bottom:.5rem;}
@@ -33,6 +34,7 @@
 .ecb2-help .mb-0 {margin-bottom:0;}
 .ecb2-help .border-bottom {border-bottom: 1px solid #dee2e6!important;}
 
+.ecb2-help pre {margin-left:0;}
 
 /* colpick Color Picker / https://github.com/josedvq/colpick-jQuery-Color-Picker  http://www.htmldrive.net/items/demo/1358/colpick-A-jQuery-RGB-HEX-and-HSB-Color-Picker-plugin-is-free-lightweight-and-customizable
 */

@@ -33,7 +33,14 @@ if ( version_compare($oldversion, '1.8') < 0 ) {
 if ( version_compare($oldversion, '2.0') < 0 ) {
     // individual files to remove
     $filesToRemove = [
-        '/test/ecb2_sortable_udt_test.php'
+        '/lib/class.ecb2_tools.php',
+        '/test/ecb2_sortable_udt_test.php',
+        '/templates/colorpicker_template.tpl',
+        '/templates/datepicker_template.tpl',
+        '/templates/image_template.tpl',
+        '/templates/input_repeater_template.tpl',
+        '/templates/select_template.tpl',
+        '/templates/sortablelist_template.tpl'
     ];
     foreach ($filesToRemove as $delFile) @unlink($module_path.$delFile);
 }

@@ -1,7 +1,11 @@
 {* help.ecb2fd_file_selector.tpl *}
 <p>The file_selector field enables a file to be selected from a set directory and can optionally show a thumbnail.</p>
 
-<pre>{literal}{content_module module=ECB2 field=file_selector block="test10" dir="images" filetypes="jpg,gif,png" excludeprefix="thumb_"}{/literal}</pre>
+<fieldset>
+    {$fielddef->get_demo_input(['filetypes'=>"jpg,gif,png", 'excludeprefix'=>"thumb_", 'preview'=>1, 'recurse'=>1])}
+</fieldset>
+
+<pre>{literal}{content_module module=ECB2 field=file_selector block="test10" filetypes="jpg,gif,png" excludeprefix="thumb_" recurse=1 preview=1}{/literal}</pre>
 
 <p>Parameters:</p>
 <ul>
