@@ -5,6 +5,7 @@ $lang['add_line'] = 'Add line';
 $lang['admin_only_help'] = 'Admin only fields';
 $lang['admin_only_help_intro'] = 'The following fields are only used to format and add content to the admin pages. They do not provide any useful content for the frontend website pages.';
 
+
 $lang['content_block_label_selected'] = 'Selected';
 $lang['content_block_label_available'] = 'Available';
 $lang['customgs_field_error'] = "Please create field '%s' in CustomGS";
@@ -12,6 +13,7 @@ $lang['customgs_field_error'] = "Please create field '%s' in CustomGS";
 $lang['drop_items'] = 'No items selected - drop selected items here';
 $lang['drop_required_items'] = 'Drop %s required items here';
 
+$lang['error_filename'] = 'The file \'%s\' for the \'%s\' parameter could not be found.';
 $lang['extended_content_blocks'] = 'Extended Content Blocks';
 
 $lang['fields'] = 'Fields';
@@ -28,6 +30,7 @@ $lang['installed'] = 'Module version %s installed.';
 $lang['module_description'] = 'This module enables extra types of content block for page templates';
 $lang['module_error'] = 'The \'%s\' module is not available.';
 
+$lang['need_permission'] = 'You need permission to use this module';
 $lang['none_selected'] = '--- none ---';
 
 $lang['parameter_missing'] = 'Please specify a \'%s\' parameter for the ECB2 content block \'%s\'.';
@@ -35,7 +38,6 @@ $lang['postinstall'] = 'Extended Content Blocks 2 was successful installed';
 $lang['postuninstall'] = 'Extended Content Blocks 2 was successful uninstalled';
 
 $lang['really_uninstall'] = 'Really? Are you sure you want to uninstall the ECB2 module?';
-$lang['refresh'] = 'Refresh';
 $lang['remove'] = 'Remove';
 $lang['remove_line'] = 'Remove line';
 
@@ -47,9 +49,6 @@ $lang['template_error'] = 'Invalid template name \'%s\'';
 $lang['udt_error'] = 'User Defined Tag \'%s\' does not exist';
 $lang['uninstalled'] = 'Module Uninstalled.';
 $lang['upgraded'] = 'Module upgraded to version %s.';
-
-
-
 
 
 
@@ -96,7 +95,9 @@ EOD;
 
 $lang['about_c'] = <<<'EOD'
 <p>ECB2 provides additional Content Blocks for use in page templates for CMS Made Simple v2+.</p>
-<p>The ECB2 module is a fork of the module Extended Content Blocks (ECB), for CMSMS v1, developed by Zdeno Kuzmany.</p><br>
+<p>Thanks to Tom Phane @tomph, for his code improvements, optimisations, and help content (especially a great simple smarty tip).</p>
+<p>The ECB2 module is a fork of the module Extended Content Blocks (ECB), for CMSMS v1, developed by Zdeno Kuzmany.</p>
+<br><br>
 
 <h3>Upgrading from ECB</h3>
 <p>Install ECB2 module and change all "module" parameters, in content_module tags to be module="ECB2" (was "ECB"). Then ECB can be uninstalled.</p><br>

@@ -27,7 +27,8 @@
 
 class ECB2 extends \CMSModule {
 
-    const MODULE_VERSION = '1.99';
+    const MODULE_VERSION = '1.99.3';
+    const MANAGE_PERM = 'manage_ecb2';
 
     const FIELD_TYPES = [
         'textinput',
@@ -91,6 +92,7 @@ class ECB2 extends \CMSModule {
     public function GetDescription() { return $this->Lang('module_description'); }
     public function GetHelp() { return $this->get_help(); }
     public function HasAdmin() { return true;}
+    public function VisibleToAdminUser() { return ( $this->CheckPermission(self::MANAGE_PERM) ); }
     public function GetHeaderHTML() { return  $this->output_admin_css_js(); }
     public function InstallPostMessage() { return $this->Lang('postinstall');}
     public function UninstallPostMessage() { return $this->Lang('postuninstall');}

@@ -7,7 +7,13 @@
 #          see /ECB2/lang/LICENCE.txt or <http://www.gnu.org/licenses/>
 #---------------------------------------------------------------------------------------------------
 
-if ( !isset($gCms) ) exit;
+if ( !defined('CMS_VERSION') ) exit;
+
+if( !$this->CheckPermission(ECB2::MANAGE_PERM) ) {
+    $this->ShowErrors( $this->Lang('need_permission') );
+    return;
+}
 
 echo $this->get_help();
+
 

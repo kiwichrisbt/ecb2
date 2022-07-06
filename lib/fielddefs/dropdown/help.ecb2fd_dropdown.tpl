@@ -57,7 +57,7 @@
 </fieldset>
 
 <fieldset>
-<legend>Sample dropdown with compact, multiple select - use 'multiple=1' </legend>
+<legend>Sample dropdown with multiple & compact select - use 'multiple=1 compact=1' </legend>
 {$fielddef->get_demo_input(['values'=>'Apple=apple,Orange=orange,Kiwifruit=kiwifruit', 'multiple'=>1, 'compact'=>1, 'size'=>4, default=>'apple,kiwifruit'])}
 </fieldset>
 

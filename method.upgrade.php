@@ -40,11 +40,14 @@ if ( version_compare($oldversion, '2.0') < 0 ) {
         '/templates/image_template.tpl',
         '/templates/input_repeater_template.tpl',
         '/templates/select_template.tpl',
-        '/templates/sortablelist_template.tpl'
+        '/templates/sortablelist_template.tpl',
+        '/action.refresh.php'
     ];
     foreach ($filesToRemove as $delFile) @unlink($module_path.$delFile);
 }
 
+if ( version_compare($oldversion, '1.99.3') < 0 ) {
+    $this->CreatePermission(ECB2::MANAGE_PERM,'Extended Content Blocks 2 - Manage');
+}
 
 
-?>

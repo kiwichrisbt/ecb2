@@ -1,6 +1,23 @@
 {* ECB2 _changelog.tpl *}
 
-<h3>Version 1.99... - 23Jun22.....</h3>
+
+<h3>Version 1.99.3 - 06Jul22</h3>
+<ul>
+   <li>add in module 'Manage' permissions for access to module admin page</li>
+   <li>admin_image - bug fix</li>
+</ul>
+<br>
+
+
+<h3>Version 1.99.1 - 06Jul22</h3>
+<ul>
+   <li>about tweaks</li>
+   <li>admin_image - error message added if image file not found plus add in sample image for help page.</li>
+</ul>
+<br>
+
+
+<h3>Version 1.99 - 05Jul22</h3>
 <ul>
    <li>Significantly refactored module, to enable future development of the module and simpify use. Is fully compatible with all previous usage. Please report any issues you may find.</li>
    <li>Expanded help content, with example tags and demo content blocks for all field types.</li>

@@ -44,8 +44,20 @@ class ecb2fd_admin_image extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        $help_sample_filename = 'sample_admin_only_image.png';
         $config = cmsms()->GetConfig();
         $img_url = cms_join_path( $config['uploads_url'], $this->options['image'] );
+        $img_path = cms_join_path( $config['uploads_path'], $this->options['image'] );
+        if ( $this->options['image']==$help_sample_filename) {
+            // just to make sure the help image always works!
+            $img_url = $this->mod->GetModuleURLPath() .DIRECTORY_SEPARATOR. 'lib' .DIRECTORY_SEPARATOR. 
+                'fielddefs' .DIRECTORY_SEPARATOR. $this->field .DIRECTORY_SEPARATOR. 
+                $help_sample_filename;       
+
+        } elseif ( !is_readable($img_path)) {
+            $this->error = $this->mod->Lang('error_filename', $img_url, 'image');
+            return $this->mod->error_msg($this->error);
+        }
     
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );

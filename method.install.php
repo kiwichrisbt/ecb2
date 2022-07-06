@@ -10,6 +10,7 @@
 
 if (!isset($gCms)) exit;
 
-## nothing to do
+// Setup Module Permissions
+$this->CreatePermission(ECB2::MANAGE_PERM,'Extended Content Blocks 2 - Manage');
 
 

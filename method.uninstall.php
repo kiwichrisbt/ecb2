@@ -10,8 +10,8 @@
 
 if (!isset($gCms)) exit;
 
-
-// remove the permissions
+// remove the permissions, etc
+$this->RemovePermission(ECB2::MANAGE_PERM);
 $this->RemovePreference();
 $this->DeleteTemplate();
 
