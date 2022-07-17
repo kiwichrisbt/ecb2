@@ -21,8 +21,8 @@ if ( version_compare($oldversion, '1.8') < 0 ) {
     // remove sub dirs
     $dirsToRemove = ['/lib/js/images', '/icons'];
     foreach ($dirsToRemove as $delDir) {
-        foreach (glob($module_path.$delDir.'/*.*') as $filename) unlink($filename);
-        rmdir($module_path.$delDir);
+        foreach (glob($module_path.$delDir.'/*.*') as $filename) @unlink($filename);
+        @rmdir($module_path.$delDir);
     }
     // individual files to remove
     $filesToRemove = ['/lib/js/mColorPicker.min.js', '/changelog.inc', '/lib/js/jquery-ui-timepicker-addon.js', 

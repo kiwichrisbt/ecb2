@@ -19,7 +19,7 @@
 
 <h3>Version 1.99 - 05Jul22</h3>
 <ul>
-   <li>Significantly refactored module, to enable future development of the module and simpify use. Is fully compatible with all previous usage. Please report any issues you may find.</li>
+   <li>Significantly refactored module, to enable future development of the module and simplify use. Is fully compatible with all previous usage. Please report any issues you may find.</li>
    <li>Expanded help content, with example tags and demo content blocks for all field types.</li>
    <li>Some field types have been renamed, to make their use more obvious. All previous field types are fully supported as an alias for the new field name</li>
    <li>'textinput' field replaces 'input', field=input is a fully supported alias</li>
