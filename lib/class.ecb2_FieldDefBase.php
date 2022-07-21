@@ -193,7 +193,7 @@ abstract class ecb2_FieldDefBase
         }
         $cms_module_call = "{cms_module module=".$module_name;
         foreach ($module_params as $key => $value) {
-            $cms_module_call .= " $key=$value";
+            $cms_module_call .= " $key=\"$value\"";
         }
 
         $smarty = \CmsApp::get_instance()->GetSmarty();

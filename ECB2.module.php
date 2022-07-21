@@ -226,6 +226,24 @@ class ECB2 extends \CMSModule {
     }
 
 
+    /**
+     *  CMSModule Methods available ... 
+     */
+// GetContentBlockFieldValue(string $blockName, array $blockParams, array $inputParams, \ContentBase $content_obj) : mixed|false
+// // Return a value for a module generated content block type.
+// // This mehod is called from a {content_module} tag, when the content edit form is being edited.
+// // Given input parameters (i.e: via _POST or _REQUEST), this method will extract a value for the given content block information.
+// // This method can be overridden if the module is providing content block types to the CMSMS content objects.
+
+// ValidateContentBlockFieldValue(string $blockName, mixed $value, \arrray $blockparams, \contentBase $content_obj) : string
+// // Validate the value for a module generated content block type.
+// // This mehod is called from a {content_module} tag, when the content edit form is being validated.
+// // This method can be overridden if the module is providing content block types to the CMSMS content objects.
+
+// RenderContentBlockField(string $blockName, string $value, array $blockparams, \ContentBase $content_obj) : string
+// // Render the value of a module content block on the frontend of the website.
+// // This gives modules the opportunity to render data stored in content blocks differently.
+
 
     /**
      */

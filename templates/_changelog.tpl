@@ -1,6 +1,14 @@
 {* ECB2 _changelog.tpl *}
 
 
+<h3>Version 1.99.???? - 21Jul22 ????</h3>
+<ul>
+   <li>bug fix for using a module call 'mod' parameter - if any parameters being passed through to the module contain a space it would probably cause an error. Fixed.</li>
+   <li></li>
+</ul>
+<br>
+
+
 <h3>Version 1.99.3 - 06Jul22</h3>
 <ul>
    <li>add in module 'Manage' permissions for access to module admin page</li>
