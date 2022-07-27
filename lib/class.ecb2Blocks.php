@@ -10,8 +10,8 @@
 class ecb2Blocks 
 {
 
-    private $content_id;
-    private $properties;
+    // private $content_id;
+    // private $properties;
 
 
     /**

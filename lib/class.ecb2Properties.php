@@ -39,13 +39,13 @@ class ecb2Properties
     /**
      *  save a single property
      */
-	public function save_property( $blockName, $ecb_values = [] )
+	public function save_property( $blockName, $ecb_values = [], $content_id )
 	{
-        if ( $this->content_id <= 0 || !is_array($ecb_values) ) return FALSE;
+        if ( $content_id <= 0 || !is_array($ecb_values) ) return FALSE;
 
 		$db = CmsApp::get_instance()->GetDb();
-		$query = 'SELECT prop_name FROM '.CMS_DB_PREFIX.'module_ecb2_props WHERE content_id = ?';
-		$gotprops = $db->GetCol($query,array($this->mId));
+		$query = 'SELECT content_id FROM '.CMS_DB_PREFIX.'module_ecb2_props WHERE content_id = ?';
+		$gotprops = $db->GetCol($query, [$content_id]);
 
 		$now = $db->DbTimeStamp(time());
 		$iquery = 'INSERT INTO '.CMS_DB_PREFIX."module_ecb2_props
@@ -80,6 +80,7 @@ class ecb2Properties
         $dict = NewDataDictionary($db);
         $taboptarray = array( 'mysql' => 'TYPE=MyISAM' );
         $fields = "
+            id          I KEY AUTO,
             content_id  I NOTNULL,
             type	    C(25) NOTNULL,
             prop_name	C(255) NOTNULL,
@@ -94,7 +95,7 @@ class ecb2Properties
         $sqlarray = $dict->CreateTableSQL(CMS_DB_PREFIX.'module_ecb2_props', $fields, $taboptarray);
         $res = $dict->ExecuteSQLArray($sqlarray);
         // add index
-        $sqlarray = $dict->CreateIndexSQL('ecb2_idx_props_by_id', CMS_DB_PREFIX.'module_ecb2_props', 'content_id');
+        $sqlarray = $dict->CreateIndexSQL('ecb2_idx_props_by_content_id', CMS_DB_PREFIX.'module_ecb2_props', 'content_id');
         $dict->ExecuteSQLArray($sqlarray);
     }
 
