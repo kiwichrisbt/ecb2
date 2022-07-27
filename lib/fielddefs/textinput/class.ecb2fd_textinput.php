@@ -37,6 +37,8 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
             'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'size'          => ['default' => 30,    'filter' => FILTER_VALIDATE_INT],
             'max_length'    => ['default' => 255,   'filter' => FILTER_VALIDATE_INT],
+            'repeater'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
+            'max_blocks'    => ['default' => 1,     'filter' => FILTER_VALIDATE_INT],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
     }
@@ -47,13 +49,19 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+// temp only!
+$ecb_values = explode('||', $this->value);
+
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
-        $tpl->assign('block_name', $this->block_name );
-        $tpl->assign('value', $this->value );
-        $tpl->assign('size', $this->options['size'] );
-        $tpl->assign('max_length', $this->options['max_length'] );
-        $tpl->assign('description', $this->options['description'] );
+        $tpl->assign( 'block_name', $this->block_name );
+        $tpl->assign( 'value', $this->value );
+        $tpl->assign( 'ecb_values', $ecb_values );
+        $tpl->assign( 'size', $this->options['size'] );
+        $tpl->assign( 'max_length', $this->options['max_length'] );
+        $tpl->assign( 'repeater', $this->options['repeater'] );
+        $tpl->assign( 'max_blocks', $this->options['max_blocks'] );
+        $tpl->assign( 'description', $this->options['description'] );
         return $tpl->fetch();
    
     }

@@ -27,8 +27,9 @@
 
 class ECB2 extends \CMSModule {
 
-    const MODULE_VERSION = '1.99.4';
+    const MODULE_VERSION = '1.99.5';
     const MANAGE_PERM = 'manage_ecb2';
+    const ECB2_DATA = 'ecb2_data';
 
     const FIELD_TYPES = [
         'textinput',
@@ -81,6 +82,9 @@ class ECB2 extends \CMSModule {
     const HELP_TEMPLATE_PREFIX = 'help.';
     const DEMO_BLOCK_PREFIX = 'demo_';
 
+    protected $ecb2_content_id = NULL;
+    protected $ecb2_properties = NULL; 
+
     public function GetName() { return 'ECB2';  }
     public function GetFriendlyName() { return $this->Lang('friendlyname'); }
     public function GetVersion() { return self::MODULE_VERSION; }
@@ -124,7 +128,7 @@ class ECB2 extends \CMSModule {
     /**
      *  Internal autoloader
      */
-    private final function _autoloader($classname)
+    private function _autoloader($classname)
     {
         $parts = explode('\\', $classname);
         $classname = end($parts);
@@ -195,7 +199,7 @@ class ECB2 extends \CMSModule {
      * @param object $content_obj the page properties
      * @return string
      */
-    public function GetContentBlockFieldInput($blockName, $value, $params, $adding, $content_obj) 
+    public function GetContentBlockFieldInput( $blockName, $value, $params, $adding, $content_obj ) 
     {
         if ( empty($params['field']) ) {
             return $this->error_msg( $this->Lang('field_error', $blockName) );
@@ -226,23 +230,99 @@ class ECB2 extends \CMSModule {
     }
 
 
+
     /**
-     *  CMSModule Methods available ... 
+     *  Data entered by the editor is processed here before its saved in a table
+     *  This method is called from a {content_module} tag, when the content edit form is being edited.
+     *  Given input parameters (i.e: via _POST or _REQUEST), this method will extract a value for the 
+     *  given content block information.
+     *  This method can be overridden if the module is providing content block types to the CMSMS 
+     *  content objects.
+     *  @param string $blockName - Content block name
+     *  @param array $blockParams - Content block parameters
+     *  @param array $inputParams - input parameters
+     *  @param object $content_obj - The content object being edited.
+     *  @return mixed|false The content block value if possible.
      */
-// GetContentBlockFieldValue(string $blockName, array $blockParams, array $inputParams, \ContentBase $content_obj) : mixed|false
-// // Return a value for a module generated content block type.
-// // This mehod is called from a {content_module} tag, when the content edit form is being edited.
-// // Given input parameters (i.e: via _POST or _REQUEST), this method will extract a value for the given content block information.
-// // This method can be overridden if the module is providing content block types to the CMSMS content objects.
+    public function GetContentBlockFieldValue( $blockName, $blockParams, $inputParams, $content_obj )
+    {
+        // strings are stored in the default 'content_props' table
+        // arrays are always stored in the 'module_ecb2_blocks' - once an array always an array
+        if ( is_string($inputParams[$blockName]) ) return $inputParams[$blockName]; 
 
-// ValidateContentBlockFieldValue(string $blockName, mixed $value, \arrray $blockparams, \contentBase $content_obj) : string
-// // Validate the value for a module generated content block type.
-// // This mehod is called from a {content_module} tag, when the content edit form is being validated.
-// // This method can be overridden if the module is providing content block types to the CMSMS content objects.
+        // $block = $this->blockManager()->load_by_name($blockName);
+        // if( !$block ) return FALSE;
 
-// RenderContentBlockField(string $blockName, string $value, array $blockparams, \ContentBase $content_obj) : string
-// // Render the value of a module content block on the frontend of the website.
-// // This gives modules the opportunity to render data stored in content blocks differently.
+// save in 'module_ecb2_blocks'
+        $ecb_values = $inputParams[$blockName]; // array
+        // $content_obj->mId;   
+        $this->_load_ecb2_properties( $content_obj->Id() );
+
+
+////////// UP TO HERE!!!!!
+
+        $this->ecb2_properties->save_property( $blockName, $ecb_values );
+
+
+// temp until saving in 'module_ecb2_blocks'
+return $inputParams[$blockName];
+        return $this::ECB2_DATA;    // ECB2_DATA flag stored in 'content_props'
+    }
+
+
+
+    /**
+     *  Render the value of a module content block on the frontend of the website.
+     *  This gives modules the opportunity to render data stored in content blocks differently.
+     *
+     *  @param string $blockName - Content block name
+     *  @param string $value - Content block value as stored in the database
+     *  @param array $blockparams - Content block parameters
+     *  @param object $content_obj - The content object being edited.
+     *  @return string The content block value if possible.
+     */
+    public function RenderContentBlockField( $blockName, $value, $blockparams, $content_obj ) 
+    {
+        // $test_output = 'Manipluated by ECB2:'.$value;
+        $test_output = $value;
+        return $test_output;
+    }
+
+
+
+    // not used     ValidateContentBlockFieldValue( $blockName, $value, $blockparams, $content_obj )
+    // /**
+    //  *  Validate the value for a module generated content block type.
+    //  *  This method is called from a {content_module} tag, when the content edit form is being validated.
+    //  *  This method can be overridden if the module is providing content block types to the CMSMS content 
+    //  *  objects.
+    //  *
+    //  *  @param string $blockName - Content block name
+    //  *  @param string $value - Content block value as stored in the database
+    //  *  @param array $blockparams - Content block parameters
+    //  *  @param object $content_obj - The content object being edited.
+    //  *  @return string An error message if the value is invalid, empty otherwise.
+    //  */
+    // public function ValidateContentBlockFieldValue( $blockName, $value, $blockparams, $content_obj )
+    // {
+    //     return '';
+    // } 
+
+
+    /**
+     *  load and cache ecb2_properties for current page
+     */
+    private function _load_ecb2_properties( $content_id )
+    {
+        if ( $this->ecb2_content_id==$content_id && is_object($this->ecb2_properties) ) return;
+
+// TEST - should only run once per page save
+        $this->ecb2_content_id = $content_id;
+        $this->ecb2_properties = new ecb2Properties( $content_id );
+
+echo '';
+
+    }
 
 
     /**
