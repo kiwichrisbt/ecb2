@@ -30,6 +30,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         // $this->restrict_params = FALSE;    // default: true
+        // $this->use_ecb2_data = TRUE;    // default: FALSE - can override e.g. 'groups' type
         $this->parameter_aliases = [
             'default_value' => 'default'
         ];
@@ -50,13 +51,14 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
     public function get_content_block_input() 
     {
 // temp only!
-$ecb_values = explode('||', $this->value);
+// $ecb_values = explode('||', $this->value);
+
 
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign( 'block_name', $this->block_name );
         $tpl->assign( 'value', $this->value );
-        $tpl->assign( 'ecb_values', $ecb_values );
+        $tpl->assign( 'ecb_values', $this->ecb_values );
         $tpl->assign( 'size', $this->options['size'] );
         $tpl->assign( 'max_length', $this->options['max_length'] );
         $tpl->assign( 'repeater', $this->options['repeater'] );

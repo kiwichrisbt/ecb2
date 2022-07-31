@@ -82,8 +82,8 @@ class ECB2 extends \CMSModule {
     const HELP_TEMPLATE_PREFIX = 'help.';
     const DEMO_BLOCK_PREFIX = 'demo_';
 
-    protected $ecb2_content_id = NULL;
-    protected $ecb2_properties = NULL; 
+    public $ecb2_content_id = NULL;
+    public $ecb2_properties = NULL; 
 
     public function GetName() { return 'ECB2';  }
     public function GetFriendlyName() { return $this->Lang('friendlyname'); }
@@ -210,6 +210,7 @@ class ECB2 extends \CMSModule {
             $adding = true;
         }
 
+// change this - ugly (maybe used elsewhere also) >>>> 
         echo $this->output_admin_css_js();   // output css & js - but only once per page
 
         // handle field aliases
@@ -225,6 +226,11 @@ class ECB2 extends \CMSModule {
 
         $type = self::FIELD_DEF_PREFIX.$params["field"];
         $ecb2 = new $type($this, $blockName, $value, $params, $adding);
+        if ($ecb2->use_ecb2_data) {
+            $this->_load_ecb2_properties( $content_obj->Id() );    // load if not already cached
+            $ecb2->load_ecb2_data();
+        }
+
         return $ecb2->get_content_block_input();
 
     }
@@ -248,7 +254,7 @@ class ECB2 extends \CMSModule {
     {
         // strings are stored in the default 'content_props' table
         // arrays are always stored in the 'module_ecb2_blocks' - once an array always an array
-        if ( is_string($inputParams[$blockName]) ) return $inputParams[$blockName]; 
+        if ( is_string($inputParams[$blockName]) ) return $inputParams[$blockName];
 
         // $block = $this->blockManager()->load_by_name($blockName);
         // if( !$block ) return FALSE;
@@ -256,13 +262,14 @@ class ECB2 extends \CMSModule {
 // save in 'module_ecb2_blocks'
         $ecb_values = $inputParams[$blockName]; // array
         // $content_obj->mId;   
-        $this->_load_ecb2_properties( $content_obj->Id() );
+        //$this->_load_ecb2_properties( $content_obj->Id() );
 
+
+        $content_id = $content_obj->Id();
+        $ecb2_property = new ecb2Properties();
+        $ecb2_property->save_property( $blockName, $ecb_values, $content_id );
 
 ////////// UP TO HERE!!!!!
-
-        $this->ecb2_properties->save_property( $blockName, $ecb_values );
-
 
 // temp until saving in 'module_ecb2_blocks'
 return $inputParams[$blockName];
@@ -316,9 +323,11 @@ return $inputParams[$blockName];
     {
         if ( $this->ecb2_content_id==$content_id && is_object($this->ecb2_properties) ) return;
 
-// TEST - should only run once per page save
+// TEST - should only run once per admin page load
         $this->ecb2_content_id = $content_id;
-        $this->ecb2_properties = new ecb2Properties( $content_id );
+        $ecb_props = new ecb2Properties();
+        // $this->ecb2_properties = new ecb2Properties();
+        $this->ecb2_properties = $ecb_props->load_properties( $content_id );
 
 echo '';
 

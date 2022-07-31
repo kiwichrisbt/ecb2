@@ -12,6 +12,7 @@ abstract class ecb2_FieldDefBase
     protected $mod;
     protected $block_name;
     protected $value;
+    protected $ecb_values;
     protected $adding;
     protected $default_parameters;
     protected $options;
@@ -22,6 +23,8 @@ abstract class ecb2_FieldDefBase
     protected $parameter_aliases;
     protected $demo_count;
     protected $error;
+    
+    public $use_ecb2_data;
 
    
 
@@ -36,6 +39,7 @@ abstract class ecb2_FieldDefBase
         $this->mod = $mod;
         $this->block_name = $blockName;
         $this->value = $value;
+        $this->ecb_values = [];
         $this->alias = munge_string_to_url($blockName, TRUE);
         $this->adding = $adding;
         $this->field = '';
@@ -45,6 +49,13 @@ abstract class ecb2_FieldDefBase
         if ( isset($params['field_alias_used']) ) $this->field_alias_used = $params['field_alias_used'];
         $this->parameter_aliases = [];
         $this->demo_count = 0;
+        // store data in '_module_ecb2_props' instead of 'content_props' - default: FALSE
+        //     - once stored in _module_ecb2_props does not move back (output as object not string)
+        if ( !empty($params['repeater']) || $value==$this->mod::ECB2_DATA ) {
+            $this->use_ecb2_data = TRUE;
+        } else {
+            $this->use_ecb2_data = FALSE;   
+        }
 
         $this->set_field_parameters();
         $this->initialise_options($params);
@@ -126,6 +137,20 @@ abstract class ecb2_FieldDefBase
         }
 
     }
+
+
+
+    /**
+     *  load the ecb data for just this field from the cached ecb_data for the current page
+     */
+    public function load_ecb2_data()
+    {
+        // double check ecb_data is available
+        if ( !isset($this->mod->ecb2_content_id) || !isset($this->mod->ecb2_properties) ) return;
+        if ( !isset($this->mod->ecb2_properties[$this->block_name]) ) return FALSE;   
+        
+        $this->ecb_values = $this->mod->ecb2_properties[$this->block_name];
+    } 
 
 
 
