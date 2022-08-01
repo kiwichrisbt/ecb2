@@ -254,25 +254,16 @@ class ECB2 extends \CMSModule {
     {
         // strings are stored in the default 'content_props' table
         // arrays are always stored in the 'module_ecb2_blocks' - once an array always an array
-        if ( is_string($inputParams[$blockName]) ) return $inputParams[$blockName];
+        // if no array returned and inputParams[$blockName]==ECB2_DATA still return ECB2_DATA
+        if ( is_string($inputParams[$blockName]) ) {
+            return $inputParams[$blockName];
+        }
 
-        // $block = $this->blockManager()->load_by_name($blockName);
-        // if( !$block ) return FALSE;
-
-// save in 'module_ecb2_blocks'
+        // save in 'module_ecb2_blocks'
         $ecb_values = $inputParams[$blockName]; // array
-        // $content_obj->mId;   
-        //$this->_load_ecb2_properties( $content_obj->Id() );
-
-
         $content_id = $content_obj->Id();
         $ecb2_property = new ecb2Properties();
         $ecb2_property->save_property( $blockName, $ecb_values, $content_id );
-
-////////// UP TO HERE!!!!!
-
-// temp until saving in 'module_ecb2_blocks'
-return $inputParams[$blockName];
         return $this::ECB2_DATA;    // ECB2_DATA flag stored in 'content_props'
     }
 
@@ -290,10 +281,21 @@ return $inputParams[$blockName];
      */
     public function RenderContentBlockField( $blockName, $value, $blockparams, $content_obj ) 
     {
-        // $test_output = 'Manipluated by ECB2:'.$value;
-        $test_output = $value;
-        return $test_output;
+        $this->use_ecb2_data = ( !empty($blockparams['repeater']) || $value==$this::ECB2_DATA );
+
+        if ( !$this->use_ecb2_data ) return $value;
+
+        $temp = $this->get_property( $content_obj->Id(), $blockName );
+
+        // return json_decode($json_temp);
+        return $temp;
     }
+
+    // function RenderContentBlockField($blockName,$value,$blockparams,ContentBase $content_obj)
+    // {
+    //     //FrontEnd Request
+    //     return json_decode($value);
+    // }
 
 
 
@@ -329,9 +331,26 @@ return $inputParams[$blockName];
         // $this->ecb2_properties = new ecb2Properties();
         $this->ecb2_properties = $ecb_props->load_properties( $content_id );
 
-echo '';
-
     }
+
+
+
+    /**
+     *  load a single property
+     *  @return array - of ecb2_values or empty array
+     */
+	public function get_property( $content_id, $blockName )
+	{
+        if ( $content_id <= 0 || empty($blockName) ) return FALSE;
+        $this->_load_ecb2_properties( $content_id );
+
+        if ( isset($this->ecb2_properties[$blockName]) ) {
+            return $this->ecb2_properties[$blockName];
+        } else {
+            return [];
+        }
+    }
+
 
 
     /**

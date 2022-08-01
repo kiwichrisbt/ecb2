@@ -33,7 +33,7 @@ class ecb2Properties
 
         if ( !empty($dbr) ) {
             foreach( $dbr as $row ) {
-                $props[$row['prop_name']][$row['id']] = $row['content'];
+                $props[$row['prop_name']][] = $row['content'];
             }
         }
 		return $props;
@@ -43,39 +43,39 @@ class ecb2Properties
 
     /**
      *  save a single property
+     *  - all values updated with every page apply/save
      */
 	public function save_property( $blockName, $ecb_values = [], $content_id )
 	{
         if ( $content_id <= 0 || empty($blockName) || !is_array($ecb_values) ) return FALSE;
 
 		$db = CmsApp::get_instance()->GetDb();
-		$query = 'SELECT id FROM '.CMS_DB_PREFIX.'module_ecb2_props WHERE content_id = ? 
-                    AND prop_name = ?';
-		$savedprops = $db->GetCol($query, [$content_id, $blockName]);
-        $props_not_updated =array_flip($savedprops);
+		$query = 'SELECT id FROM '.CMS_DB_PREFIX.'module_ecb2_props WHERE content_id = ? AND prop_name = ? 
+            ORDER BY position';
+		$savedPropIds = $db->GetCol($query, [$content_id, $blockName]);
+        // $props_not_updated =array_flip($savedPropIds);
 		$insert_query = 'INSERT INTO '.CMS_DB_PREFIX."module_ecb2_props
             (content_id, type, prop_name, content, position)
-            VALUES (?, ?, ?, ?, ?, NOW(), NOW())";
+            VALUES (?, ?, ?, ?, ?)";
 		$update_query = 'UPDATE '.CMS_DB_PREFIX."module_ecb2_props 
-            SET content = ?, position = ? WHERE id = ?";  // NOW()
+            SET content = ?, position = ? WHERE id = ?"; 
         $position = 1;
         $updated_props = [];
 		foreach( $ecb_values as $key => $value ) {
-			if ( in_array($key, $savedprops) ) {  // update
-				$dbr = $db->Execute($update_query, [$value, $position, $key]);
-                unset($props_not_updated[$key]);
-                $updated_props[$key] = $key;
-			}
-			else {  // insert 
-				$dbr = $db->Execute($insert_query, [$content_id, 'string', $blockName, $value, $position]);
-            }
+            $propId = array_shift( $savedPropIds );
+			if ( $propId ) {  // update
+				$dbr = $db->Execute($update_query, [$value, $position, $propId]);
 
+			} else {  // insert 
+				$dbr = $db->Execute($insert_query, [$content_id, 'string', $blockName, $value, $position]);
+
+            }
             $position++;
 		}
         // delete any remaining props (deleted by editor)
-        if ( !empty($props_not_updated) ) {
+        if ( !empty($savedPropIds) ) {
             $delete_query = 'DELETE FROM '.CMS_DB_PREFIX.'module_ecb2_props 
-                WHERE id IN ('.implode(',', array_keys($props_not_updated)).')';
+                WHERE id IN ('.implode(',', array_values($savedPropIds)).')';
             $dbr = $db->Execute($delete_query);
         }
 		return TRUE;
@@ -108,11 +108,6 @@ class ecb2Properties
         // add index
         $sqlarray = $dict->CreateIndexSQL('ecb2_idx_props_by_content_id', CMS_DB_PREFIX.'module_ecb2_props', 'content_id');
         $dict->ExecuteSQLArray($sqlarray);
-        // start AUTO_INCREMENT at 1000 - any lower ids are newly added fields
-        $query = 'ALTER TABLE '.CMS_DB_PREFIX.'module_ecb2_props AUTO_INCREMENT = ?';
-        $db->Execute($query, [$this::MINIMUM_ID]);
-
-
     }
 
 

@@ -51,11 +51,7 @@ abstract class ecb2_FieldDefBase
         $this->demo_count = 0;
         // store data in '_module_ecb2_props' instead of 'content_props' - default: FALSE
         //     - once stored in _module_ecb2_props does not move back (output as object not string)
-        if ( !empty($params['repeater']) || $value==$this->mod::ECB2_DATA ) {
-            $this->use_ecb2_data = TRUE;
-        } else {
-            $this->use_ecb2_data = FALSE;   
-        }
+        $this->use_ecb2_data = ( !empty($params['repeater']) || $value==$this->mod::ECB2_DATA );
 
         $this->set_field_parameters();
         $this->initialise_options($params);
@@ -147,9 +143,22 @@ abstract class ecb2_FieldDefBase
     {
         // double check ecb_data is available
         if ( !isset($this->mod->ecb2_content_id) || !isset($this->mod->ecb2_properties) ) return;
-        if ( !isset($this->mod->ecb2_properties[$this->block_name]) ) return FALSE;   
+        if ( isset($this->mod->ecb2_properties[$this->block_name]) ) {
+            $this->ecb_values = $this->mod->ecb2_properties[$this->block_name];
         
-        $this->ecb_values = $this->mod->ecb2_properties[$this->block_name];
+        } else {
+            if ( $this->value==$this->mod::ECB2_DATA ) {
+                // no data stored yet so set first value to ''
+                $this->ecb_values[] = '';
+            
+            } else {
+                // use value - field probably used previously without repeater option
+                $this->ecb_values[] = $this->value;
+            
+            }
+
+        }
+        
     } 
 
 
@@ -344,9 +353,14 @@ abstract class ecb2_FieldDefBase
         $this->value = NULL;
         $this->demo_count++;
         $this->block_name = $this->mod::DEMO_BLOCK_PREFIX.$this->field.$this->demo_count; 
+        $this->use_ecb2_data = ( !empty($params['repeater']) );
 
         // re-initialise with new $params from help call
         $this->initialise_options($params);
+
+        if ( $this->use_ecb2_data ) {
+            $this->ecb_values[] = $this->value;
+        }
 
         return $this->get_content_block_input();
 

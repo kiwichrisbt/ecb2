@@ -13,6 +13,7 @@ $lang['customgs_field_error'] = "Please create field '%s' in CustomGS";
 $lang['drop_items'] = 'No items selected - drop selected items here';
 $lang['drop_required_items'] = 'Drop %s required items here';
 
+$lang['error_assign_required'] = 'The assign parameter is required to correctly output multiple values.';
 $lang['error_filename'] = 'The file \'%s\' for the \'%s\' parameter could not be found.';
 $lang['extended_content_blocks'] = 'Extended Content Blocks';
 

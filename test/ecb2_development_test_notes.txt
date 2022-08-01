@@ -38,3 +38,12 @@ Overlap above=overlap-above
 Overlap below=overlap-below
 Clickable=clickable
 "
+
+
+Updating Icon font
+==================
+- use selection json file in /lib/css to open font selection in icomoon
+- add any new fonts - free / open source only
+- download selection and save 
+- upload all font files & new selection json file into /lib/css
+- update /lib/css/ecb2_admin.css from latest icomoon css file
