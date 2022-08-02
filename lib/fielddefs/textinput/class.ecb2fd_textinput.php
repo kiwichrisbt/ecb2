@@ -71,6 +71,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
         $tpl->assign( 'max_blocks', $this->options['max_blocks'] );
         $tpl->assign( 'description', $this->options['description'] );
         $tpl->assign( 'assign', $this->options['assign'] );
+        $tpl->assign( 'field_alias_used', $this->field_alias_used );
         return $tpl->fetch();
    
     }

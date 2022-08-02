@@ -23,6 +23,6 @@
 
 
 <fieldset>
-    <legend>Sample textinput with repeater & max_blocks - use 'repeater=1 max_blocks=5 assign=tmp' </legend>
-    {$fielddef->get_demo_input(['size'=>100, 'default'=>"a sample textinput", 'repeater'=>1, 'max_blocks'=>5, 'assign'=>'tmp'])}
+    <legend>Sample textinput with repeater & max_blocks - use 'repeater=1 max_blocks=4 assign=tmp' </legend>
+    {$fielddef->get_demo_input(['size'=>100, 'default'=>"a sample textinput", 'repeater'=>1, 'max_blocks'=>4, 'assign'=>'tmp'])}
 </fieldset>
