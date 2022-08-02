@@ -1,6 +1,7 @@
 <?php
 
 $lang['about'] = 'About';
+$lang['add_item'] = 'Add item';
 $lang['add_line'] = 'Add line';
 $lang['admin_only_help'] = 'Admin only fields';
 $lang['admin_only_help_intro'] = 'The following fields are only used to format and add content to the admin pages. They do not provide any useful content for the frontend website pages.';
