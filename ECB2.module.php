@@ -27,7 +27,7 @@
 
 class ECB2 extends \CMSModule {
 
-    const MODULE_VERSION = '1.99.5';
+    const MODULE_VERSION = '1.99.5.1';
     const MANAGE_PERM = 'manage_ecb2';
     const ECB2_DATA = 'ecb2_data';
 
@@ -45,7 +45,6 @@ class ECB2 extends \CMSModule {
         'gallery_picker',
         'module_picker',
         'hidden',
-        'input_repeater',
             // admin only fields below here... (only because of a help subheading)
         'admin_fieldset_start',
         'admin_fieldset_end',
@@ -73,7 +72,8 @@ class ECB2 extends \CMSModule {
         'text' => 'admin_text',
         'link' => 'admin_link',
         'module_link' => 'admin_module_link',
-        'image' => 'admin_image'
+        'image' => 'admin_image',
+        'input_repeater' => 'textinput'
     ];
 
     const FIELD_DEF_PREFIX = 'ecb2fd_';
@@ -287,15 +287,14 @@ class ECB2 extends \CMSModule {
 
         $temp = $this->get_property( $content_obj->Id(), $blockName );
 
+        // a hack for backwards compatibility for input_repeater - if assign not used
+        if ($blockparams['field']=='input_repeater' && empty($blockparams['assign']) ) {
+            $temp = implode('||', $temp);
+        }
+
         // return json_decode($json_temp);
         return $temp;
     }
-
-    // function RenderContentBlockField($blockName,$value,$blockparams,ContentBase $content_obj)
-    // {
-    //     //FrontEnd Request
-    //     return json_decode($value);
-    // }
 
 
 

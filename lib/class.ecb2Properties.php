@@ -13,8 +13,6 @@ class ecb2Properties
     private $content_id;        //?????? is this needed ???????
     // private $properties;
 
-    const MINIMUM_ID = 1000;    // start AUTO_INCREMENT at - any lower ids are newly added fields
-
 
 
 	/**

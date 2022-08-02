@@ -1,5 +1,5 @@
 {* help.ecb2fd_textinput.tpl *}
-<p>The textinput field creates a simple text input, for storing a single string.</p>
+<p>The textinput field creates a simple text input, for storing a single string. Either just create a simple single text input or use the repeater option to create an unlimited number of sortable inputs.</p>
 
 <fieldset>
 {$fielddef->get_demo_input(['size'=>55, 'max_length'=>55, 'default'=>"a sample textinput"])}
@@ -9,7 +9,7 @@
 
 <p>Parameters:</p>
 <ul>
-    <li>field (required) - '<b>textinput</b>', or alias: '<b>input</b>'</li>
+    <li>field (required) - '<b>textinput</b>', or alias: '<b>input</b>', '<b>input_repeater</b>'</li>
     <li>block (required) - the name of the content block</li>
     <li>assign (required for repeater*) - the name of the content block</li>
     <li>size (optional) - sets the width of the html input. May be overridden by css - default 30</li>
@@ -19,8 +19,10 @@
     <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
+<p>Note: for backwards compatibility, an '<b>input_repeater</b>' field will still be output as a single string, with each seperate field delimited by '||'. To make the output a more useful array use 'explode', e.g. {literal}{"||"|explode:$content_block_name}{/literal}. To output as an array, use the '<b>assign</b>' parameter.</p>
+
 
 <fieldset>
-    <legend>Sample textinput with repeater & max_blocks - use 'repeater=1 max_blocks=3 assign=tmp' </legend>
-    {$fielddef->get_demo_input(['size'=>100, 'default'=>"a sample textinput", 'repeater'=>1, 'max_blocks'=>3, 'assign'=>'tmp'])}
+    <legend>Sample textinput with repeater & max_blocks - use 'repeater=1 max_blocks=5 assign=tmp' </legend>
+    {$fielddef->get_demo_input(['size'=>100, 'default'=>"a sample textinput", 'repeater'=>1, 'max_blocks'=>5, 'assign'=>'tmp'])}
 </fieldset>

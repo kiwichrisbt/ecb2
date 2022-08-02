@@ -52,8 +52,12 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
-// temp only!
-// $ecb_values = explode('||', $this->value);
+        if ($this->field_alias_used=='input_repeater') {
+            $this->options['repeater'] = TRUE;
+            if ($this->value!=$this->mod::ECB2_DATA) {
+                $this->ecb_values = explode('||', $this->value);
+            }
+        }
 
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
