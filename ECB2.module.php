@@ -255,13 +255,17 @@ class ECB2 extends \CMSModule {
         // strings are stored in the default 'content_props' table
         // arrays are always stored in the 'module_ecb2_blocks' - once an array always an array
         // if no array returned and inputParams[$blockName]==ECB2_DATA still return ECB2_DATA
+        
         if ( is_string($inputParams[$blockName]) ) {
             return $inputParams[$blockName];
         }
 
+        $content_id = $content_obj->Id();
+        if ( $content_id<1 && !isset($inputParams[$blockName]) ) {  // adding so can't save to a $content_id yet
+            return NULL;
+        }
         // save in 'module_ecb2_blocks'
         $ecb_values = $inputParams[$blockName]; // array
-        $content_id = $content_obj->Id();
         $ecb2_property = new ecb2Properties();
         $ecb2_property->save_property( $blockName, $ecb_values, $content_id );
         return $this::ECB2_DATA;    // ECB2_DATA flag stored in 'content_props'

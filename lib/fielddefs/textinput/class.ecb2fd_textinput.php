@@ -54,7 +54,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
     {
         if ($this->field_alias_used=='input_repeater') {
             $this->options['repeater'] = TRUE;
-            if ($this->value!=$this->mod::ECB2_DATA) {
+            if ( $this->value!=$this->mod::ECB2_DATA ) {
                 $this->ecb_values = explode('||', $this->value);
             }
         }
