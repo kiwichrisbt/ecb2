@@ -13,11 +13,6 @@ if (!isset($gCms)) exit;
 // Setup Module Permissions
 $this->CreatePermission(ECB2::MANAGE_PERM,'Extended Content Blocks 2 - Manage');
 
-
-// create module_ecb2_props table
-$props_table = new ecb2Properties();
-$props_table->create_database();
-
 //  create module_ecb2_blocks table
 $blocks_table = new ecb2Blocks();
 $blocks_table->create_database();

@@ -17,8 +17,6 @@ $this->DeleteTemplate();
 
 
 // remove the database tables & index
-$props_table = new ecb2Properties();
-$props_table->remove_database();
 $blocks_table = new ecb2Blocks();
 $blocks_table->remove_database();
 

@@ -37,7 +37,7 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true
-        // $this->use_ecb2_data = TRUE;    // default: FALSE - can override e.g. 'groups' type
+        // $this->use_json_format = TRUE;     // default: FALSE - can override e.g. 'groups' type
 
     }
 

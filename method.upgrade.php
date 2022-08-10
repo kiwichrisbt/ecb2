@@ -59,10 +59,6 @@ if ( version_compare($oldversion, '1.99.3') < 0 ) {
 }
 
 if ( version_compare($oldversion, '1.99.5') < 0 ) {
-    // create module_ecb2_props table
-    $props_table = new ecb2Properties();
-    $props_table->create_database();
-
     //  create module_ecb2_blocks table
     $blocks_table = new ecb2Blocks();
     $blocks_table->create_database();

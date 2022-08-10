@@ -4,7 +4,7 @@
 <h3>Version 1.99.???? - 21Jul22 ????</h3>
 <ul>
    <li>bug fix for using a module call 'mod' parameter - if any parameters being passed through to the module contain a space it would probably cause an error. Fixed.</li>
-   <li>added databases to stored ecb2_data and ecb2_block definitions</li>
+   <li>added database to store ecb2_block definitions</li>
    <li>added repeater functionality - sortable content blocks, optionally limited by 'max_blocks'</li>
    <li>improved admin layout & added module custom icons</li>
    <li>input_repeater is now an alias of textinput (fully compatible)</li>

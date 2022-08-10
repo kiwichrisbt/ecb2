@@ -30,7 +30,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         // $this->restrict_params = FALSE;    // default: true
-        // $this->use_ecb2_data = TRUE;    // default: FALSE - can override e.g. 'groups' type
+        // $this->use_json_format = TRUE;    // default: FALSE - can override e.g. 'groups' type
         $this->parameter_aliases = [
             'default_value' => 'default'
         ];
@@ -52,10 +52,10 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
-        if ($this->field_alias_used=='input_repeater') {
+        if ( $this->field_alias_used=='input_repeater' ) {
             $this->options['repeater'] = TRUE;
-            if ( $this->value!=$this->mod::ECB2_DATA ) {
-                $this->ecb_values = explode('||', $this->value);
+            if ( empty($this->values) ) {
+                $this->values = explode('||', $this->value);
             }
         }
 
@@ -63,8 +63,9 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign( 'mod', $this->mod );
         $tpl->assign( 'block_name', $this->block_name );
+        $tpl->assign( 'type', $this->field );
         $tpl->assign( 'value', $this->value );
-        $tpl->assign( 'ecb_values', $this->ecb_values );
+        $tpl->assign( 'values', $this->values );
         $tpl->assign( 'size', $this->options['size'] );
         $tpl->assign( 'max_length', $this->options['max_length'] );
         $tpl->assign( 'repeater', $this->options['repeater'] );
@@ -72,6 +73,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
         $tpl->assign( 'description', $this->options['description'] );
         $tpl->assign( 'assign', $this->options['assign'] );
         $tpl->assign( 'field_alias_used', $this->field_alias_used );
+        $tpl->assign( 'use_json_format', $this->use_json_format );
         return $tpl->fetch();
    
     }

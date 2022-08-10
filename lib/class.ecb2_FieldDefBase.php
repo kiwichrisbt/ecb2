@@ -11,21 +11,20 @@ abstract class ecb2_FieldDefBase
 {
     protected $mod;
     protected $block_name;
-    protected $value;
-    protected $ecb_values;
+    protected $field;
+    protected $value;               // used when using single string values ECB2 v1 format
+    protected $values;              // used when json format 
     protected $adding;
     protected $default_parameters;
     protected $options;
     protected $alias;
-    protected $field;
-    protected $field_alias_used;
     protected $restrict_params;
+    protected $field_alias_used;
     protected $parameter_aliases;
     protected $demo_count;
     protected $error;
     
-    public $use_ecb2_data;
-
+    public $use_json_format;
    
 
     /**
@@ -38,20 +37,37 @@ abstract class ecb2_FieldDefBase
     {
         $this->mod = $mod;
         $this->block_name = $blockName;
-        $this->value = $value;
-        $this->ecb_values = [];
+        $this->value = NULL;
+        $this->values = [];
         $this->alias = munge_string_to_url($blockName, TRUE);
         $this->adding = $adding;
         $this->field = '';
         $this->default_parameters = [];
         $this->options = [];
         $this->restrict_params = TRUE;
-        if ( isset($params['field_alias_used']) ) $this->field_alias_used = $params['field_alias_used'];
+        if ( isset($params['field_alias_used']) ) {
+            $this->field_alias_used = $params['field_alias_used'];
+        }
         $this->parameter_aliases = [];
         $this->demo_count = 0;
-        // store data in '_module_ecb2_props' instead of 'content_props' - default: FALSE
-        //     - once stored in _module_ecb2_props does not move back (output as object not string)
-        $this->use_ecb2_data = ( !empty($params['repeater']) || $value==$this->mod::ECB2_DATA );
+        $this->use_json_format = FALSE;     // single value stored as string ECB2 v1 format for simple fields
+        //   once stored as json always stored as jason (output as object not string)
+        if ( !empty($params['repeater']) ) $this->use_json_format = TRUE;
+
+        $json_data = json_decode($value);
+        if ( json_last_error()===JSON_ERROR_NONE ) {
+            // JSON is valid
+            $this->json_data = $json_data;
+            $this->values = !empty($json_data->values) ? $json_data->values : [];
+            $this->use_json_format = TRUE;
+
+        } elseif ( $this->use_json_format ) { // but JSON not valid
+            $this->values[] = $value;
+
+        } else { // single string value
+            $this->value = $value;
+
+        }
 
         $this->set_field_parameters();
         $this->initialise_options($params);
@@ -128,38 +144,16 @@ abstract class ecb2_FieldDefBase
         }
 
         // set default value if adding
-        if ( $this->adding && $this->value===NULL && isset($this->options['default']) ) {
-            $this->value = $this->options['default'];
+        if ( $this->adding && isset($this->options['default']) ) {
+            if ( $this->use_json_format && $this->values[0]===NULL) {
+                $this->values[0] = $this->options['default'];
+            } elseif ( $this->value===NULL) {
+                $this->value = $this->options['default'];
+            }
         }
 
     }
 
-
-
-    /**
-     *  load the ecb data for just this field from the cached ecb_data for the current page
-     */
-    public function load_ecb2_data()
-    {
-        // double check ecb_data is available
-        if ( !isset($this->mod->ecb2_content_id) || !isset($this->mod->ecb2_properties) ) return;
-        if ( isset($this->mod->ecb2_properties[$this->block_name]) ) {
-            $this->ecb_values = $this->mod->ecb2_properties[$this->block_name];
-        
-        } else {
-            if ( $this->value==$this->mod::ECB2_DATA ) {
-                // no data stored yet so set first value to ''
-                $this->ecb_values[] = '';
-            
-            } else {
-                // use value - field probably used previously without repeater option
-                $this->ecb_values[] = $this->value;
-            
-            }
-
-        }
-        
-    } 
 
 
 
@@ -353,13 +347,15 @@ abstract class ecb2_FieldDefBase
         $this->value = NULL;
         $this->demo_count++;
         $this->block_name = $this->mod::DEMO_BLOCK_PREFIX.$this->field.$this->demo_count; 
-        $this->use_ecb2_data = ( !empty($params['repeater']) );
 
         // re-initialise with new $params from help call
         $this->initialise_options($params);
 
-        if ( $this->use_ecb2_data ) {
-            $this->ecb_values[] = $this->value;
+        // reset use_json_format depending on $params
+        $this->use_json_format = !empty($params['repeater']);
+
+        if ( $this->use_json_format ) {
+            $this->values[] = $this->value;
         }
 
         return $this->get_content_block_input();

@@ -29,7 +29,6 @@ class ECB2 extends \CMSModule {
 
     const MODULE_VERSION = '1.99.5.1';
     const MANAGE_PERM = 'manage_ecb2';
-    const ECB2_DATA = 'ecb2_data';
 
     const FIELD_TYPES = [
         'textinput',
@@ -82,9 +81,6 @@ class ECB2 extends \CMSModule {
     const HELP_TEMPLATE_PREFIX = 'help.';
     const DEMO_BLOCK_PREFIX = 'demo_';
 
-    public $ecb2_content_id = NULL;
-    public $ecb2_properties = NULL; 
-
     public function GetName() { return 'ECB2';  }
     public function GetFriendlyName() { return $this->Lang('friendlyname'); }
     public function GetVersion() { return self::MODULE_VERSION; }
@@ -97,7 +93,7 @@ class ECB2 extends \CMSModule {
     public function GetHelp() { return $this->get_help(); }
     public function HasAdmin() { return true;}
     public function VisibleToAdminUser() { return ( $this->CheckPermission(self::MANAGE_PERM) ); }
-    public function GetHeaderHTML() { return  $this->output_admin_css_js(); }
+    public function GetHeaderHTML() { return $this->get_admin_css_js(); }
     public function InstallPostMessage() { return $this->Lang('postinstall');}
     public function UninstallPostMessage() { return $this->Lang('postuninstall');}
     public function UninstallPreMessage() { return $this->Lang('really_uninstall');}
@@ -153,7 +149,7 @@ class ECB2 extends \CMSModule {
      */
     public function get_help()
     {
-        echo $this->output_admin_css_js();
+        $this->get_admin_css_js( TRUE );
         $field_help = [];
         foreach(self::FIELD_TYPES as $field_type) {
             $type = self::FIELD_DEF_PREFIX.$field_type;
@@ -176,8 +172,9 @@ class ECB2 extends \CMSModule {
     /**
      *  load ECB2 admin js & css - but only once! - e.g. if first ECB2 content block on the page
      *  all js & css should be in these combined files (for now)
+     *  @return string - html to load js & css
      */
-    public function output_admin_css_js()
+    public function get_admin_css_js( $echo_now = FALSE )
     {
         if (cms_utils::get_app_data('ECB2_js_css_loaded')) return;
         $path = $this->GetModuleURLPath();
@@ -185,7 +182,11 @@ class ECB2 extends \CMSModule {
             <link rel="stylesheet" type="text/css" href="'.$path.'/lib/css/ecb2_admin.css?v'.self::MODULE_VERSION.'">
             <script language="javascript" src="'.$path.'/lib/js/ecb2_admin.js?v'.self::MODULE_VERSION.'"></script>';
         cms_utils::set_app_data('ECB2_js_css_loaded', 1);
-        return $admin_css_js;
+        if ( $echo_now ) {
+            echo $admin_css_js;
+        } else {
+            return $admin_css_js;
+        }
     }
 
 
@@ -210,8 +211,7 @@ class ECB2 extends \CMSModule {
             $adding = true;
         }
 
-// change this - ugly (maybe used elsewhere also) >>>> 
-        echo $this->output_admin_css_js();   // output css & js - but only once per page
+        $this->get_admin_css_js( TRUE );   // output css & js - but only once per page
 
         // handle field aliases
         if ( !in_array($params['field'], self::FIELD_TYPES) && 
@@ -226,10 +226,6 @@ class ECB2 extends \CMSModule {
 
         $type = self::FIELD_DEF_PREFIX.$params["field"];
         $ecb2 = new $type($this, $blockName, $value, $params, $adding);
-        if ($ecb2->use_ecb2_data) {
-            $this->_load_ecb2_properties( $content_obj->Id() );    // load if not already cached
-            $ecb2->load_ecb2_data();
-        }
 
         return $ecb2->get_content_block_input();
 
@@ -252,23 +248,55 @@ class ECB2 extends \CMSModule {
      */
     public function GetContentBlockFieldValue( $blockName, $blockParams, $inputParams, $content_obj )
     {
-        // strings are stored in the default 'content_props' table
-        // arrays are always stored in the 'module_ecb2_blocks' - once an array always an array
-        // if no array returned and inputParams[$blockName]==ECB2_DATA still return ECB2_DATA
-        
-        if ( is_string($inputParams[$blockName]) ) {
+        // returned strings are stored in the default 'content_props' table as a string
+        // arrays are always stored as json in 'content_props' - once json always json     
+        if ( !isset($inputParams[$blockName]) ) {     // prob new page
+            return '';
+
+        } elseif ( is_string($inputParams[$blockName]) ) {
             return $inputParams[$blockName];
+
+        }
+        
+        // else array of inputs returned
+        $field_obj = $this->create_field_object($inputParams[$blockName]);
+        // if ($tmp) $output[] = $tmp;
+$tmp = json_encode($field_obj, JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION);
+        return json_encode($field_obj, JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION);
+
+    }
+
+
+
+    /**
+     *  @param array $inputArray - 1 or more array items from editing the ecb2 field 
+     *  @return stdClass ecb2 field object
+     */
+    private function create_field_object( $inputArray = [] ) {
+        
+        $field_obj = new stdClass();
+        $i = 0;
+        foreach ($inputArray as $key => $value) {
+            switch ($key) {
+                case 'type':
+                    $field_obj->type = $value;
+                    break;
+
+                case 'children':
+                    $field_obj->children = create_field_object( $value );
+                    break;
+
+                case 'param1':
+                    $field_obj->param1 = $value;
+                    break;
+
+                default:    // is a value 
+                    $field_obj->values[] = $value;
+                    break;
+            }
         }
 
-        $content_id = $content_obj->Id();
-        if ( $content_id<1 && !isset($inputParams[$blockName]) ) {  // adding so can't save to a $content_id yet
-            return NULL;
-        }
-        // save in 'module_ecb2_blocks'
-        $ecb_values = $inputParams[$blockName]; // array
-        $ecb2_property = new ecb2Properties();
-        $ecb2_property->save_property( $blockName, $ecb_values, $content_id );
-        return $this::ECB2_DATA;    // ECB2_DATA flag stored in 'content_props'
+        return $field_obj;
     }
 
 
@@ -285,20 +313,22 @@ class ECB2 extends \CMSModule {
      */
     public function RenderContentBlockField( $blockName, $value, $blockparams, $content_obj ) 
     {
-        $this->use_ecb2_data = ( !empty($blockparams['repeater']) || $value==$this::ECB2_DATA );
 
-        if ( !$this->use_ecb2_data ) return $value;
+        $json_data = json_decode($value);
+        if (json_last_error()===JSON_ERROR_NONE) {  
+            // JSON is valid
+            // a hack for backwards compatibility for input_repeater - if assign not used
+            if ( $blockparams['field']=='input_repeater' && empty($blockparams['assign']) ) {
+                return implode('||', $json_data->values);
+            }
+            return $json_data;
 
-        $temp = $this->get_property( $content_obj->Id(), $blockName );
-
-        // a hack for backwards compatibility for input_repeater - if assign not used
-        if ($blockparams['field']=='input_repeater' && empty($blockparams['assign']) ) {
-            $temp = implode('||', $temp);
+        } else {    // just a string
+            return $value;  
+            
         }
-
-        // return json_decode($json_temp);
-        return $temp;
-    }
+        
+     }
 
 
 
@@ -319,40 +349,6 @@ class ECB2 extends \CMSModule {
     // {
     //     return '';
     // } 
-
-
-    /**
-     *  load and cache ecb2_properties for current page
-     */
-    private function _load_ecb2_properties( $content_id )
-    {
-        if ( $this->ecb2_content_id==$content_id && is_object($this->ecb2_properties) ) return;
-
-// TEST - should only run once per admin page load
-        $this->ecb2_content_id = $content_id;
-        $ecb_props = new ecb2Properties();
-        // $this->ecb2_properties = new ecb2Properties();
-        $this->ecb2_properties = $ecb_props->load_properties( $content_id );
-
-    }
-
-
-
-    /**
-     *  load a single property
-     *  @return array - of ecb2_values or empty array
-     */
-	public function get_property( $content_id, $blockName )
-	{
-        if ( $content_id <= 0 || empty($blockName) ) return FALSE;
-        $this->_load_ecb2_properties( $content_id );
-
-        if ( isset($this->ecb2_properties[$blockName]) ) {
-            return $this->ecb2_properties[$blockName];
-        } else {
-            return [];
-        }
-    }
 
 
 
