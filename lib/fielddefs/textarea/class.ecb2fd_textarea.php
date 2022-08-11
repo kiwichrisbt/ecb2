@@ -34,6 +34,7 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         // $this->restrict_params = FALSE;    // default: true
+        // $this->use_json_format = TRUE;    // default: FALSE - can override e.g. 'groups' type
         $this->parameter_aliases = [
             'default_value' => 'default'
         ];
@@ -42,7 +43,10 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
             'rows'          => ['default' => 20,    'filter' => FILTER_VALIDATE_INT],
             'cols'          => ['default' => 80,   'filter' => FILTER_VALIDATE_INT],
             'wysiwyg'       => ['default' => FALSE,   'filter' => FILTER_VALIDATE_BOOLEAN],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'repeater'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
+            'max_blocks'    => ['default' => 0,    'filter' => FILTER_VALIDATE_INT],
+            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'assign'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
 
     }
@@ -56,12 +60,19 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
     {
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
-        $tpl->assign('block_name', $this->block_name );
-        $tpl->assign('value', $this->value );
-        $tpl->assign('rows', $this->options['rows'] );
-        $tpl->assign('cols', $this->options['cols'] );
-        $tpl->assign('wysiwyg', $this->options['wysiwyg'] );
-        $tpl->assign('description', $this->options['description'] );
+        $tpl->assign( 'mod', $this->mod );
+        $tpl->assign( 'block_name', $this->block_name );
+        $tpl->assign( 'type', $this->field );
+        $tpl->assign( 'value', $this->value );
+        $tpl->assign( 'values', $this->values );
+        $tpl->assign( 'rows', $this->options['rows'] );
+        $tpl->assign( 'cols', $this->options['cols'] );
+        $tpl->assign( 'wysiwyg', $this->options['wysiwyg'] );
+        $tpl->assign( 'repeater', $this->options['repeater'] );
+        $tpl->assign( 'max_blocks', $this->options['max_blocks'] );
+        $tpl->assign( 'description', $this->options['description'] );
+        $tpl->assign( 'assign', $this->options['assign'] );
+        $tpl->assign( 'use_json_format', $this->use_json_format );
         return $tpl->fetch();
    
     }

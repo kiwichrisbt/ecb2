@@ -47,6 +47,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
     }
 
 
+
     /**
      *  @return string complete content block 
      */

@@ -21,6 +21,8 @@
     font-style:normal; font-variant:normal; line-height:1;text-transform:none; font-size:16px;
     color:inherit; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
 
+div.pagecontainer fieldset {}
+
 .ecb2-icon-minus-solid:before {content:'\e900';}
 .ecb2-icon-plus-solid:before {content:'\e901';}
 .ecb2-icon-image:before {content:'\e90d';}
@@ -53,11 +55,11 @@
 .ecb_repeater * {box-sizing:border-box;}
 .ecb_repeater {position:relative; margin-bottom:2.3rem;}
 .ecb2-repeater-add {position:absolute; top:100%; right:0; margin-top:.5rem;}
-.ecb_repeater .repeater-wrapper {position:relative; width:100%; padding:0 2.25rem 0 .25rem;
+.ecb_repeater .repeater-wrapper {position:relative; width:100%; padding:0 3rem 0 .25rem;
     background-color:#fff; border:1px solid #dadada; border-bottom-color:transparent;}
 .ecb_repeater .repeater-wrapper:last-child, .ecb_repeater .repeater-wrapper:last-child .drag-panel,
     .ecb_repeater .repeater-wrapper:last-child .right-panel {border-bottom-color:#dadada;}
-.ecb_repeater.sortable .repeater-wrapper {padding-left:2.25rem; 
+.ecb_repeater.sortable .repeater-wrapper {min-height:39px; padding-left:2.25rem; 
     cursor:move; cursor:grab; cursor:-moz-grab; cursor:-webkit-grab;}
 .ecb_repeater .repeater-wrapper .drag-panel {position:absolute; top:0; left:0; display:block; 
     width:1.75rem; height:calc(100% + 1px); text-align:center;
@@ -69,9 +71,10 @@
     border-bottom:1px solid transparent;}
 .ecb2-repeater-remove {margin:.3rem 0;}
 .ecb_repeater input, .ecb_repeater textarea, .ecb_repeater select {margin:4px 8px 4px 0;}
+.ecb_repeater .mce-tinymce, .ecb_repeater .tox-tinymce {margin-top:.5rem; margin-bottom:.5rem;}
 .ecb_repeater .repeater-field {max-width:100%; vertical-align:middle;}
 .ecb_repeater .ui-sortable-helper {box-shadow:2px 2px 3px rgba(0,0,0,.3);}
-.ecb_repeater .repeater-placeholder {min-height:39px; border:1px solid #fcefa1; 
+.ecb_repeater .repeater-placeholder {/*min-height:39px;*/ border:1px solid #fcefa1; 
     background-color:#fffbe4; display: block !important; visibility:visible;}
 
 
@@ -96,6 +99,7 @@
 .ecb2-help .border-bottom {border-bottom: 1px solid #dee2e6!important;}
 
 .ecb2-help pre {margin-left:0;}
+.ecb2-help fieldset {min-width:0;}
 
 /* colpick Color Picker / https://github.com/josedvq/colpick-jQuery-Color-Picker  http://www.htmldrive.net/items/demo/1358/colpick-A-jQuery-RGB-HEX-and-HSB-Color-Picker-plugin-is-free-lightweight-and-customizable
 */
