@@ -17,4 +17,5 @@ $this->CreatePermission(ECB2::MANAGE_PERM,'Extended Content Blocks 2 - Manage');
 $blocks_table = new ecb2Blocks();
 $blocks_table->create_database();
 
+ecb2_FileUtils::CreateImagesDir();
 

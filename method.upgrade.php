@@ -52,6 +52,8 @@ if ( version_compare($oldversion, '2.0') < 0 ) {
         '/action.refresh.php'
     ];
     foreach ($filesToRemove as $delFile) @unlink($module_path.$delFile);
+
+    ecb2_FileUtils::CreateImagesDir();
 }
 
 if ( version_compare($oldversion, '1.99.3') < 0 ) {

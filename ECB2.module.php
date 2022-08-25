@@ -27,7 +27,7 @@
 
 class ECB2 extends \CMSModule {
 
-    const MODULE_VERSION = '1.99.5.1';
+    const MODULE_VERSION = '1.99.5.2';
     const MANAGE_PERM = 'manage_ecb2';
 
     const FIELD_TYPES = [
@@ -35,6 +35,7 @@ class ECB2 extends \CMSModule {
         'textarea',
         'dropdown',
         'sortablelist',
+        'gallery',
         'checkbox',
         'radio',
         'color_picker',
@@ -72,7 +73,8 @@ class ECB2 extends \CMSModule {
         'link' => 'admin_link',
         'module_link' => 'admin_module_link',
         'image' => 'admin_image',
-        'input_repeater' => 'textinput'
+        'input_repeater' => 'textinput',
+        'image' => 'gallery'
     ];
 
     const FIELD_DEF_PREFIX = 'ecb2fd_';
@@ -200,7 +202,7 @@ class ECB2 extends \CMSModule {
      * @param object $content_obj the page properties
      * @return string
      */
-    public function GetContentBlockFieldInput( $blockName, $value, $params, $adding, $content_obj ) 
+    public function GetContentBlockFieldInput( $blockName, $value, $params, $adding, ContentBase $content_obj ) 
     {
         if ( empty($params['field']) ) {
             return $this->error_msg( $this->Lang('field_error', $blockName) );
@@ -246,7 +248,7 @@ class ECB2 extends \CMSModule {
      *  @param object $content_obj - The content object being edited.
      *  @return mixed|false The content block value if possible.
      */
-    public function GetContentBlockFieldValue( $blockName, $blockParams, $inputParams, $content_obj )
+    public function GetContentBlockFieldValue( $blockName, $blockParams, $inputParams, ContentBase $content_obj )
     {
         // returned strings are stored in the default 'content_props' table as a string
         // arrays are always stored as json in 'content_props' - once json always json     
@@ -260,9 +262,8 @@ class ECB2 extends \CMSModule {
         
         // else array of inputs returned
         $field_obj = $this->create_field_object($inputParams[$blockName]);
-        // if ($tmp) $output[] = $tmp;
-$tmp = json_encode($field_obj, JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION);
-        return json_encode($field_obj, JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION);
+        $json_values = json_encode($field_obj, JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION);
+        return $json_values;
 
     }
 
@@ -277,23 +278,34 @@ $tmp = json_encode($field_obj, JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION)
         $field_obj = new stdClass();
         $i = 0;
         foreach ($inputArray as $key => $value) {
-            switch ($key) {
-                case 'type':
-                    $field_obj->type = $value;
-                    break;
+            if ( $key=='children' ) {
+                $field_obj->children = create_field_object( $value );
+            
+            } elseif ( is_numeric($key) ) { // is a value
+                $field_obj->values[] = $value;
+            
+            } else { // is other data
+                $field_obj->$key = $value;
 
-                case 'children':
-                    $field_obj->children = create_field_object( $value );
-                    break;
-
-                case 'param1':
-                    $field_obj->param1 = $value;
-                    break;
-
-                default:    // is a value 
-                    $field_obj->values[] = $value;
-                    break;
             }
+
+            // switch ($key) {
+            //     case 'type':
+            //         $field_obj->type = $value;
+            //         break;
+
+            //     case 'children':
+            //         $field_obj->children = create_field_object( $value );
+            //         break;
+
+            //     case 'param1':
+            //         $field_obj->param1 = $value;
+            //         break;
+
+            //     default:    // is a value 
+            //         $field_obj->values[] = $value;
+            //         break;
+            // }
         }
 
         return $field_obj;
@@ -311,7 +323,7 @@ $tmp = json_encode($field_obj, JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION)
      *  @param object $content_obj - The content object being edited.
      *  @return string The content block value if possible.
      */
-    public function RenderContentBlockField( $blockName, $value, $blockparams, $content_obj ) 
+    public function RenderContentBlockField( $blockName, $value, $blockparams, ContentBase $content_obj ) 
     {
 
         $json_data = json_decode($value);
