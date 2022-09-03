@@ -153,9 +153,10 @@ class ECB2 extends \CMSModule {
     {
         $this->get_admin_css_js( TRUE );
         $field_help = [];
+        $dummy_id = 0;
         foreach(self::FIELD_TYPES as $field_type) {
             $type = self::FIELD_DEF_PREFIX.$field_type;
-            $ecb2 = new $type($this, $this::DEMO_BLOCK_PREFIX.$field_type, NULL, ['field' => $field_type], TRUE);
+            $ecb2 = new $type($this, $this::DEMO_BLOCK_PREFIX.$field_type, $dummy_id, NULL, ['field' => $field_type], TRUE);
             $field_help[$field_type] = $ecb2->get_field_help();
         }
 
@@ -227,7 +228,7 @@ class ECB2 extends \CMSModule {
         }
 
         $type = self::FIELD_DEF_PREFIX.$params["field"];
-        $ecb2 = new $type($this, $blockName, $value, $params, $adding);
+        $ecb2 = new $type($this, $blockName, $content_obj->Id(), $value, $params, $adding);
 
         return $ecb2->get_content_block_input();
 
@@ -257,58 +258,17 @@ class ECB2 extends \CMSModule {
 
         } elseif ( is_string($inputParams[$blockName]) ) {
             return $inputParams[$blockName];
-
         }
         
-        // else array of inputs returned
-        $field_obj = $this->create_field_object($inputParams[$blockName]);
-        $json_values = json_encode($field_obj, JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION);
-        return $json_values;
+        // else array of inputs returned - get fieldDef class to manipulate input values - if necessary
+        $id = $content_obj->Id();
+        $value = '';    // just use dummy value here, pass input array into get_content_block_value()
+        $adding = ($id == 0);   // test this!!!!!!!!!!!!!!!!!!
+        $type = self::FIELD_DEF_PREFIX.$blockParams['field'];
+        $ecb2 = new $type($this, $blockName, $id, $value, $blockParams, $adding);
 
-    }
+        return $ecb2->get_content_block_value( $inputParams[$blockName] );
 
-
-
-    /**
-     *  @param array $inputArray - 1 or more array items from editing the ecb2 field 
-     *  @return stdClass ecb2 field object
-     */
-    private function create_field_object( $inputArray = [] ) {
-        
-        $field_obj = new stdClass();
-        $i = 0;
-        foreach ($inputArray as $key => $value) {
-            if ( $key=='children' ) {
-                $field_obj->children = create_field_object( $value );
-            
-            } elseif ( is_numeric($key) ) { // is a value
-                $field_obj->values[] = $value;
-            
-            } else { // is other data
-                $field_obj->$key = $value;
-
-            }
-
-            // switch ($key) {
-            //     case 'type':
-            //         $field_obj->type = $value;
-            //         break;
-
-            //     case 'children':
-            //         $field_obj->children = create_field_object( $value );
-            //         break;
-
-            //     case 'param1':
-            //         $field_obj->param1 = $value;
-            //         break;
-
-            //     default:    // is a value 
-            //         $field_obj->values[] = $value;
-            //         break;
-            // }
-        }
-
-        return $field_obj;
     }
 
 
@@ -316,6 +276,9 @@ class ECB2 extends \CMSModule {
     /**
      *  Render the value of a module content block on the frontend of the website.
      *  This gives modules the opportunity to render data stored in content blocks differently.
+     *
+     *  Note: any changes to the data should be handled during the admin save operation
+     *        For speed during a front end call only a json_decode is required for processing
      *
      *  @param string $blockName - Content block name
      *  @param string $value - Content block value as stored in the database

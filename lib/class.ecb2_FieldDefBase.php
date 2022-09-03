@@ -11,9 +11,11 @@ abstract class ecb2_FieldDefBase
 {
     protected $mod;
     protected $block_name;
+    protected $id;
     protected $field;
     protected $value;               // used when using single string values ECB2 v1 format
     protected $values;              // used when json format 
+    protected $field_object;        // stdClass object that contains all values for saving
     protected $adding;
     protected $default_parameters;
     protected $options;
@@ -28,17 +30,21 @@ abstract class ecb2_FieldDefBase
    
 
     /**
-     * @param string $blockName
-     * @param string $value
-     * @param array $params
-     * @param boolean $adding
+     *  @param string $mod - ECB2 module class
+     *  @param string $blockName
+     *  @param string $id - content page id (poss module item id - in the future)
+     *  @param string $value
+     *  @param array $params
+     *  @param boolean $adding
      */
-    public function __construct($mod, $blockName, $value, $params, $adding) 
+    public function __construct($mod, $blockName, $id, $value, $params, $adding) 
     {
         $this->mod = $mod;
         $this->block_name = $blockName;
+        $this->id = $id;
         $this->value = NULL;
         $this->values = [];
+        $this->field_object = NULL;
         $this->alias = munge_string_to_url($blockName, TRUE);
         $this->adding = $adding;
         $this->field = '';
@@ -362,6 +368,57 @@ abstract class ecb2_FieldDefBase
 
     }
 
+
+
+    /**
+     *  Data entered by the editor is processed before its saved in props table
+     *  Method can be overidden by child class
+     *  
+     *  @return string formatted json containing all field data ready to be saved & output
+     */
+    public function get_content_block_value( $inputArray ) 
+    {
+        $this->set_field_object( $inputArray );
+
+        return $this->ECB2_json_encode_field_object();
+    }
+
+
+
+    /**
+     *  sets $this->field_object to stdClass ecb2 field object
+     *  @param array $inputArray - 1 or more array items from editing the ecb2 field 
+     */
+    protected function set_field_object( $inputArray = [] ) 
+    {    
+        $field_object = new stdClass();
+        $field_object->values = [];        // ensure values set as empty array as a minimum
+        $i = 0;
+        foreach ($inputArray as $key => $value) {
+            if ( $key=='children' ) {
+                $field_object->children = create_field_object( $value );
+            
+            } elseif ( is_numeric($key) ) { // is a value
+                $field_object->values[] = $value;
+            
+            } else { // is other data
+                $field_object->$key = $value;
+
+            }
+        }
+        $this->field_object = $field_object;
+    }
+
+
+
+    /**
+     *  @param array $inputArray - 1 or more array items from editing the ecb2 field 
+     *  @return string json encoded $this->field_obj
+     */
+    protected function ECB2_json_encode_field_object() 
+    {
+        return json_encode( $this->field_object, JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION );
+    }
 
 
 

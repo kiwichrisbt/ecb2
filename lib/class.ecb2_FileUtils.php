@@ -10,47 +10,100 @@
 class ecb2_FileUtils 
 {
 
-    const ECB2_IMAGE_DIR = 'ecb2_images';
+    const ECB2_IMAGE_DIR = '_ecb2_images';
+    const ECB2_IMAGE_TEMP_DIR = '_tmp';     // sub dir of ECB2_IMAGE_DIR
 
 
 
     /**
-     *  @return string path to ECB2 images dir
+     *  @return string path to ECB2 images temp sub dir: /ECB2_IMAGE_DIR/ECB2_IMAGE_TEMP_DIR
      */
-    public static function ECB2ImagesPath() 
+    public static function ECB2ImagesTempPath() 
     {
         $config = cmsms()->GetConfig();
-        return cms_join_path( $config['image_uploads_path'], self::ECB2_IMAGE_DIR ).DIRECTORY_SEPARATOR;
+        return cms_join_path( $config['image_uploads_path'], self::ECB2_IMAGE_DIR, 
+            self::ECB2_IMAGE_TEMP_DIR ).DIRECTORY_SEPARATOR;
     }
 
 
 
     /**
-     *  @return string url to ECB2 images dir
+     *  @return string path to unique ECB2 images sub dir: /ECB2_IMAGE_DIR/blockname_module_id
+     *  @param string $blockname - name of props blockname
+     *  @param string $id - content id - i.e. page id
+     *  @param string $module - if not Content page (default) - not actually used yet
+     *  @param string $uploads_dir - if set is a subdir of /uploads to use
      */
-    public static function ECB2ImagesUrl() 
+    public static function ECB2ImagesPath( $blockname, $id='', $module='', $uploads_dir='' ) 
     {
         $config = cmsms()->GetConfig();
-        return cms_join_path( $config['uploads_url'], 'images', self::ECB2_IMAGE_DIR ).DIRECTORY_SEPARATOR;
-    }
-
-
-
-    /**
-     *  creates the ECB2 images dir - if it doesn't already exist
-     */
-    public static function CreateImagesDir() 
-    {
-        $ecb2_images_dir = self::ECB2ImagesPath();
-        if ( !file_exists($ecb2_images_dir) ) {
-            mkdir($ecb2_images_dir, 0777, true);
+        if ( !empty($uploads_dir) ) {
+            $imagesPath = cms_join_path( $config['image_uploads_path'], $uploads_dir );
+            return $imagesPath.DIRECTORY_SEPARATOR;
         }
+
+        if ( empty($blockname) ) return FALSE;
+
+        $imagesPath = cms_join_path( $config['image_uploads_path'], self::ECB2_IMAGE_DIR );
+        $dirname = munge_string_to_url( $blockname. ($module ? '_'.$module : '') . ($id ? '_'.$id : '') );
+        return $imagesPath.DIRECTORY_SEPARATOR.$dirname.DIRECTORY_SEPARATOR;
     }
 
 
 
     /**
-     *  unique filename for ECB2 images dir, if filename already exists, it has _x 
+     *  @return string url to either a subdir of /uploads, or a unique ECB2 images sub dir: 
+     *                   /ECB2_IMAGE_DIR/blockname_module_id
+     *  @param string $blockname - name of props blockname
+     *  @param string $id - content id - i.e. page id
+     *  @param string $module - if not Content page (default) - not actually used yet
+     *  @param string $uploads_dir - if set is a subdir of /uploads to use
+     */
+    public static function ECB2ImagesUrl( $blockname, $id, $module='', $uploads_dir='' ) 
+    {
+        $config = cmsms()->GetConfig();
+        if ( !empty($uploads_dir) ) {
+            $ecb2Url = cms_join_path( $config['uploads_url'], $uploads_dir );
+            return $ecb2Url.DIRECTORY_SEPARATOR;
+        }
+
+        if ( empty($blockname) ) return FALSE;
+
+        $ecb2Url = cms_join_path( $config['uploads_url'], 'images', self::ECB2_IMAGE_DIR ).DIRECTORY_SEPARATOR;
+        $dirname = munge_string_to_url( $blockname. ($module ? '_'.$module : '') . ($id ? '_'.$id : '') );
+        return $ecb2Url.$dirname.DIRECTORY_SEPARATOR;
+    }
+
+
+
+    /**
+     *  creates the unique ECB2 images sub dir - if it doesn't already exist: 
+     *          /ECB2_IMAGE_DIR/blockname_module_id
+     *      or the ECB2_IMAGE_DIR/ECB2_IMAGE_TEMP_DIR if params all empty
+     *  @param string $blockname - name of props blockname
+     *  @param string $id - content id - i.e. page id
+     *  @param string $module - if not Content page (default) - not actually used yet
+     *  @param string $uploads_dir - if set is a subdir of /uploads to use
+     */
+    public static function CreateImagesDir( $blockname='', $id='', $module='', $uploads_dir='' )
+    {
+        $success = false;
+        if ( !empty($uploads_dir) || !empty($blockname) ) {
+            $ecb2_images_dir = self::ECB2ImagesPath( $blockname, $id, $module, $uploads_dir );
+        } else {
+            $ecb2_images_dir = self::ECB2ImagesPath( self::ECB2_IMAGE_TEMP_DIR );
+        }
+
+        if ( $ecb2_images_dir && !file_exists($ecb2_images_dir) ) {
+            $success = mkdir($ecb2_images_dir, 0755, true);
+        }
+        return $success;
+    }
+
+
+
+    /** NB: NOT CURRENTLY USED...
+     *  unique filename for ECB2 images, if filename already exists, it has _x 
      *      appended before the suffix, e.g. 'new_image_1.jpg', then 'new_image_2.jpg' 
      *
      *  @return string unique filename 
@@ -78,9 +131,9 @@ class ecb2_FileUtils
 
 
     /**
-     *  upload file into ecb2_images_dir with unique filename if necessary
+     *  upload file into ECB2ImagesTempPath
      *
-     *  @return mixed $unique_filename or FALSE on failure of upload
+     *  @return boolean $success
      *  @param string $original_filename - original filename of uploaded file
      *  @param string $tmp_filename - temp filename of the file on the server
      */
@@ -88,13 +141,35 @@ class ecb2_FileUtils
     {
         if ( empty($original_filename) || empty($tmp_filename) ) return false;
 
-        $ecb2_images_path = self::ECB2ImagesPath();
-        $unique_filename = self::ECB2UniqueFilename( $original_filename );
-        $success = cms_move_uploaded_file( $tmp_filename, $ecb2_images_path.$unique_filename );
-        
-        if (!$success) return FALSE;
+        $ecb2_images_path = self::ECB2ImagesTempPath();
+        $success = cms_move_uploaded_file( $tmp_filename, $ecb2_images_path.$original_filename );
+        return $success;
 
-        return $unique_filename;
+    }
+
+
+
+    /**
+     *  move files from _tmp into $dir, deleting any unwanted files
+     *  existing files with same name will not be overwritten
+     *
+     *  @param array $values - filenames of all files in the gallery
+     *  @param string $dir - directory to be updated with set gallery images
+     */
+    public static function updateGalleryDir( $values, $dir )
+    {
+        if ( empty($values) ) return;
+
+        $tmp_dir = self::ECB2ImagesTempPath();
+        // create $dir if it doesn't exist
+        if ( $dir && !file_exists($dir) ) {
+            $success = mkdir($dir, 0755, true);
+        }
+        foreach ($values as $filename) {
+            if ( !file_exists($dir.$filename) && file_exists($tmp_dir.$filename)) {
+                rename( $tmp_dir.$filename, $dir.$filename );   // moves file from _tmp
+            }
+        }
 
     }
 

@@ -11,9 +11,9 @@
 class ecb2fd_gallery extends ecb2_FieldDefBase 
 {
 
-	public function __construct($mod, $blockName, $value, $params, $adding) 
+	public function __construct($mod, $blockName, $id, $value, $params, $adding) 
 	{	
-		parent::__construct($mod, $blockName, $value, $params, $adding);
+		parent::__construct($mod, $blockName, $id, $value, $params, $adding);
 
 	}
 
@@ -30,8 +30,8 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'dir'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            // ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
@@ -47,9 +47,10 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        $location = ecb2_FileUtils::ECB2ImagesUrl( $this->block_name, $this->id, '', $this->options['dir'] );
         $actionparms = [];
         $action_url = $this->mod->create_url( 'm1_', 'do_UploadFiles', '', $actionparms);
-        $json_values = htmlspecialchars(json_encode($this->values, JSON_HEX_APOS), ENT_QUOTES, 'UTF-8');
+        // $json_values = htmlspecialchars(json_encode($this->values, JSON_HEX_APOS), ENT_QUOTES, 'UTF-8');
         $json_values = json_encode($this->values, JSON_HEX_APOS);
 
         $smarty = \CmsApp::get_instance()->GetSmarty();
@@ -57,7 +58,7 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         $tpl->assign( 'block_name', $this->block_name );
         $tpl->assign( 'values', $this->values );
         $tpl->assign( 'json_values', $json_values );
-        $tpl->assign( 'location', ecb2_FileUtils::ECB2ImagesUrl() );
+        $tpl->assign( 'location', $location );
         $tpl->assign( 'type', $this->field );
         $tpl->assign( 'action_url', $action_url );
 
@@ -65,6 +66,27 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         return $tpl->fetch();
    
     }
+
+
+
+    /**
+     *  Data entered by the editor is processed before its saved in props table
+     *  Method can be overidden by this class (usually also calls parent class)
+     *  
+     *  @return string formatted json containing all field data ready to be saved & output
+     */
+    public function get_content_block_value( $inputArray ) 
+    {
+        $this->set_field_object( $inputArray );
+    
+        // handle moving files from _tmp into galleryDir, deleting any unwanted files
+        $galleryDir = ecb2_FileUtils::ECB2ImagesPath( $this->block_name, $this->id, '', 
+            $this->options['dir'] );
+        ecb2_FileUtils::updateGalleryDir( $this->field_object->values, $galleryDir );
+    
+        return $this->ECB2_json_encode_field_object(); 
+    }
+
 
 
 }

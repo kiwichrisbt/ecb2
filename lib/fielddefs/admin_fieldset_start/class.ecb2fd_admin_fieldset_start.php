@@ -11,9 +11,9 @@
 class ecb2fd_admin_fieldset_start extends ecb2_FieldDefBase 
 {
 
-	public function __construct($mod, $blockName, $value, $params, $adding) 
+	public function __construct($mod, $blockName, $id, $value, $params, $adding) 
 	{	
-		parent::__construct($mod, $blockName, $value, $params, $adding);
+		parent::__construct($mod, $blockName, $id, $value, $params, $adding);
 
 	}
 

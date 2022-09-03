@@ -11,9 +11,9 @@
 class ecb2fd_ZZZ extends ecb2_FieldDefBase 
 {
 
-	public function __construct($mod, $blockName, $value, $params, $adding) 
+	public function __construct($mod, $blockName, $id, $value, $params, $adding) 
 	{	
-		parent::__construct($mod, $blockName, $value, $params, $adding);
+		parent::__construct($mod, $blockName, $id, $value, $params, $adding);
 
 	}
 
@@ -61,6 +61,26 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
         return $tpl->fetch();
    
     }
+
+
+
+    // /**
+    //  *  Data entered by the editor is processed before its saved in props table
+    //  *  This method, if required, overides the parent class method, to enable additional processing 
+    //  *  before the data is saved.
+    //  *  Can be omitted and ecb2_FieldDefBase will handle default processing
+    //  *
+    //  *  @return string formatted json containing all field data ready to be saved & output
+    //  */
+    // public function get_content_block_value( $inputArray ) 
+    // {
+    //     $this->set_field_object( $inputArray );
+    //
+    //     // do other stuff here
+    //
+    //     return $this->ECB2_json_encode_field_object(); 
+    // }
+
 
 
 }

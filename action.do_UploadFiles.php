@@ -18,13 +18,12 @@ if ( !empty($_FILES['file']) ) {
         $original_filename = $_FILES['file']['name'][$key];
         if ( $error==UPLOAD_ERR_OK ) {
             $tmp_filename = $_FILES['file']['tmp_name'][$key];
-            $new_filename = ecb2_FileUtils::ECB2MoveUploadedFile( $original_filename, $tmp_filename );
+            $success = ecb2_FileUtils::ECB2MoveUploadedFile( $original_filename, $tmp_filename );
         }
+//  $success = FALSE;     // only for testing!
         $result[] = [
             'name' => $original_filename,
-            'new_filename' => $new_filename     // or FALSE if error occurred
-// 'new_filename' => FALSE     // only for testing!
-
+            'success' => $success    
         ];
     }
 
