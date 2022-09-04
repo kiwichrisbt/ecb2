@@ -30,10 +30,10 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            'dir'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            // ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'dir'             => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'auto_add_delete' => ['default' => true,  'filter' => FILTER_VALIDATE_BOOLEAN],
+            'default_value'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'description'     => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true
@@ -48,6 +48,11 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
     public function get_content_block_input() 
     {
         $location = ecb2_FileUtils::ECB2ImagesUrl( $this->block_name, $this->id, '', $this->options['dir'] );
+        $dir = ecb2_FileUtils::ECB2ImagesPath( $this->block_name, $this->id, '', $this->options['dir'] );
+        if ( $this->options['auto_add_delete'] ) {
+            $this->values = ecb2_FileUtils::autoAddDirImages( $this->values, $dir);
+        }
+
         $actionparms = [];
         $action_url = $this->mod->create_url( 'm1_', 'do_UploadFiles', '', $actionparms);
         // $json_values = htmlspecialchars(json_encode($this->values, JSON_HEX_APOS), ENT_QUOTES, 'UTF-8');
@@ -82,7 +87,8 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         // handle moving files from _tmp into galleryDir, deleting any unwanted files
         $galleryDir = ecb2_FileUtils::ECB2ImagesPath( $this->block_name, $this->id, '', 
             $this->options['dir'] );
-        ecb2_FileUtils::updateGalleryDir( $this->field_object->values, $galleryDir );
+        ecb2_FileUtils::updateGalleryDir( $this->field_object->values, $galleryDir,
+            $this->options['auto_add_delete'] );
     
         return $this->ECB2_json_encode_field_object(); 
     }

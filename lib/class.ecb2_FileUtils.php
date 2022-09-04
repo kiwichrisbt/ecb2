@@ -12,7 +12,7 @@ class ecb2_FileUtils
 
     const ECB2_IMAGE_DIR = '_ecb2_images';
     const ECB2_IMAGE_TEMP_DIR = '_tmp';     // sub dir of ECB2_IMAGE_DIR
-
+    const THUMB_PREFIX = 'thumb_'; 
 
 
     /**
@@ -63,13 +63,13 @@ class ecb2_FileUtils
     {
         $config = cmsms()->GetConfig();
         if ( !empty($uploads_dir) ) {
-            $ecb2Url = cms_join_path( $config['uploads_url'], $uploads_dir );
+            $ecb2Url = cms_join_path( $config['image_uploads_url'], $uploads_dir );
             return $ecb2Url.DIRECTORY_SEPARATOR;
         }
 
         if ( empty($blockname) ) return FALSE;
 
-        $ecb2Url = cms_join_path( $config['uploads_url'], 'images', self::ECB2_IMAGE_DIR ).DIRECTORY_SEPARATOR;
+        $ecb2Url = cms_join_path( $config['image_uploads_url'], self::ECB2_IMAGE_DIR ).DIRECTORY_SEPARATOR;
         $dirname = munge_string_to_url( $blockname. ($module ? '_'.$module : '') . ($id ? '_'.$id : '') );
         return $ecb2Url.$dirname.DIRECTORY_SEPARATOR;
     }
@@ -83,7 +83,7 @@ class ecb2_FileUtils
      *  @param string $blockname - name of props blockname
      *  @param string $id - content id - i.e. page id
      *  @param string $module - if not Content page (default) - not actually used yet
-     *  @param string $uploads_dir - if set is a subdir of /uploads to use
+     *  @param string $uploads_dir - if set is a subdir of /uploads/images to use (default)
      */
     public static function CreateImagesDir( $blockname='', $id='', $module='', $uploads_dir='' )
     {
@@ -155,8 +155,9 @@ class ecb2_FileUtils
      *
      *  @param array $values - filenames of all files in the gallery
      *  @param string $dir - directory to be updated with set gallery images
+     *  @param boolean $auto_add_delete - if set delete any unused images & thumbnails
      */
-    public static function updateGalleryDir( $values, $dir )
+    public static function updateGalleryDir( $values, $dir, $auto_add_delete )
     {
         if ( empty($values) ) return;
 
@@ -171,6 +172,44 @@ class ecb2_FileUtils
             }
         }
 
+        // if $auto_add_delete remove any unused files (& thumbnails <<< not yet done)
+        foreach ( glob( $dir.'*.*' ) as $filename) {
+            $tmp_filename = basename($filename);
+            if ( !in_array($tmp_filename, $values) ) unlink($filename);
+        }
+    
+    }
+
+
+
+    /**
+     *  move files from _tmp into $dir, deleting any unwanted files
+     *  existing files with same name will not be overwritten
+     *
+     *  @param array $values - filenames of already selected files in the dir
+     *  @param string $dir - directory to be used for this gallery
+     *  @return array $all_filenames - any additional filenames, appended to 
+     */
+    public static function autoAddDirImages( $values, $dir)
+    {
+        $all_filenames = $values;
+        foreach ( glob( $dir.'*.*' ) as $filename) {
+            $tmp_filename = basename($filename);
+            if ( !self::isECB2Thumb($tmp_filename) && !in_array($tmp_filename, $values) ) {
+                $all_filenames[] = $tmp_filename;
+            }
+        }
+        return $all_filenames;
+    }
+
+
+    /**
+     * @return boolean true if $haystack starts with self::THUMB_PREFIX ('thumb_')
+     */
+    public static function isECB2Thumb( $haystack ) 
+    {
+        $length = strlen( self::THUMB_PREFIX );
+        return substr( $haystack, 0, $length ) === self::THUMB_PREFIX;
     }
 
 
