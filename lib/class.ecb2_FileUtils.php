@@ -156,10 +156,13 @@ class ecb2_FileUtils
      *  @param array $values - filenames of all files in the gallery
      *  @param string $dir - directory to be updated with set gallery images
      *  @param boolean $auto_add_delete - if set delete any unused images & thumbnails
+     *  @param boolean $thumb_width - thumbnail width set for this content block
+     *  @param boolean $thumb_height - thumbnail height set for this content block
      */
-    public static function updateGalleryDir( $values, $dir, $auto_add_delete )
+    public static function updateGalleryDir( $values, $dir, $auto_add_delete, $thumb_width=0, 
+        $thumb_height=0 )
     {
-        if ( empty($values) ) return;
+        if ( empty($values) && !$auto_add_delete ) return;
 
         $tmp_dir = self::ECB2ImagesTempPath();
         // create $dir if it doesn't exist
@@ -172,10 +175,34 @@ class ecb2_FileUtils
             }
         }
 
-        // if $auto_add_delete remove any unused files (& thumbnails <<< not yet done)
-        foreach ( glob( $dir.'*.*' ) as $filename) {
-            $tmp_filename = basename($filename);
-            if ( !in_array($tmp_filename, $values) ) unlink($filename);
+        // delete any thumbnails that are not the correct size
+        self::get_required_thumbnail_size( $thumb_width, $thumb_height );
+        foreach ( glob( $dir.self::THUMB_PREFIX.'*.*' ) as $thumbfilename) {
+            $tmp_thumbfilename = basename($thumbfilename);
+            list($width, $height) = getimagesize($thumbfilename);
+            if ( ($thumb_width>0 && $width!=$thumb_width) || 
+                 ($thumb_height>0 && $height!=$thumb_height) ) {
+                unlink($thumbfilename);
+            }
+        }
+
+        // create any new thumbnails
+        foreach ( $values as $filename) {
+            if ( !file_exists($dir.self::THUMB_PREFIX.$filename) ) {
+                self::create_thumbnail( $dir.$filename, $thumb_width, $thumb_height );
+            }
+        }
+
+        // remove any unused files & their thumbnails 
+        if ($auto_add_delete) {    
+            $filesAndThumbs = $values;
+            foreach ( $values as $filename) {
+                $filesAndThumbs[] = self::THUMB_PREFIX.$filename;
+            }
+            foreach ( glob( $dir.'*.*' ) as $filename) {
+                $tmp_filename = basename($filename);
+                if ( !in_array($tmp_filename, $filesAndThumbs) ) unlink($filename);
+            }
         }
     
     }
@@ -203,6 +230,7 @@ class ecb2_FileUtils
     }
 
 
+
     /**
      * @return boolean true if $haystack starts with self::THUMB_PREFIX ('thumb_')
      */
@@ -210,6 +238,143 @@ class ecb2_FileUtils
     {
         $length = strlen( self::THUMB_PREFIX );
         return substr( $haystack, 0, $length ) === self::THUMB_PREFIX;
+    }
+
+
+
+    /**
+     *  Creates a thumbnail for the $src file if it doesn't already exist
+     *
+     *  @param string $src - filename of file to create thumbnail for
+     *  @param int $thumb_width - width of thumbnail to be created (default: module pref, sitepref)
+     *  @param int $thumb_height - height of thumbnail to be created (default: module pref, sitepref)
+     *  @param string $dest - alternative filename for new thumbnail
+     *  @param boolean $force - if set to TRUE will overwrite any existing thumbnail filename
+     *  @return boolean true if new thumbnail created
+     *  based on FileManager > class.filemanager_utils
+     */
+    public static function create_thumbnail($src, $thumb_width=0, $thumb_height=0, $dest=NULL, $force=FALSE)
+    {
+        if ( !file_exists($src) ) return FALSE;
+        if ( !$dest ) {
+            $bn = basename($src);
+            $dn = dirname($src);
+            $dest = $dn.DIRECTORY_SEPARATOR.self::THUMB_PREFIX.$bn;
+        }
+
+        if ( !$force && (file_exists($dest) && !is_writable($dest) ) ) return FALSE;
+        
+        $info = getimagesize($src);
+        // list($src_width, $src_height, $mime) = getimagesize($src);
+        if ( !$info || !isset($info['mime']) ) return FALSE;
+        $src_width = $info[0];
+        $src_height = $info[1];
+        $src_x = 0; 
+        $src_y = 0;
+
+        self::get_thumbnail_size($src_width, $src_height, $thumb_width, $thumb_height, $src_x, $src_y);
+
+        $i_src = imagecreatefromstring(file_get_contents($src));
+        $i_dest = imagecreatetruecolor($thumb_width, $thumb_height);
+        imagealphablending($i_dest, FALSE);
+        $color = imageColorAllocateAlpha($i_src, 255, 255, 255, 127);
+        imagecolortransparent($i_dest, $color);
+        imagefill($i_dest, 0, 0, $color);
+        imagesavealpha($i_dest, TRUE);
+        imagecopyresampled($i_dest, $i_src, 0,0, $src_x, $src_y, $thumb_width, $thumb_height, $src_width, $src_height);
+
+        $res = null;
+        switch( $info['mime'] ) {
+        case 'image/gif':
+            $res = imagegif($i_dest,$dest);
+            break;
+        case 'image/png':
+            $res = imagepng($i_dest,$dest,9);
+            break;
+        case 'image/jpeg':
+            $res = imagejpeg($i_dest,$dest,100);
+            break;
+        }
+
+        if ( !$res ) return FALSE;
+        return TRUE;
+    }
+
+
+
+    /**
+     *  sets provided parameters thumb_width & thumb_height
+     *  based on the provided values, defaulting to module preferences, or global siteprefs
+     *
+     *  @param string $thumb_width - width of thumbnail to be created (default: module pref, sitepref)
+     *  @param string $thumb_height - height of thumbnail to be created (default: module pref, sitepref)
+     */
+    public static function get_required_thumbnail_size( &$thumb_width=0, &$thumb_height=0 )
+    {
+        $thumb_width = (int) $thumb_width;
+        $thumb_height = (int) $thumb_height;
+        if ( $thumb_width==0 && $thumb_height==0 ) { 
+            $module = cms_utils::get_module( 'ECB2' );
+            $ecb2_thumb_width = $module->GetPreference('thumbnailWidth', '');
+            $ecb2_thumb_height = $module->GetPreference('thumbnailHeight', '');
+            if ( isset($ecb2_thumb_width) || isset($ecb2_thumb_height) ) { // use module preferences
+                $thumb_width = (int)$ecb2_thumb_width;
+                $thumb_height = (int)$ecb2_thumb_height;
+
+            } else {    // use CMSMS preferences
+                $thumb_width = (int)cms_siteprefs::get('thumbnail_width',96);
+                $thumb_height = (int)cms_siteprefs::get('thumbnail_height',96);
+            }
+        }
+    }
+
+
+
+    /**
+     *  sets provided parameters thumb_width & thumb_height, src_y, & src_y
+     *  based on the provided values, defaulting to module preferences, or global siteprefs
+     *  if only width or height set (params or module pref) then height or width 100% (respectively)
+     *  thumbnail cropped to retain image ratio
+     *
+     *  @param array $src_width - width of the src image 
+     *  @param array $src_height - height of the src image
+     *  @param string $thumb_width - width of thumbnail to be created (default: module pref, sitepref)
+     *  @param string $thumb_height - height of thumbnail to be created (default: module pref, sitepref)
+     *  @param string $src_x - 0 or set if width cropping required
+     *  @param boolean $src_y - 0 or set if height cropping required
+     *  based on FileManager > class.filemanager_utils
+     */
+    public static function get_thumbnail_size( &$src_width, &$src_height, &$thumb_width=0, &$thumb_height=0, &$src_x=0, &$src_y=0 )
+    {
+        self::get_required_thumbnail_size( $thumb_width, $thumb_height );
+
+        // if one dimension not set calculate width/height ratio
+        if ( $thumb_width!=0 && $thumb_height!=0 ) {
+            $thumb_width = (int)$thumb_width;
+            $thumb_height = (int)$thumb_height;
+
+        } elseif ( $thumb_width==0 ) {  // but not $thumb_height
+            $thumb_width = (int)($src_width / $src_height * $thumb_height);
+
+        } else { // $thumb_height==0 but not $thumb_width
+            $thumb_height = (int)($src_height / $src_width * $thumb_width);
+
+        }
+
+        // set $src_x/$src_y to crop width/height if required & set $src_width/$src_height
+        if ( $src_height==0 || $thumb_height==0) return;
+        $ratio_src = $src_width / $src_height;
+        $ratio_thumb = $thumb_width / $thumb_height;
+        if ($ratio_src > $ratio_thumb) {    // src_wider_than_thumb
+            $src_x = (int)(($src_width - $src_height * $ratio_thumb) / 2); 
+            $src_width = (int)($src_height * $ratio_thumb); 
+
+        } else {                            // src_taller_than_thumb
+            $src_y = (int)(($src_height - $src_width / $ratio_thumb) / 2); 
+            $src_height = (int)($src_width / $ratio_thumb);
+
+        }
+
     }
 
 

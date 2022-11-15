@@ -11,7 +11,7 @@
 if (!isset($gCms)) exit;
 
 // remove permission USE_ECB2
-define('USE_ECB2', 'Use Extended Content Blocks 2');
+define('USE_ECB2', 'Use Extended Content Blocks');
 $db = $this->GetDb();
 if ( version_compare($oldversion, '1.4') < 0 ) {
     $this->RemovePermission(USE_ECB2);
@@ -49,6 +49,8 @@ if ( version_compare($oldversion, '2.0') < 0 ) {
         '/templates/input_repeater_template.tpl',
         '/templates/select_template.tpl',
         '/templates/sortablelist_template.tpl',
+        '/templates/_help.tpl',
+        '/templates/_changelog.tpl',
         '/action.refresh.php'
     ];
     foreach ($filesToRemove as $delFile) @unlink($module_path.$delFile);

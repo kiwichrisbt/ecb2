@@ -30,10 +30,12 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            'dir'             => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'auto_add_delete' => ['default' => true,  'filter' => FILTER_VALIDATE_BOOLEAN],
-            'default_value'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'description'     => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'dir'              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'thumbnail_width'  => ['default' => 0,    'filter' => FILTER_VALIDATE_INT],
+            'thumbnail_height' => ['default' => 0,    'filter' => FILTER_VALIDATE_INT],
+            'auto_add_delete'  => ['default' => true,  'filter' => FILTER_VALIDATE_BOOLEAN],
+            'default_value'    => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'description'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true
@@ -52,10 +54,12 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         if ( $this->options['auto_add_delete'] ) {
             $this->values = ecb2_FileUtils::autoAddDirImages( $this->values, $dir);
         }
+        $thumbnail_width = $this->options['thumbnail_width'];
+        $thumbnail_height = $this->options['thumbnail_height'];
+        ecb2_FileUtils::get_required_thumbnail_size( $thumbnail_width, $thumbnail_height );
 
         $actionparms = [];
         $action_url = $this->mod->create_url( 'm1_', 'do_UploadFiles', '', $actionparms);
-        // $json_values = htmlspecialchars(json_encode($this->values, JSON_HEX_APOS), ENT_QUOTES, 'UTF-8');
         $json_values = json_encode($this->values, JSON_HEX_APOS);
 
         $smarty = \CmsApp::get_instance()->GetSmarty();
@@ -64,9 +68,11 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         $tpl->assign( 'values', $this->values );
         $tpl->assign( 'json_values', $json_values );
         $tpl->assign( 'location', $location );
+        $tpl->assign( 'thumbnail_width', $thumbnail_width );
+        $tpl->assign( 'thumbnail_height', $thumbnail_height );
+        $tpl->assign( 'thumbnail_prefix', ecb2_FileUtils::THUMB_PREFIX );
         $tpl->assign( 'type', $this->field );
         $tpl->assign( 'action_url', $action_url );
-
         $tpl->assign( 'description', $this->options['description'] );
         return $tpl->fetch();
    
@@ -84,11 +90,11 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
     {
         $this->set_field_object( $inputArray );
     
-        // handle moving files from _tmp into galleryDir, deleting any unwanted files
+        // handle moving files from _tmp into galleryDir, create thumbnails & delete any unwanted files
         $galleryDir = ecb2_FileUtils::ECB2ImagesPath( $this->block_name, $this->id, '', 
             $this->options['dir'] );
         ecb2_FileUtils::updateGalleryDir( $this->field_object->values, $galleryDir,
-            $this->options['auto_add_delete'] );
+            $this->options['auto_add_delete'], $this->options['thumbnail_width'], $this->options['thumbnail_height'] );
     
         return $this->ECB2_json_encode_field_object(); 
     }

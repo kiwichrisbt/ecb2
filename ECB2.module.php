@@ -90,9 +90,9 @@ class ECB2 extends \CMSModule {
     public function LazyLoadFrontend() { return true; }         // ??????????????
     public function GetAuthor() { return 'Chris Taylor'; }
     public function GetAuthorEmail() { return 'chris@binnovative.co.uk'; }
-    public function GetChangeLog() { return $this->ProcessTemplate('_changelog.tpl'); }
+    public function GetChangeLog() { return $this->ProcessTemplate('admin_changelog.tpl'); }
     public function GetDescription() { return $this->Lang('module_description'); }
-    public function GetHelp() { return $this->get_help(); }
+    public function GetHelp() { return $this->get_admin(TRUE); }
     public function HasAdmin() { return true;}
     public function VisibleToAdminUser() { return ( $this->CheckPermission(self::MANAGE_PERM) ); }
     public function GetHeaderHTML() { return $this->get_admin_css_js(); }
@@ -146,12 +146,69 @@ class ECB2 extends \CMSModule {
 
 
 
+    // /**
+    //  *  @return string help content - now uses smarty templates
+    //  */
+    // public function get_help()
+    // {
+    //     $this->get_admin_css_js( TRUE );
+    //     $output = '';
+    //     $smarty = \CmsApp::get_instance()->GetSmarty();
+
+    //     $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_default.tpl'), null, null, $smarty );
+    //     $tpl->assign('mod', $this);
+    //     $output .= $tpl->fetch();
+
+    //     $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_content_blocks.tpl'), null, null, $smarty );
+    //     $tpl->assign('mod', $this);
+    //     $tpl->assign('field_types', self::FIELD_TYPES);
+    //     $tpl->assign('first_admin_only_field', self::FIRST_ADMIN_ONLY_FIELD);
+    //     $field_help = [];
+    //     $dummy_id = 0;
+    //     foreach(self::FIELD_TYPES as $field_type) {
+    //         $type = self::FIELD_DEF_PREFIX.$field_type;
+    //         $ecb2 = new $type($this, $this::DEMO_BLOCK_PREFIX.$field_type, $dummy_id, NULL, ['field' => $field_type], TRUE);
+    //         $field_help[$field_type] = $ecb2->get_field_help();
+    //     }
+    //     $tpl->assign('field_help', $field_help);
+    //     $output .= $tpl->fetch();
+
+
+    //     $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_options.tpl'), null, null, $smarty );
+    //     $tpl->assign('mod', $this);
+    //     $output .= $tpl->fetch();
+
+
+    //     $smarty = \CmsApp::get_instance()->GetSmarty();
+    //     $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_about.tpl'), null, null, $smarty );
+    //     $tpl->assign('mod', $this);
+    //     $output .= $tpl->fetch();
+
+    //     return $output;
+
+    // }
+
+
+
     /**
-     *  @return string help content - now uses smarty templates
+     *  @param boolean $help_only - only output the help tabs
+     *  @return string admin page content - uses smarty templates
      */
-    public function get_help()
+    public function get_admin( $help_only=FALSE )
     {
         $this->get_admin_css_js( TRUE );
+        $output = '';
+        $smarty = \CmsApp::get_instance()->GetSmarty();
+
+        $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_default.tpl'), null, null, $smarty );
+        $tpl->assign('mod', $this);
+        $tpl->assign('help_only', $help_only);
+        $output .= $tpl->fetch();
+
+        $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_content_blocks.tpl'), null, null, $smarty );
+        $tpl->assign('mod', $this);
+        $tpl->assign('field_types', self::FIELD_TYPES);
+        $tpl->assign('first_admin_only_field', self::FIRST_ADMIN_ONLY_FIELD);
         $field_help = [];
         $dummy_id = 0;
         foreach(self::FIELD_TYPES as $field_type) {
@@ -159,15 +216,26 @@ class ECB2 extends \CMSModule {
             $ecb2 = new $type($this, $this::DEMO_BLOCK_PREFIX.$field_type, $dummy_id, NULL, ['field' => $field_type], TRUE);
             $field_help[$field_type] = $ecb2->get_field_help();
         }
+        $tpl->assign('field_help', $field_help);
+        $output .= $tpl->fetch();
+
+        if (!$help_only) {
+            $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_options.tpl'), null, null, $smarty );
+            $tpl->assign('mod', $this);
+            $tpl->assign( 'customModuleName', $this->GetPreference('customModuleName', $this->Lang('extended_content_blocks')) );
+            $tpl->assign( 'adminSection', $this->GetPreference('adminSection', 'extensions') );
+            $tpl->assign( 'adminSectionOptions', $this->Lang('adminSectionOptions') );
+            $tpl->assign( 'thumbnailWidth', $this->GetPreference('thumbnailWidth', '') );
+            $tpl->assign( 'thumbnailHeight', $this->GetPreference('thumbnailHeight', '') );
+            $output .= $tpl->fetch();
+        }
 
         $smarty = \CmsApp::get_instance()->GetSmarty();
-        $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('_help.tpl'), null, null, $smarty );
+        $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_about.tpl'), null, null, $smarty );
         $tpl->assign('mod', $this);
-        $tpl->assign('field_types', self::FIELD_TYPES);
-        $tpl->assign('first_admin_only_field', self::FIRST_ADMIN_ONLY_FIELD);
-        $tpl->assign('field_help', $field_help);
-        return $tpl->fetch();
+        $output .= $tpl->fetch();
 
+        return $output;
     }
 
 

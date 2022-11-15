@@ -5,7 +5,7 @@
         {$description}<br>
 {/if}
 
-<div class="ecb2-dropzone dropzone-previews" data-dropzone-url="{$action_url}" data-block-name="{$block_name}" data-location="{$location}" data-dropzone-values="{$json_values|cms_escape}">
+<div class="ecb2-dropzone dropzone-previews" data-dropzone-url="{$action_url}" data-block-name="{$block_name}" data-location="{$location}" data-dropzone-values="{$json_values|cms_escape}" data-dropzone-thumbnail-width="{$thumbnail_width}" data-dropzone-thumbnail-height="{$thumbnail_height}" data-dropzone-thumbnail-prefix="{$thumbnail_prefix}">
     <div class="fallback ecb2-fallback">
         <input name="file" type="file" multiple />
     </div>
@@ -15,7 +15,7 @@
     <div class="dropzone-preview-template">
         <div class="dz-preview dz-file-preview" style="display:none;">
             <input id="" name="" class="dz-input-filename" type="hidden" value=""/>
-            <div class="dz-image">
+            <div class="dz-image" style="{if $thumbnail_width}width:{$thumbnail_width}px;{/if}{if $thumbnail_height} height:{$thumbnail_height}px;{/if}">
                 <img data-dz-thumbnail="">
             </div>  
             <div class="dz-details">
@@ -31,7 +31,7 @@
     </div>
 
 {*    <div class="dz-test">TEST - click here</div>*}
-    <div class="dz-upload-prompt ecb2-btn ecb2-btn-default" style="width:120px; height:120px;"><span class="ecb2-icon-plus"></span>Drop images here or click to upload</div>
+    <div class="dz-upload-prompt ecb2-btn ecb2-btn-default" style="{if $thumbnail_width}width:{$thumbnail_width}px;{/if}{if $thumbnail_height} height:{$thumbnail_height}px;{/if}"><span class="ecb2-icon-plus"></span>Drop images here or click to upload</div>
 
 </div>
 

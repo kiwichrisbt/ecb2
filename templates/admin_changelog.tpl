@@ -1,4 +1,4 @@
-{* ECB2 _changelog.tpl *}
+{* ECB2 admin_changelog.tpl *}
 
 
 <h3>Version 1.99.???? - 21Jul22 ????</h3>

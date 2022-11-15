@@ -14,6 +14,23 @@ if( !$this->CheckPermission(ECB2::MANAGE_PERM) ) {
     return;
 }
 
-echo $this->get_help();
+
+// process edits if form submitted - Save Options
+if ( isset($params['submit']) ) {
+    if ( !empty($params['customModuleName']) ) {
+        $this->SetPreference('customModuleName', $params['customModuleName']);
+    }
+    if ( !empty($params['adminSection']) ) {
+        $this->SetPreference('adminSection', $params['adminSection']);
+    }
+    $this->SetPreference('thumbnailWidth', $params['thumbnailWidth']);
+    $this->SetPreference('thumbnailHeight', $params['thumbnailHeight']);
+
+    $this->SetMessage( $this->Lang('options_saved'));
+    $this->RedirectToAdminTab('options');
+}
+
+
+echo $this->get_admin();
 
 

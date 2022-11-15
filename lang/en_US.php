@@ -5,6 +5,15 @@ $lang['add_item'] = 'Add item';
 $lang['add_line'] = 'Add line';
 $lang['admin_only_help'] = 'Admin only fields';
 $lang['admin_only_help_intro'] = 'The following fields are only used to format and add content to the admin pages. They do not provide any useful content for the frontend website pages.';
+$lang['adminSectionOptions'] = [
+    'main' => 'main',
+    'content' => 'content',
+    'layout' => 'layout',
+    'usersgroups' => 'usersgroups',
+    'extensions' => 'extensions',
+    'admin' => 'siteadmin',
+    'myprefs' => 'myprefs'
+];
 
 
 $lang['content_block_label_selected'] = 'Selected';
@@ -21,10 +30,16 @@ $lang['extended_content_blocks'] = 'Extended Content Blocks';
 $lang['fields'] = 'Fields';
 $lang['field_error'] = 'Please specify a correct field parameter for the ECB2 content block \'%s\'.';
 $lang['field_types'] = 'Field types';
-$lang['friendlyname'] = 'Extended Content Blocks 2';
+$lang['friendlyname'] = 'Extended Content Blocks';
 
 $lang['gallery_module_error'] = 'Gallery module is not installed.';
 
+$lang['help_thumbnailWidth'] = 'Provides a default thumbnail width for all ECB2 generated thumbnails. If width is not set the ratio of the image will be used to calculate it.<br>
+If both width and height are not set, the CMSMS Thumbnail Width & Height will be used.<br>
+Thumnbail width & height can also be set by each content block.';
+$lang['help_thumbnailHeight'] = 'Provides a default thumbnail height for all ECB2 generated thumbnails. If height is not set the ratio of the image will be used to calculate it.<br>
+If both width and height are not set, the CMSMS Thumbnail Width & Height will be used.<br>
+Thumnbail width & height can also be set by each content block.';
 $lang['hide'] = 'Hide';
 
 $lang['installed'] = 'Module version %s installed.';
@@ -35,22 +50,32 @@ $lang['module_error'] = 'The \'%s\' module is not available.';
 $lang['need_permission'] = 'You need permission to use this module';
 $lang['none_selected'] = '--- none ---';
 
+$lang['options'] = 'Options';
+$lang['options_saved'] = 'Options saved';
+
 $lang['parameter_missing'] = 'Please specify a \'%s\' parameter for the ECB2 content block \'%s\'.';
-$lang['postinstall'] = 'Extended Content Blocks 2 was successful installed';
-$lang['postuninstall'] = 'Extended Content Blocks 2 was successful uninstalled';
+$lang['postinstall'] = 'Extended Content Blocks was successful installed';
+$lang['postuninstall'] = 'Extended Content Blocks was successful uninstalled';
 
 $lang['really_uninstall'] = 'Really? Are you sure you want to uninstall the ECB2 module?';
 $lang['remove'] = 'Remove';
 $lang['remove_line'] = 'Remove line';
 
+$lang['save_options'] = 'Save Options';
 $lang['selected'] = 'Selected';
 $lang['select'] = 'Select';
 
 $lang['template_error'] = 'Invalid template name \'%s\'';
+$lang['title_customModuleName'] = 'Custom Module Name';
+$lang['title_adminSection'] = 'Module Admin Section';
+$lang['title_thumbnailWidth'] = 'Thumbnail width';
+$lang['title_thumbnailHeight'] = 'Thumbnail height';
 
 $lang['udt_error'] = 'User Defined Tag \'%s\' does not exist';
 $lang['uninstalled'] = 'Module Uninstalled.';
 $lang['upgraded'] = 'Module upgraded to version %s.';
+
+
 
 
 
@@ -71,7 +96,7 @@ $lang['upgraded'] = 'Module upgraded to version %s.';
 
 
 $lang['general_c'] = <<<'EOD'
-<p>The Extended Content Blocks 2 (ECB2) module to give you more page editing options. Many aditional content block types are available to use in each page template. e.g. dropdown, colour picker, checkbox, radio button, and many more.</p>
+<p>The Extended Content Blocks (ECB2) module to give you more page editing options. Many aditional content block types are available to use in each page template. e.g. dropdown, colour picker, checkbox, radio button, and many more.</p>
 <br>
 
 <h3>Usage</h3>
@@ -110,7 +135,7 @@ $lang['about_c'] = <<<'EOD'
 <ul>
     <li>block (required) - must stay the same</li>
     <li>field (required) - choose the appropriate ECB2 field
-    <li>other parameters will be required depending on the field and preiovuis options set in CGContentUtils</li>
+    <li>other parameters will be required depending on the field and previous options set in CGContentUtils</li>
 </ul>
 <p>Check all are working as expected, then CGContentUtils can be uninstalled.</p>
 <br>
