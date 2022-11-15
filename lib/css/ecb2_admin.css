@@ -601,7 +601,7 @@
 }
 
 .ecb2-dropzone .dz-upload-prompt {display:inline-flex; align-items:center; flex-direction:column;
-    justify-content:center; margin:0 1rem 1rem 0;}
+    justify-content:center; min-width:80px; margin:0 1rem 1rem 0;}
 .ecb2-dropzone .dz-upload-prompt .ecb2-icon-plus {font-size:1rem; line-height:2rem;}
 .ecb2-dropzone:hover .dz-upload-prompt {background-color:#ffca95; border:1px solid #ffc39d;}
 .ecb2-dropzone .dz-upload-prompt:hover {color:#fff; border:1px solid #fa6704; background:#fa8004;}

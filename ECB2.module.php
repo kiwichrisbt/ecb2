@@ -146,50 +146,6 @@ class ECB2 extends \CMSModule {
 
 
 
-    // /**
-    //  *  @return string help content - now uses smarty templates
-    //  */
-    // public function get_help()
-    // {
-    //     $this->get_admin_css_js( TRUE );
-    //     $output = '';
-    //     $smarty = \CmsApp::get_instance()->GetSmarty();
-
-    //     $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_default.tpl'), null, null, $smarty );
-    //     $tpl->assign('mod', $this);
-    //     $output .= $tpl->fetch();
-
-    //     $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_content_blocks.tpl'), null, null, $smarty );
-    //     $tpl->assign('mod', $this);
-    //     $tpl->assign('field_types', self::FIELD_TYPES);
-    //     $tpl->assign('first_admin_only_field', self::FIRST_ADMIN_ONLY_FIELD);
-    //     $field_help = [];
-    //     $dummy_id = 0;
-    //     foreach(self::FIELD_TYPES as $field_type) {
-    //         $type = self::FIELD_DEF_PREFIX.$field_type;
-    //         $ecb2 = new $type($this, $this::DEMO_BLOCK_PREFIX.$field_type, $dummy_id, NULL, ['field' => $field_type], TRUE);
-    //         $field_help[$field_type] = $ecb2->get_field_help();
-    //     }
-    //     $tpl->assign('field_help', $field_help);
-    //     $output .= $tpl->fetch();
-
-
-    //     $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_options.tpl'), null, null, $smarty );
-    //     $tpl->assign('mod', $this);
-    //     $output .= $tpl->fetch();
-
-
-    //     $smarty = \CmsApp::get_instance()->GetSmarty();
-    //     $tpl = $smarty->CreateTemplate( $this->GetTemplateResource('admin_about.tpl'), null, null, $smarty );
-    //     $tpl->assign('mod', $this);
-    //     $output .= $tpl->fetch();
-
-    //     return $output;
-
-    // }
-
-
-
     /**
      *  @param boolean $help_only - only output the help tabs
      *  @return string admin page content - uses smarty templates

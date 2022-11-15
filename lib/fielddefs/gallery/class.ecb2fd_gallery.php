@@ -30,12 +30,16 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            'dir'              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'thumbnail_width'  => ['default' => 0,    'filter' => FILTER_VALIDATE_INT],
-            'thumbnail_height' => ['default' => 0,    'filter' => FILTER_VALIDATE_INT],
-            'auto_add_delete'  => ['default' => true,  'filter' => FILTER_VALIDATE_BOOLEAN],
-            'default_value'    => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'description'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'dir'              => ['default' => '',     'filter' => FILTER_SANITIZE_STRING],
+            'resize_width'     => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
+            'resize_height'    => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
+            'resize_method'    => ['default' => '',     'filter' => FILTER_SANITIZE_STRING],
+            'thumbnail_width'  => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
+            'thumbnail_height' => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
+            'max_files'        => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
+            'auto_add_delete'  => ['default' => true,   'filter' => FILTER_VALIDATE_BOOLEAN],
+            'default_value'    => ['default' => '',     'filter' => FILTER_SANITIZE_STRING], 
+            'description'      => ['default' => '',     'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true
@@ -54,9 +58,16 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         if ( $this->options['auto_add_delete'] ) {
             $this->values = ecb2_FileUtils::autoAddDirImages( $this->values, $dir);
         }
+        $resize_method = ($this->options['resize_method']=='crop') ? 'crop' : ''; // default: 'contain'
         $thumbnail_width = $this->options['thumbnail_width'];
         $thumbnail_height = $this->options['thumbnail_height'];
         ecb2_FileUtils::get_required_thumbnail_size( $thumbnail_width, $thumbnail_height );
+        $max_files = $this->options['max_files'];
+        if ( $max_files>0 ) {
+            $max_files_text = $this->mod->Lang( 'max_files_text', $max_files );
+        } else {
+            $max_files_text = $this->mod->Lang( 'max_files_unlimited_text' );
+        }
 
         $actionparms = [];
         $action_url = $this->mod->create_url( 'm1_', 'do_UploadFiles', '', $actionparms);
@@ -68,8 +79,13 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         $tpl->assign( 'values', $this->values );
         $tpl->assign( 'json_values', $json_values );
         $tpl->assign( 'location', $location );
+        $tpl->assign( 'resize_width', $this->options['resize_width'] );
+        $tpl->assign( 'resize_height', $this->options['resize_height'] );
+        $tpl->assign( 'resize_method', $resize_method );
         $tpl->assign( 'thumbnail_width', $thumbnail_width );
         $tpl->assign( 'thumbnail_height', $thumbnail_height );
+        $tpl->assign( 'max_files', $max_files );
+        $tpl->assign( 'max_files_text', $max_files_text );
         $tpl->assign( 'thumbnail_prefix', ecb2_FileUtils::THUMB_PREFIX );
         $tpl->assign( 'type', $this->field );
         $tpl->assign( 'action_url', $action_url );

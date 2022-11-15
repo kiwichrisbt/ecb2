@@ -44,6 +44,8 @@ $lang['hide'] = 'Hide';
 
 $lang['installed'] = 'Module version %s installed.';
 
+$lang['max_files_text'] = 'You have already uploaded the maximum of %s files';
+$lang['max_files_unlimited_text'] = 'You have already uploaded the maximum of unlimited files';
 $lang['module_description'] = 'This module enables extra types of content block for page templates';
 $lang['module_error'] = 'The \'%s\' module is not available.';
 

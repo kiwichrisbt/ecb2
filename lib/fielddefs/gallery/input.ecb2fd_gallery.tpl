@@ -5,7 +5,7 @@
         {$description}<br>
 {/if}
 
-<div class="ecb2-dropzone dropzone-previews" data-dropzone-url="{$action_url}" data-block-name="{$block_name}" data-location="{$location}" data-dropzone-values="{$json_values|cms_escape}" data-dropzone-thumbnail-width="{$thumbnail_width}" data-dropzone-thumbnail-height="{$thumbnail_height}" data-dropzone-thumbnail-prefix="{$thumbnail_prefix}">
+<div class="ecb2-dropzone dropzone-previews" data-dropzone-url="{$action_url}" data-block-name="{$block_name}" data-location="{$location}" data-dropzone-values="{$json_values|cms_escape}" data-dropzone-thumbnail-width="{$thumbnail_width}" data-dropzone-thumbnail-height="{$thumbnail_height}" data-dropzone-thumbnail-prefix="{$thumbnail_prefix}"{if $resize_width} data-dropzone-resize-width="{$resize_width}"{/if}{if $resize_height} data-dropzone-resize-height="{$resize_height}"{/if}{if $resize_method} data-dropzone-resize-method="{$resize_method}"{/if}{if $max_files>0} data-dropzone-max-files="{$max_files}"{/if} data-dropzone-max-files-text="{$max_files_text}">
     <div class="fallback ecb2-fallback">
         <input name="file" type="file" multiple />
     </div>
@@ -31,7 +31,7 @@
     </div>
 
 {*    <div class="dz-test">TEST - click here</div>*}
-    <div class="dz-upload-prompt ecb2-btn ecb2-btn-default" style="{if $thumbnail_width}width:{$thumbnail_width}px;{/if}{if $thumbnail_height} height:{$thumbnail_height}px;{/if}"><span class="ecb2-icon-plus"></span>Drop images here or click to upload</div>
+    <div class="dz-upload-prompt ecb2-btn ecb2-btn-default" style="{*if $thumbnail_width}width:{$thumbnail_width}px;{/if*}{if $thumbnail_height} height:{$thumbnail_height}px;{/if}" title="Drop images here or click to upload"><span class="ecb2-icon-plus"></span></div>
 
 </div>
 
