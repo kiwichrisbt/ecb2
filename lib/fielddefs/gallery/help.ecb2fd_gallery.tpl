@@ -1,5 +1,5 @@
 {* help.ecb2fd_gallery.tpl *}
-<p>The gallery field creates a simple text input, for storing a single string.</p>
+<p>The gallery field enables multiple images to added by dragging and dropping or uploading. Thumbnails of the images are displayed and created on the server and images can optionally be automatically resized before they are uploaded.</p>
 
 <fieldset>
     {$fielddef->get_demo_input([])}

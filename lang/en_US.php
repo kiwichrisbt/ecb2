@@ -25,6 +25,7 @@ $lang['drop_required_items'] = 'Drop %s required items here';
 
 $lang['error_assign_required'] = 'The assign parameter is required to correctly output multiple values.';
 $lang['error_filename'] = 'The file \'%s\' for the \'%s\' parameter could not be found.';
+$lang['error_field_type_name'] = 'A field type or name is invalid.';
 $lang['extended_content_blocks'] = 'Extended Content Blocks';
 
 $lang['fields'] = 'Fields';

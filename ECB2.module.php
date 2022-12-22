@@ -35,9 +35,9 @@ class ECB2 extends \CMSModule {
         'textarea',
         'dropdown',
         'sortablelist',
-        'gallery',
         'checkbox',
         'radio',
+        'gallery',
         'color_picker',
         'date_time_picker',
         'file_selector',
@@ -45,6 +45,7 @@ class ECB2 extends \CMSModule {
         'gallery_picker',
         'module_picker',
         'hidden',
+        'group',
             // admin only fields below here... (only because of a help subheading)
         'admin_fieldset_start',
         'admin_fieldset_end',
@@ -219,7 +220,7 @@ class ECB2 extends \CMSModule {
 
 
     /**
-     * Get page content representing the UI for a module-content-block
+     * Get admin page content representing the UI for a module-content-block
      * @param string $blockName
      * @param mixed $value Might be null
      * @param array $params
@@ -254,6 +255,8 @@ class ECB2 extends \CMSModule {
         $type = self::FIELD_DEF_PREFIX.$params["field"];
         $ecb2 = new $type($this, $blockName, $content_obj->Id(), $value, $params, $adding);
 
+        if ( !empty($ecb2->allowed_sub_fields) ) $ecb2->create_sub_fields( $params );
+
         return $ecb2->get_content_block_input();
 
     }
@@ -276,7 +279,7 @@ class ECB2 extends \CMSModule {
     public function GetContentBlockFieldValue( $blockName, $blockParams, $inputParams, ContentBase $content_obj )
     {
         // returned strings are stored in the default 'content_props' table as a string
-        // arrays are always stored as json in 'content_props' - once json always json     
+        // arrays are always stored as json in 'content_props' - once json always json
         if ( !isset($inputParams[$blockName]) ) {     // prob new page
             return '';
 
@@ -291,7 +294,8 @@ class ECB2 extends \CMSModule {
         $type = self::FIELD_DEF_PREFIX.$blockParams['field'];
         $ecb2 = new $type($this, $blockName, $id, $value, $blockParams, $adding);
 
-        return $ecb2->get_content_block_value( $inputParams[$blockName] );
+        $ecb2_value = $ecb2->get_content_block_value( $inputParams[$blockName] );
+        return $ecb2_value;
 
     }
 

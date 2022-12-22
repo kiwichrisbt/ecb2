@@ -17,7 +17,7 @@
         {cms_textarea name=$block_name enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value}
 
 {elseif !$repeater && $use_json_format}
-        <input type="hidden" name="{$block_name}[type]" value="{$type}"/>
+        {* <input type="hidden" name="{$block_name}[type]" value="{$type}"/> *}
         {cms_textarea name="$block_name[]" enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$values[0]}
 
 {else}{* $repeater *}
@@ -27,9 +27,9 @@
         </div><br>
     {/if}
 
-        <input type="hidden" name="{$block_name}[type]" value="{$type}"/>
+        {* <input type="hidden" name="{$block_name}[type]" value="{$type}"/> *}
         
-        <div id="{$block_name}-repeater" class="ecb_repeater sortable {if $wysiwyg}wysiwyg{/if}" data-block-name="{$block_name}" {if $max_blocks>0}data-max-blocks="{$max_blocks}"{/if}>
+        <div id="{$block_name}-repeater" class="ecb_repeater sortable {if $wysiwyg}wysiwyg{/if}" data-block-name="{$block_name}" data-highest-row="{$values|@count}" {if $max_blocks>0}data-max-blocks="{$max_blocks}"{/if}>
 
             <div class="repeater-wrapper-template" style="display:none;">
                 <div class="drag-panel">
@@ -48,7 +48,7 @@
                 <div class="drag-panel">
                     <span class="ecb2-icon-grip-dots-vertical-solid"></span>
                 </div>
-                {cms_textarea id="repeater-field-{$block_name}-{$value@iteration}" name="$block_name[]" class="repeater-field" enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value addtext="data-repeater=\"#{$block_name}-repeater\""}
+                {cms_textarea id="{$block_name}_r_{$value@iteration}" name="{$block_name}[r_{$value@iteration}]" class="repeater-field" enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value addtext="data-repeater=\"#{$block_name}-repeater\""}
                 <div class="right-panel">
                     <button class="ecb2-repeater-remove ecb2-btn ecb2-btn-default ecb2-icon-only" data-repeater="#{$block_name}-repeater" title="{$mod->Lang('remove_line')}" role="button" aria-disabled="false"><span class="ecb2-icon-trash-can-regular"></span></button>
                 </div>

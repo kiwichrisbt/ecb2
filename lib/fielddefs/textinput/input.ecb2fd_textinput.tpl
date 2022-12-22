@@ -4,11 +4,19 @@
 {if !empty($description)}
         {$description}<br>
 {/if}
-{if !$repeater}
+
+{if $is_sub_field && is_null($sub_row_number)}{* sub_field template *}
+        <input id="" name="" class="repeater-field" value="" size="{$size}" maxlength="{$max_length}" data-repeater="#{$sub_parent_block}-repeater" data-field-name="{$block_name}"/>
+
+{elseif $is_sub_field}
+        <input id="{$sub_parent_block}_r_{$sub_row_number}_{$block_name}" name="{$sub_parent_block}[r_{$sub_row_number}][{$block_name}]" class="repeater-field" value="{$value}" size="{$size}" maxlength="{$max_length}" data-repeater="#{$sub_parent_block}-repeater" data-field-name="{$block_name}"/>
+
+{elseif !$repeater}
     {if !$use_json_format}
         <input type="text" name="{$block_name}" size="{$size}" maxlength="{$max_length}" value="{$value}"/>
+
     {else}
-        <input type="hidden" id="{$block_name}" name="{$block_name}[type]" value="{$type}"/>
+        {* <input type="hidden" id="{$block_name}" name="{$block_name}[type]" value="{$type}"/> *}
         <input type="text" name="{$block_name}[]" size="{$size}" maxlength="{$max_length}" value="{$values[0]}"/>
     {/if}
 
@@ -19,9 +27,9 @@
         </div><br>
     {/if}
 
-        <input type="hidden" id="{$block_name}" name="{$block_name}[type]" value="{$type}"/>
+        {* <input type="hidden" id="{$block_name}" name="{$block_name}[type]" value="{$type}"/> *}
         
-        <div id="{$block_name}-repeater" class="ecb_repeater sortable" data-block-name="{$block_name}" {if $max_blocks>0}data-max-blocks="{$max_blocks}"{/if}>
+        <div id="{$block_name}-repeater" class="ecb_repeater sortable" data-block-name="{$block_name}" data-highest-row="{$values|@count}" {if $max_blocks>0}data-max-blocks="{$max_blocks}"{/if}>
         
             <div class="repeater-wrapper-template" style="display:none;">
                 <div class="drag-panel">
@@ -40,7 +48,7 @@
                 <div class="drag-panel">
                     <span class="ecb2-icon-grip-dots-vertical-solid"></span>
                 </div>
-                <input id="repeater-field-{$block_name}-{$value@iteration}" name="{$block_name}[]" class="repeater-field" size="{$size}" maxlength="{$max_length}" value="{$value}" data-repeater="#{$block_name}-repeater"/>
+                <input id="{$block_name}_r_{$value@iteration}" name="{$block_name}[r_{$value@iteration}]" class="repeater-field" size="{$size}" maxlength="{$max_length}" value="{$value}" data-repeater="#{$block_name}-repeater"/>
                 <div class="right-panel">
                     <button class="ecb2-repeater-remove ecb2-btn ecb2-btn-default ecb2-icon-only" data-repeater="#{$block_name}-repeater" title="{$mod->Lang('remove_line')}" role="button" aria-disabled="false"><span class="ecb2-icon-trash-can-regular"></span></button>
                 </div>

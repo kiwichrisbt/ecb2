@@ -10,7 +10,7 @@
         <input name="file" type="file" multiple />
     </div>
 
-    <input type="hidden" class="type" name="{$block_name}[type]" value="{$type}"/>
+    {* <input type="hidden" class="type" name="{$block_name}[type]" value="{$type}"/> *}
 
     <div class="dropzone-preview-template">
         <div class="dz-preview dz-file-preview" style="display:none;">

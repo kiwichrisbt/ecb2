@@ -15,6 +15,7 @@ abstract class ecb2_FieldDefBase
     protected $field;
     protected $value;               // used when using single string values ECB2 v1 format
     protected $values;              // used when json format 
+    protected $sub_fields;          // when multiple fields of different types
     protected $field_object;        // stdClass object that contains all values for saving
     protected $adding;
     protected $default_parameters;
@@ -25,8 +26,14 @@ abstract class ecb2_FieldDefBase
     protected $parameter_aliases;
     protected $demo_count;
     protected $error;
+    protected $is_sub_field;
+    protected $sub_parent_block;
+    protected $sub_row_number;
+    protected $sub_fields_ignored_params;
+    protected $cached_template;
     
     public $use_json_format;
+    public $allowed_sub_fields;
    
 
     /**
@@ -44,6 +51,7 @@ abstract class ecb2_FieldDefBase
         $this->id = $id;
         $this->value = NULL;
         $this->values = [];
+        $this->sub_fields = NULL;
         $this->field_object = NULL;
         $this->alias = munge_string_to_url($blockName, TRUE);
         $this->adding = $adding;
@@ -51,6 +59,11 @@ abstract class ecb2_FieldDefBase
         $this->default_parameters = [];
         $this->options = [];
         $this->restrict_params = TRUE;
+        $this->allowed_sub_fields = [];
+        $this->is_sub_field = FALSE;
+        $this->sub_parent_block = '';
+        $this->sub_row_number = NULL;
+        $this->sub_fields_ignored_params = [];
         if ( isset($params['field_alias_used']) ) {
             $this->field_alias_used = $params['field_alias_used'];
         }
@@ -62,10 +75,14 @@ abstract class ecb2_FieldDefBase
 
         $json_data = json_decode($value);
         if ( json_last_error()===JSON_ERROR_NONE ) {
-            // JSON is valid
+            // JSON is valid - either use $json_data->values OR $json_data->sub_fields - NOT both!
             $this->json_data = $json_data;
-            $this->values = !empty($json_data->values) ? $json_data->values : [];
             $this->use_json_format = TRUE;
+            if ( !empty($json_data->values) ) {
+                $this->values = $json_data->values;  
+            } elseif ( !empty($json_data->sub_fields) ) {
+                $this->values = $json_data->sub_fields;
+            }
 
         } elseif ( $this->use_json_format ) { // but JSON not valid
             $this->values[] = $value;
@@ -162,20 +179,120 @@ abstract class ecb2_FieldDefBase
 
 
 
+    /**
+     *  create a set of sub_fields from Content Block subX_params ...
+     *  sets $this->sub_fields with array of sub_field ecb2_FieldDef's
+     *  @param array $params - all Content Block params
+     */
+    public function create_sub_fields($params)
+    {
+        $sub_params = [];
+        $sub_field_list = [];
+        // get all sub_params that specify sub_fields options
+        foreach ($params as $key => $value) {
+            if ( preg_match('/^sub([0-9]*)_([A-Za-z0-9_]+)/', $key, $matches) ) {
+                $sub_params[$matches[1]][$matches[2]] = $value;
+            }
+        }
+
+        foreach ($sub_params as $sub_field_params) {
+            // test for valid field type & name
+            if ( !isset($sub_field_params['field']) || 
+                 !in_array($sub_field_params['field'], $this->allowed_sub_fields) ||
+                 !isset($sub_field_params['name']) || 
+                 !preg_match('/^[A-Za-z][A-Za-z0-9_]*/', $sub_field_params['name']) ) 
+            {
+                $this->error = $this->mod->Lang('error_field_type_name', );
+                return;  
+            } 
+
+            $sub_type = $this->mod::FIELD_DEF_PREFIX.$sub_field_params['field'];
+            $sub_name = $sub_field_params['name'];
+            $sub_params = $sub_field_params;    // all except 'name'
+            unset( $sub_params['name'] ); 
+            // remove any sub_fields_ignored_params
+            foreach ($sub_field_params as $tmp_param_name => $tmp_value) {
+                if ( in_array($tmp_param_name, $this->sub_fields_ignored_params) ) {
+                    unset( $sub_params[$tmp_param_name] );
+                }
+            }
+            $sub_value = '';  // temporary value only - is updated before each field generated
+
+            $sub_field = new $sub_type($this->mod, $sub_name, $this->id, $sub_value, $sub_params, $this->adding);
+            $sub_field->set_as_subfield($this->block_name);
+            $sub_fields[] = $sub_field;
+        }
+        $this->sub_fields = $sub_fields;
+
+    }
+
+
 
     /**
-     *  returns the default input smarty template contents
+     *  set the $this->value of the fielddef when being used mulitple times within a group
+     *  @param object $fields - all values for the entire row of fields in a group
+     *  @param integer $row_number - to be used to group all row values together
+     */
+    public function set_sub_field_value($fields, $row_number)
+    {
+        // set value to default
+        if ( isset($this->options['default']) ) {   
+            $this->value = $this->options['default'];
+        }
+        // set to fields value if available
+        if ( isset($fields->{$this->block_name}) ) {
+            $this->value = $fields->{$this->block_name};
+        }
+        $this->sub_row_number = $row_number;
+
+    }
+
+
+
+    /**
+     *  @return string Label for the field - defaults to block_name if label not set
+     */
+    public function get_field_label()
+    {
+        $label = ( !empty($this->options['label']) ) ? $this->options['label'] : $this->block_name;
+        return $label;
+
+    }
+
+
+
+    /**
+     *  sets the fielddef as a sub_field and sets the sub_parent_block
+     *  @param string $parent_block_name - block_name of the parent block
+     */
+    public function set_as_subfield($parent_block_name)
+    {
+        $this->is_sub_field = TRUE;
+        $this->sub_parent_block = $parent_block_name;
+
+    }
+
+
+
+    /**
+     *  returns the default input smarty template contents 
+     *  retrieved from cached_template if already read and saved
      *  see LISEFielddefBase for ideas :)
      */
     protected function get_template()
     {
+        if ( !empty($this->cached_template) ) {
+            return $this->cached_template;
+        }
+
         // default input smarty template filename
         $filename = $this->mod->GetModulePath() .DIRECTORY_SEPARATOR. 'lib' .DIRECTORY_SEPARATOR. 
             'fielddefs' .DIRECTORY_SEPARATOR. $this->field .DIRECTORY_SEPARATOR. 
             $this->mod::INPUT_TEMPLATE_PREFIX . $this->mod::FIELD_DEF_PREFIX . $this->field . '.tpl';
 
         if (is_readable($filename)) {
-            return @file_get_contents($filename);
+            $this->cached_template = @file_get_contents($filename);
+            return $this->cached_template;
         }
 
     }
@@ -372,13 +489,13 @@ abstract class ecb2_FieldDefBase
 
     /**
      *  Data entered by the editor is processed before its saved in props table
-     *  Method can be overidden by child class
+     *  Method can be overidden by child class, e.g. gallery
      *  
      *  @return string formatted json containing all field data ready to be saved & output
      */
     public function get_content_block_value( $inputArray ) 
     {
-        $this->set_field_object( $inputArray );
+        $this->field_object = $this->create_field_object( $inputArray );
 
         return $this->ECB2_json_encode_field_object();
     }
@@ -386,27 +503,55 @@ abstract class ecb2_FieldDefBase
 
 
     /**
-     *  sets $this->field_object to stdClass ecb2 field object
      *  @param array $inputArray - 1 or more array items from editing the ecb2 field 
+     *  @return stdClass field_object in the format of:
+     *        (
+     *            [values] => Array {
+     *                [0] => '1c #1 - changed?'
+     *                [1] => '1c .... not line 4 :)'
+     *                [2] => '1c line #2 - changed?'
+     *                ...
+     *            }
+     *                OR                  // if e.g. type is a group
+     *            [sub_fields] => Array {
+     *                [0] => field stdClass Object {
+     *                    [field_name1] => '1st text'    // $test1c->sub_fields[0]->field_name1 = '1st text' 
+     *                    [field_name2] => 'another text line'
+     *                }
+     *                [1] => field stdClass Object {
+     *                     ...
+     *                } 
+     *            }
+     *            [param1] => 'some_text_string'
+     *        )
      */
-    protected function set_field_object( $inputArray = [] ) 
+    protected function create_field_object( $inputArray = [] ) 
     {    
         $field_object = new stdClass();
-        $field_object->values = [];        // ensure values set as empty array as a minimum
-        $i = 0;
         foreach ($inputArray as $key => $value) {
-            if ( $key=='children' ) {
-                $field_object->children = create_field_object( $value );
-            
-            } elseif ( is_numeric($key) ) { // is a value
-                $field_object->values[] = $value;
+            if ( preg_match('/^r_[0-9]+$/', $key) ) { // is a value or child
+                if ( is_array($value) ) {   // sub_fields
+                    $sub_fields = [];
+                    foreach ($value as $field_name => $child_value) {
+                        $sub_fields[$field_name] = $child_value;
+                    }
+                    $field_object->sub_fields[] = $sub_fields;
+
+                } else {    // value
+                    $field_object->values[] = $value;
+
+                }
             
             } else { // is other data
                 $field_object->$key = $value;
 
             }
         }
-        $this->field_object = $field_object;
+
+        if ( !isset($field_object->values) && !isset($field_object->sub_fields) ) {
+            $field_object->values = [];        // ensure values set as empty array as a minimum
+        }
+        return $field_object;
     }
 
 

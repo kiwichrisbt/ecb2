@@ -36,6 +36,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
         ];
         $this->default_parameters = [
             'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'size'          => ['default' => 30,    'filter' => FILTER_VALIDATE_INT],
             'max_length'    => ['default' => 255,   'filter' => FILTER_VALIDATE_INT],
             'repeater'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
@@ -59,12 +60,14 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
                 $this->values = explode('||', $this->value);
             }
         }
+        if ( $this->options['repeater'] && empty($this->values) ) $this->values[] = NULL;
 
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign( 'mod', $this->mod );
         $tpl->assign( 'block_name', $this->block_name );
         $tpl->assign( 'type', $this->field );
+        $tpl->assign( 'label', $this->options['label'] );
         $tpl->assign( 'value', $this->value );
         $tpl->assign( 'values', $this->values );
         $tpl->assign( 'size', $this->options['size'] );
@@ -75,6 +78,9 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
         $tpl->assign( 'assign', $this->options['assign'] );
         $tpl->assign( 'field_alias_used', $this->field_alias_used );
         $tpl->assign( 'use_json_format', $this->use_json_format );
+        $tpl->assign( 'is_sub_field', $this->is_sub_field );
+        $tpl->assign( 'sub_parent_block', $this->sub_parent_block );
+        $tpl->assign( 'sub_row_number', $this->sub_row_number );
         return $tpl->fetch();
    
     }

@@ -64,39 +64,16 @@ Decision: change to using json format (instead of separate database). Other modu
 
 define a format for extend data that is flexible enough that it does not need to change in the future:
 
-output is a field object (stdObject)
+- see ecb2_FieldDefBase -> create_field_object() for notes in comments
+
+- output is a field object (stdObject)
         each object has:
-            - a type
             - either (depending on 'type'):
                 values - an array or sorted 
                 or
-                children - an array of field objects
-            - extra (params - need to try this to define)
+                sub_fields - an array of field objects
+            - extra (params - need to try this to define) - not yet used
 
 
 textinput e.g. test1c ... either just a single value (OLD style)
 
- stdClass Object
-        (
-            [type] => textinput or ... group                // $test1c->type = 'group'
-            [values] Array {
-                [0] => '1c #1 - changed?'
-                [1] => '1c .... not line 4 :)'
-                [2] => '1c line #2 - changed?'
-                ...
-            }
-                OR                  // if e.g. type is a group
-            [children] => Array {
-                [0] => field stdClass Object {
-                    [type] => 'textinput'                   // $test1c->children[0]->type = 'textinput'
-                    [values] => {                           // $test1c->children[0]->values is array
-                        [0] => '1st text line'              // $test1c->children[0]->values[0] = '1st text line' 
-                        [1] => 'another text line'
-                    }
-                }
-                [1] => field stdClass Object {
-
-                } 
-            }
-            [param1] => 'some_text_string'
-        )
