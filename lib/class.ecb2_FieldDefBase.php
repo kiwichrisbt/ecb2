@@ -168,9 +168,9 @@ abstract class ecb2_FieldDefBase
 
         // set default value if adding
         if ( $this->adding && isset($this->options['default']) ) {
-            if ( $this->use_json_format && $this->values[0]===NULL) {
+            if ( $this->use_json_format && empty($this->values[0])) {
                 $this->values[0] = $this->options['default'];
-            } elseif ( $this->value===NULL) {
+            } elseif ( empty($this->value) ) {
                 $this->value = $this->options['default'];
             }
         }

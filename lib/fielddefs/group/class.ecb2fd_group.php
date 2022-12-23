@@ -30,10 +30,10 @@ class ecb2fd_group extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            'max_blocks'    => ['default' => 0,    'filter' => FILTER_VALIDATE_INT],
-            'layout'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'assign'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'max_blocks'    => ['default' => 0,       'filter' => FILTER_VALIDATE_INT],
+            'layout'        => ['default' => 'table', 'filter' => FILTER_SANITIZE_STRING],
+            'description'   => ['default' => '',      'filter' => FILTER_SANITIZE_STRING],
+            'assign'        => ['default' => '',      'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         $this->restrict_params = FALSE;    // default: true
@@ -59,8 +59,26 @@ class ecb2fd_group extends ecb2_FieldDefBase
             'repeater',
             'max_blocks'
         ];
+        $this->layout_options = ['table'];  // block, grid ...
+
 
     }
+
+
+
+    /**
+     *  some extra tweaks to options in addition to standard initialisation (FieldDefBase)
+     */
+    protected function initialise_options($params)
+    {
+		parent::initialise_options($params);
+
+        if ( !in_array($this->options['layout'], $this->layout_options) ) {
+            $this->options['layout'] = $this->default_parameters['layout']['default'];
+        }
+
+    }
+
 
 
     /**
@@ -69,26 +87,17 @@ class ecb2fd_group extends ecb2_FieldDefBase
     public function get_content_block_input() 
     {
 
-        // $this->create_sub_fields($params);
-
 // or something similar... 
 if ( empty($this->sub_fields) ) $this->sub_fields[] = NULL;
 
         if ($this->error) return $this->mod->error_msg($this->error);
 
-        // if ( $this->field_alias_used=='input_repeater' ) {
-        //     $this->options['repeater'] = TRUE;
-        //     if ( empty($this->values) ) {
-        //         $this->values = explode('||', $this->value);
-        //     }
-        // }
-        // if ( $this->options['repeater'] && empty($this->values) ) $this->values[] = NULL;
 
 
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
-        $tpl->assign('block_name', $this->block_name );
-        $tpl->assign('value', $this->value );
+        $tpl->assign( 'block_name', $this->block_name );
+        $tpl->assign( 'value', $this->value );
         $tpl->assign( 'mod', $this->mod );
         $tpl->assign( 'block_name', $this->block_name );
         $tpl->assign( 'type', $this->field );
@@ -96,8 +105,8 @@ if ( empty($this->sub_fields) ) $this->sub_fields[] = NULL;
         $tpl->assign( 'sub_fields', $this->sub_fields );
         $tpl->assign( 'max_blocks', $this->options['max_blocks'] );
         $tpl->assign( 'description', $this->options['description'] );
+        $tpl->assign( 'layout', $this->options['layout'] );
         $tpl->assign( 'assign', $this->options['assign'] );
-        $tpl->assign('description', $this->options['description'] );
         return $tpl->fetch();
    
     }

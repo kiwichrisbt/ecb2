@@ -37,6 +37,7 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
         $this->default_parameters = [
             'values'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'size'          => ['default' => 5,     'filter' => FILTER_VALIDATE_INT],
             'multiple'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'first_value'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
@@ -108,6 +109,11 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
         $tpl->assign( 'compact', $this->options['compact'] );
         $tpl->assign( 'size', $this->options['size'] );
         $tpl->assign( 'selected', $this->value );
+        $tpl->assign( 'label', $this->options['label'] );
+        $tpl->assign( 'is_sub_field', $this->is_sub_field );
+        $tpl->assign( 'sub_parent_block', $this->sub_parent_block );
+        $tpl->assign( 'sub_row_number', $this->sub_row_number );
+        $tpl->assign( 'not_sub_field_template', !is_null($this->sub_row_number) );
 
         if ( $this->options['multiple'] ) {
             $selected_values = explode(',', $this->value);

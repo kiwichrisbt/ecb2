@@ -32,7 +32,7 @@
         <div id="{$block_name}-repeater" class="ecb_repeater sortable {if $wysiwyg}wysiwyg{/if}" data-block-name="{$block_name}" data-highest-row="{$values|@count}" {if $max_blocks>0}data-max-blocks="{$max_blocks}"{/if}>
 
             <div class="repeater-wrapper-template" style="display:none;">
-                <div class="drag-panel">
+                <div class="drag-panel handle">
                     <span class="ecb2-icon-grip-dots-vertical-solid"></span>
                 </div>
                 <textarea id="" name="" class="repeater-field" cols="{$cols}" rows="{$rows}" data-repeater="#{$block_name}-repeater" style="display:none;"></textarea>
@@ -45,7 +45,7 @@
 
         {foreach $values as $value}
             <div class="repeater-wrapper">
-                <div class="drag-panel">
+                <div class="drag-panel handle">
                     <span class="ecb2-icon-grip-dots-vertical-solid"></span>
                 </div>
                 {cms_textarea id="{$block_name}_r_{$value@iteration}" name="{$block_name}[r_{$value@iteration}]" class="repeater-field" enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value addtext="data-repeater=\"#{$block_name}-repeater\""}

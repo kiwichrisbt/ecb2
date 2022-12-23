@@ -81,6 +81,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
         $tpl->assign( 'is_sub_field', $this->is_sub_field );
         $tpl->assign( 'sub_parent_block', $this->sub_parent_block );
         $tpl->assign( 'sub_row_number', $this->sub_row_number );
+        $tpl->assign( 'not_sub_field_template', !is_null($this->sub_row_number) );
         return $tpl->fetch();
    
     }
