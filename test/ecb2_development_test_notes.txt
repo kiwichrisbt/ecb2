@@ -69,7 +69,7 @@ define a format for extend data that is flexible enough that it does not need to
 - output is a field object (stdObject)
         each object has:
             - either (depending on 'type'):
-                values - an array or sorted 
+                values - an array of sorted values
                 or
                 sub_fields - an array of field objects
             - extra (params - need to try this to define) - not yet used
@@ -77,3 +77,54 @@ define a format for extend data that is flexible enough that it does not need to
 
 textinput e.g. test1c ... either just a single value (OLD style)
 
+
+
+Convert into sub_field supported class
+======================================
+class file
+==========
+
+1. add label into default parameters
+            'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+
+2. check options / default_parameters, for anything not suitable for Group sub_field
+
+
+3. add label & sub_....'s   into  get_content_block_input()
+        $tpl->assign( 'label', $this->options['label'] );
+        $tpl->assign( 'is_sub_field', $this->is_sub_field );
+        $tpl->assign( 'sub_parent_block', $this->sub_parent_block );
+        $tpl->assign( 'sub_row_number', $this->sub_row_number );
+        $tpl->assign( 'not_sub_field_template', !is_null($this->sub_row_number) );
+
+
+.tpl file 
+=========
+
+4. Modify temple to output sub_fields:
+    {if $is_sub_field}
+        ... and a version of the input ... 
+        ... 
+        ... 
+
+
+
+Type of output data
+===================
+textinput       - string / strings '||' delimited if older style repeater / json array if repeater 
+                    (or was previously repeater - not really necessary!) or assign used
+textarea        - string - json array if repeater (or was previously repeater)
+dropdown        - string (single select) / string comma separated (multiple select) / 
+                    ??? json array if multiple ???
+group           - json object
+gallery         - json object
+sortablelist    - string comma separated
+checkbox        - 0 or 1
+radio           - string
+color_picker    - string
+date_time_picker - string
+file_selector   - string
+page_picker     - string
+gallery_picker  - string
+module_picker   - string
+hidden          - string

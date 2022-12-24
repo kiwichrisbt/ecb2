@@ -11,7 +11,6 @@
     </div><br>
 {/if}
 
-
     {* <input type="hidden" id="{$block_name}" name="{$block_name}[type]" value="{$type}"/> *}
     
     <div id="{$block_name}-repeater" class="ecb_repeater sortable {$layout}-layout" data-block-name="{$block_name}" data-highest-row="{$values|@count}" {if $max_blocks>0}data-max-blocks="{$max_blocks}"{/if}>

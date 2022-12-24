@@ -219,7 +219,7 @@ abstract class ecb2_FieldDefBase
             $sub_value = '';  // temporary value only - is updated before each field generated
 
             $sub_field = new $sub_type($this->mod, $sub_name, $this->id, $sub_value, $sub_params, $this->adding);
-            $sub_field->set_as_subfield($this->block_name);
+            $sub_field->set_as_subfield($this->block_name); // $parent_block_name
             $sub_fields[] = $sub_field;
         }
         $this->sub_fields = $sub_fields;
@@ -241,7 +241,14 @@ abstract class ecb2_FieldDefBase
         }
         // set to fields value if available
         if ( isset($fields->{$this->block_name}) ) {
-            $this->value = $fields->{$this->block_name};
+            $block_value = $fields->{$this->block_name};
+            if ( is_string($block_value) ) {
+                $this->value = $block_value;
+            } elseif ( is_array($block_value) ) {
+                $this->values = $block_value;
+            } elseif ( is_object($block_value) && isset($block_value->values) ) {
+                $this->values = $block_value->values;
+            }
         }
         $this->sub_row_number = $row_number;
 
@@ -529,11 +536,15 @@ abstract class ecb2_FieldDefBase
     {    
         $field_object = new stdClass();
         foreach ($inputArray as $key => $value) {
-            if ( preg_match('/^r_[0-9]+$/', $key) ) { // is a value or child
+            if ( preg_match('/^(r_)?[0-9]+$/', $key) ) { // is a value or child: r_0 or 0 
                 if ( is_array($value) ) {   // sub_fields
                     $sub_fields = [];
                     foreach ($value as $field_name => $child_value) {
-                        $sub_fields[$field_name] = $child_value;
+                        if ( is_array($child_value) ) {
+                            $sub_fields[$field_name] = self::create_field_object( $child_value );
+                        } else {
+                            $sub_fields[$field_name] = $child_value;
+                        }
                     }
                     $field_object->sub_fields[] = $sub_fields;
 

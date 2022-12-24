@@ -92,8 +92,6 @@ if ( empty($this->sub_fields) ) $this->sub_fields[] = NULL;
 
         if ($this->error) return $this->mod->error_msg($this->error);
 
-
-
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign( 'block_name', $this->block_name );

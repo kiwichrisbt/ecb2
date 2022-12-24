@@ -49,7 +49,7 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
             'customgs_field'=> ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
-
+        // $this->use_json_format = TRUE;    // default: FALSE - can override e.g. 'groups' type
     }
 
 
@@ -114,12 +114,17 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
         $tpl->assign( 'sub_parent_block', $this->sub_parent_block );
         $tpl->assign( 'sub_row_number', $this->sub_row_number );
         $tpl->assign( 'not_sub_field_template', !is_null($this->sub_row_number) );
+        $tpl->assign( 'use_json_format', $this->use_json_format );
 
         if ( $this->options['multiple'] ) {
-            $selected_values = explode(',', $this->value);
+            $selected_values = [];
             $selected_text = [];
+            if ( !empty($this->values) ) {
+                $selected_values = $this->values;
+            } elseif ( !empty($this->value) ) {
+                $selected_values = explode(',', $this->value);
+            }
             foreach ($selected_values as $value) {
-                // $selected_text[] = array_search( $value, $options );
                 $selected_text[] = isset($options[$value]) ? $options[$value] : '';
             }
             $selected_text = implode(', ', $selected_text);

@@ -59,6 +59,7 @@ class ECB2 extends \CMSModule {
     const FIELD_ALIASES = [
         'input' => 'textinput',
         'editor' => 'textarea',
+        'select' => 'dropdown', 
         'dropdown_from_module' => 'dropdown', 
         'dropdown_from_udt' => 'dropdown',
         'dropdown_from_gbc' => 'dropdown', 
@@ -241,13 +242,8 @@ class ECB2 extends \CMSModule {
 
         $this->get_admin_css_js( TRUE );   // output css & js - but only once per page
 
-        // handle field aliases
-        if ( !in_array($params['field'], self::FIELD_TYPES) && 
-             array_key_exists($params['field'], self::FIELD_ALIASES) ) {
-            $params['field_alias_used'] = $params['field'];
-            $params['field'] = self::FIELD_ALIASES[$params['field']];
-        }
-        
+
+        $this->HandleFieldAliases($params);       
         if ( !in_array($params["field"], self::FIELD_TYPES ) ) {
             return $this->error_msg( $this->Lang('field_error', $blockName) );
         }
@@ -257,7 +253,8 @@ class ECB2 extends \CMSModule {
 
         if ( !empty($ecb2->allowed_sub_fields) ) $ecb2->create_sub_fields( $params );
 
-        return $ecb2->get_content_block_input();
+        $ecb2_cb = $ecb2->get_content_block_input();
+        return $ecb2_cb;
 
     }
 
@@ -290,7 +287,8 @@ class ECB2 extends \CMSModule {
         // else array of inputs returned - get fieldDef class to manipulate input values - if necessary
         $id = $content_obj->Id();
         $value = '';    // just use dummy value here, pass input array into get_content_block_value()
-        $adding = ($id == 0);   // test this!!!!!!!!!!!!!!!!!!
+        $adding = ($id == 0); 
+        $this->HandleFieldAliases($blockParams); 
         $type = self::FIELD_DEF_PREFIX.$blockParams['field'];
         $ecb2 = new $type($this, $blockName, $id, $value, $blockParams, $adding);
 
@@ -393,6 +391,19 @@ class ECB2 extends \CMSModule {
 		}
 	}
 
+
+
+    /**
+     *  updates params if field alias has been used - also sets 'field_alias_used'
+     */
+    private function HandleFieldAliases( &$params ) 
+    {
+        if ( !in_array($params['field'], self::FIELD_TYPES) && 
+              array_key_exists($params['field'], self::FIELD_ALIASES) ) {
+            $params['field_alias_used'] = $params['field'];
+            $params['field'] = self::FIELD_ALIASES[$params['field']];
+        }
+    }
 
 
     /**
