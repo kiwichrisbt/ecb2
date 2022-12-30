@@ -7,10 +7,10 @@
 
 {if $is_sub_field}      
         {if is_null($sub_row_number)}{* output template field *}
-            <textarea id="" name="" class="repeater-field wysiwyg" cols="{$cols}" rows="{$rows}" data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}" style="display:none;"></textarea>
+            <textarea id="" name="" class="{$class}" cols="{$cols}" rows="{$rows}" data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}" style="display:none;"></textarea>
 
         {else}    
-            {cms_textarea id=$subFieldId name=$subFieldName enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value class='repeater-field wysiwyg'}
+            {cms_textarea id=$subFieldId name=$subFieldName enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value class=$class}
 
         {/if}
 
@@ -19,7 +19,7 @@
 
 {elseif !$repeater && $use_json_format}
         {* <input type="hidden" name="{$block_name}[type]" value="{$type}"/> *}
-        {cms_textarea name="$block_name[]" enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$values[0]  class='wysiwyg'}
+        {cms_textarea name="$block_name[]" enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$values[0]  class=$class}
 
 {else}{* $repeater *}
     {if empty($assign) && !(isset($field_alias_used) && $field_alias_used=='input_repeater')}
