@@ -242,7 +242,7 @@ abstract class ecb2_FieldDefBase
         // set to fields value if available
         if ( isset($fields->{$this->block_name}) ) {
             $block_value = $fields->{$this->block_name};
-            if ( is_string($block_value) ) {
+            if ( is_string($block_value) || is_numeric($block_value) ) {
                 $this->value = $block_value;
             } elseif ( is_array($block_value) ) {
                 $this->values = $block_value;

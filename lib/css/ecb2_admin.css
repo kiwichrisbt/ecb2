@@ -83,6 +83,9 @@
 .ecb_repeater .sub-field { border-right:1px solid #ebebeb;}
 .ecb_repeater input, .ecb_repeater textarea, .ecb_repeater select {margin:5px 8px;}
 .ecb_repeater .mce-tinymce, .ecb_repeater .tox-tinymce {margin-top:.5rem; margin-bottom:.5rem;}
+.ecb_repeater .sub-field .mce-tinymce, .ecb_repeater .sub-field .tox-tinymce {
+        width:auto !important; margin:5px 8px;}
+.ecb_repeater.table-layout .repeater-field.wysiwyg {width:100%;}
 .ecb_repeater .repeater-field {max-width:100%; vertical-align:middle;}
 .ecb_repeater .ui-sortable-helper {box-shadow:2px 2px 3px rgba(0,0,0,.3);}
 .ecb_repeater .repeater-placeholder {/*min-height:39px;*/ border:1px solid #fcefa1; 

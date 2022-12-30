@@ -40,6 +40,7 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
         ];
         $this->default_parameters = [
             'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'rows'          => ['default' => 20,    'filter' => FILTER_VALIDATE_INT],
             'cols'          => ['default' => 80,   'filter' => FILTER_VALIDATE_INT],
             'wysiwyg'       => ['default' => FALSE,   'filter' => FILTER_VALIDATE_BOOLEAN],
@@ -73,6 +74,38 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
         $tpl->assign( 'description', $this->options['description'] );
         $tpl->assign( 'assign', $this->options['assign'] );
         $tpl->assign( 'use_json_format', $this->use_json_format );
+        $tpl->assign( 'label', $this->options['label'] );
+        $tpl->assign( 'is_sub_field', $this->is_sub_field );
+
+        if ( $this->is_sub_field ) {
+            // add sub_field only data
+
+            $tpl->assign( 'sub_row_number', $this->sub_row_number );
+            if ( is_null($this->sub_row_number) ) {   // sub_field_template
+                // $attribs['id'] = '';
+
+            } else {   // rendered sub_field  
+                // $attribs['id'] = $this->sub_parent_block.'_r_'.$this->sub_row_number.'_'.$this->block_name;
+                // $attribs['name'] = $this->sub_parent_block.'[r_'.$this->sub_row_number.']['.
+                //     $this->block_name.']';
+                $tpl->assign( 'subFieldName', $this->sub_parent_block.'[r_'.$this->sub_row_number.']['.
+                    $this->block_name.']' );
+                $tpl->assign( 'subFieldId', $this->sub_parent_block.'_r_'.$this->sub_row_number.'_'.
+                    $this->block_name );
+                    
+            }
+
+
+            // $attribs['class'] = 'repeater-field';
+            // $attribs['rows'] = $this->options['rows'];
+            // $attribs['cols'] = $this->options['cols'];
+            // $attribs['data-repeater'] = '#'.$this->sub_parent_block.'-repeater';
+            // $attribs['data-field-name'] = $this->block_name;
+            // $tpl->assign( 'attribs', $attribs );
+            // $value = cms_htmlentities($this->value,ENT_NOQUOTES,CmsNlsOperations::get_encoding());
+            // $tpl->assign( 'value', $value );
+
+        }
         return $tpl->fetch();
    
     }

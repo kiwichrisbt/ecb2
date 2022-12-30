@@ -4,24 +4,25 @@
 {if !empty($description)}
         {$description}<br>
 {/if}
-{*if $wysiwyg}
-        {cms_textarea name=$block_name enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value}
-{else}
-        <textarea name="{$block_name}" rows="{$rows}" cols="{$cols}">{$value}</textarea>
-{/if*}
 
+{if $is_sub_field}      
+        {if is_null($sub_row_number)}{* output template field *}
+            <textarea id="" name="" class="repeater-field wysiwyg" cols="{$cols}" rows="{$rows}" data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}" style="display:none;"></textarea>
 
-{* NEW WITH REPEATER *}
+        {else}    
+            {cms_textarea id=$subFieldId name=$subFieldName enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value class='repeater-field wysiwyg'}
 
-{if !$repeater && !$use_json_format}
-        {cms_textarea name=$block_name enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value}
+        {/if}
+
+{elseif !$repeater && !$use_json_format}
+        {cms_textarea name=$block_name enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value class='wysiwyg'}
 
 {elseif !$repeater && $use_json_format}
         {* <input type="hidden" name="{$block_name}[type]" value="{$type}"/> *}
-        {cms_textarea name="$block_name[]" enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$values[0]}
+        {cms_textarea name="$block_name[]" enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$values[0]  class='wysiwyg'}
 
 {else}{* $repeater *}
-    {if empty($assign) && $field_alias_used!='input_repeater'}
+    {if empty($assign) && !(isset($field_alias_used) && $field_alias_used=='input_repeater')}
         <div class="pagewarning">
             {$mod->Lang('error_assign_required')}
         </div><br>
@@ -35,7 +36,7 @@
                 <div class="drag-panel handle">
                     <span class="ecb2-icon-grip-dots-vertical-solid"></span>
                 </div>
-                <textarea id="" name="" class="repeater-field" cols="{$cols}" rows="{$rows}" data-repeater="#{$block_name}-repeater" style="display:none;"></textarea>
+                <textarea id="" name="" class="repeater-field wysiwyg" cols="{$cols}" rows="{$rows}" data-repeater="#{$block_name}-repeater" style="display:none;"></textarea>
                 <div class="right-panel">
                     <button class="ecb2-repeater-remove ecb2-btn ecb2-btn-default ecb2-icon-only" data-repeater="#{$block_name}-repeater" title="{$mod->Lang('remove_line')}" role="button" aria-disabled="false"><span class="ecb2-icon-trash-can-regular"></span></button>
                 </div>
@@ -48,7 +49,7 @@
                 <div class="drag-panel handle">
                     <span class="ecb2-icon-grip-dots-vertical-solid"></span>
                 </div>
-                {cms_textarea id="{$block_name}_r_{$value@iteration}" name="{$block_name}[r_{$value@iteration}]" class="repeater-field" enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value addtext="data-repeater=\"#{$block_name}-repeater\""}
+                {cms_textarea id="{$block_name}_r_{$value@iteration}" name="{$block_name}[r_{$value@iteration}]" class='repeater-field wysiwyg' enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value addtext="data-repeater=\"#{$block_name}-repeater\""}
                 <div class="right-panel">
                     <button class="ecb2-repeater-remove ecb2-btn ecb2-btn-default ecb2-icon-only" data-repeater="#{$block_name}-repeater" title="{$mod->Lang('remove_line')}" role="button" aria-disabled="false"><span class="ecb2-icon-trash-can-regular"></span></button>
                 </div>
