@@ -27,7 +27,7 @@
 
 class ECB2 extends \CMSModule {
 
-    const MODULE_VERSION = '1.99.5.2';
+    const MODULE_VERSION = '1.99.6';
     const MANAGE_PERM = 'manage_ecb2';
 
     const FIELD_TYPES = [
