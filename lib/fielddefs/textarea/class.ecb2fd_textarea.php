@@ -78,9 +78,7 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
         $tpl->assign( 'is_sub_field', $this->is_sub_field );
         $class = '';
         if ( $this->options['wysiwyg'] ) $class .= ' wysiwyg';
-
         if ( $this->is_sub_field ) {
-            // add sub_field only data
             $tpl->assign( 'sub_row_number', $this->sub_row_number );
             $tpl->assign( 'subFieldName', $this->sub_parent_block.'[r_'.$this->sub_row_number.']['.
                 $this->block_name.']' );

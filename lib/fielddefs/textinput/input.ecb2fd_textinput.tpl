@@ -6,7 +6,13 @@
 {/if}
 
 {if $is_sub_field}
-        <input type="text" id="{if $not_sub_field_template}{$sub_parent_block}_r_{$sub_row_number}_{$block_name}{/if}" name="{if $not_sub_field_template}{$sub_parent_block}[r_{$sub_row_number}][{$block_name}]{/if}" class="repeater-field" value="{if $not_sub_field_template}{$value}{/if}" size="{$size}" maxlength="{$max_length}" data-repeater="#{$sub_parent_block}-repeater" data-field-name="{$block_name}"/>
+    {if is_null($sub_row_number)}{* output template field *}
+        <input type="text" id="" name="" class="{$class}" value="" size="{$size}" maxlength="{$max_length}" data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}"/>
+
+    {else}    
+        <input type="text" id="{$subFieldId}" name="{$subFieldName}" class="{$class}" value="{$value}" size="{$size}" maxlength="{$max_length}"/>
+
+    {/if}
 
 {elseif !$repeater}
     {if !$use_json_format}

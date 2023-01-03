@@ -31,6 +31,7 @@ class ecb2fd_date_time_picker extends ecb2_FieldDefBase
     {
         $this->default_parameters = [
             'size'              => ['default' => 20,        'filter' => FILTER_VALIDATE_INT],
+            'label'             => ['default' => '',        'filter' => FILTER_SANITIZE_STRING],
             'max_length'        => ['default' => 20,        'filter' => FILTER_VALIDATE_INT],
             'date_format'       => ['default' => 'yy-mm-dd','filter' => FILTER_SANITIZE_STRING],
             'time_format'       => ['default' => 'HH:mm',   'filter' => FILTER_SANITIZE_STRING],
@@ -68,7 +69,6 @@ class ecb2fd_date_time_picker extends ecb2_FieldDefBase
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign('block_name', $this->block_name );
         $tpl->assign('value', $this->value );
-        $tpl->assign('class', $class);  
         $tpl->assign('size', $this->options['size']);
         $tpl->assign('max_length', $this->options['max_length']);
         $tpl->assign('time_format', $this->options['time_format']);
@@ -76,6 +76,17 @@ class ecb2fd_date_time_picker extends ecb2_FieldDefBase
         $tpl->assign('change_year', $this->options['change_year']);
         $tpl->assign('year_range', $this->options['year_range']);
         $tpl->assign('description', $this->options['description'] );
+        $tpl->assign( 'label', $this->options['label'] );
+        $tpl->assign( 'is_sub_field', $this->is_sub_field );
+        if ( $this->is_sub_field ) {
+            $tpl->assign( 'sub_row_number', $this->sub_row_number );
+            $tpl->assign( 'subFieldName', $this->sub_parent_block.'[r_'.$this->sub_row_number.']['.
+                $this->block_name.']' );
+            $tpl->assign( 'subFieldId', $this->sub_parent_block.'_r_'.$this->sub_row_number.'_'.
+                $this->block_name );
+            $class .= ' repeater-field';
+        }
+        $tpl->assign('class', $class);  
         return $tpl->fetch();
    
     }

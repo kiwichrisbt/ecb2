@@ -41,12 +41,9 @@ class ecb2fd_group extends ecb2_FieldDefBase
         $this->allowed_sub_fields = [
             'textinput',
             'textarea',
-// start with these ^^^
             'dropdown',
             'checkbox',
             'radio',
-            // 'gallery',
-/// do these later >>>
             'color_picker',
             'date_time_picker',
             'file_selector',
@@ -59,7 +56,7 @@ class ecb2fd_group extends ecb2_FieldDefBase
             'repeater',
             'max_blocks'
         ];
-        $this->layout_options = ['table'];  // block, grid ...
+        $this->layout_options = ['table','block'];  // block, grid ...
 
 
     }
@@ -86,9 +83,7 @@ class ecb2fd_group extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
-
-// or something similar... 
-if ( empty($this->sub_fields) ) $this->sub_fields[] = NULL;
+        if ( empty($this->values) ) $this->values[] = NULL;
 
         if ($this->error) return $this->mod->error_msg($this->error);
 
@@ -111,22 +106,30 @@ if ( empty($this->sub_fields) ) $this->sub_fields[] = NULL;
 
 
 
-    // /**
-    //  *  Data entered by the editor is processed before its saved in props table
-    //  *  This method, if required, overides the parent class method, to enable additional processing 
-    //  *  before the data is saved.
-    //  *  Can be omitted and ecb2_FieldDefBase will handle default processing
-    //  *
-    //  *  @return string formatted json containing all field data ready to be saved & output
-    //  */
-    // public function get_content_block_value( $inputArray ) 
-    // {
-    //     $this->set_field_object( $inputArray );
-    //
-    //     // do other stuff here
-    //
-    //     return $this->ECB2_json_encode_field_object(); 
-    // }
+    /**
+     *  Data entered by the editor is processed before its saved in props table
+     *  This method,  overides the parent class method, to enable additional processing 
+     *  before the data is saved.
+     *
+     *  @return string formatted json containing all field data ready to be saved & output
+     */
+    public function get_content_block_value( $inputArray ) 
+    {
+
+        // if all sub_fields empty then set 'sub_fields' to empty
+        if ( !empty($inputArray) && count($inputArray)==1 ) {
+            $firstRow = current($inputArray);
+            $value_found = FALSE;
+            foreach ($firstRow as $value) {
+                if ( !empty($value) ) $value_found = TRUE;
+            }
+            if ( !$value_found ) $inputArray = array('sub_fields' => []);
+        }
+
+        $this->field_object = $this->create_field_object( $inputArray );
+    
+        return $this->ECB2_json_encode_field_object(); 
+    }
 
 
 

@@ -6,13 +6,13 @@
 {/if}
 
 {if $is_sub_field}      
-        {if is_null($sub_row_number)}{* output template field *}
-            <textarea id="" name="" class="{$class}" cols="{$cols}" rows="{$rows}" data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}" style="display:none;"></textarea>
+    {if is_null($sub_row_number)}{* output template field *}
+        <textarea id="" name="" class="{$class}" cols="{$cols}" rows="{$rows}" data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}" {if $wysiwyg}style="display:none;"{/if}></textarea>
 
-        {else}    
-            {cms_textarea id=$subFieldId name=$subFieldName enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value class=$class}
+    {else}    
+        {cms_textarea id=$subFieldId name=$subFieldName enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value class=$class}
 
-        {/if}
+    {/if}
 
 {elseif !$repeater && !$use_json_format}
         {cms_textarea name=$block_name enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value class='wysiwyg'}

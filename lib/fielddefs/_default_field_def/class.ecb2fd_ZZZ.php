@@ -30,6 +30,7 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
+            'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
@@ -51,6 +52,7 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
 
 
     
+        $class = '';
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign('block_name', $this->block_name );
@@ -58,6 +60,18 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
 
 
         $tpl->assign('description', $this->options['description'] );
+        $tpl->assign( 'label', $this->options['label'] );
+        $tpl->assign( 'is_sub_field', $this->is_sub_field );
+        if ( $this->is_sub_field ) {
+            $tpl->assign( 'sub_row_number', $this->sub_row_number );
+            $tpl->assign( 'subFieldName', $this->sub_parent_block.'[r_'.$this->sub_row_number.']['.
+                $this->block_name.']' );
+            $tpl->assign( 'subFieldId', $this->sub_parent_block.'_r_'.$this->sub_row_number.'_'.
+                $this->block_name );
+            $class .= ' repeater-field';
+        }
+        $tpl->assign('class', $class);  
+
         return $tpl->fetch();
    
     }

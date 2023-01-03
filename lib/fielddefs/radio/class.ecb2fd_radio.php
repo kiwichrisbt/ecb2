@@ -34,6 +34,7 @@ class ecb2fd_radio extends ecb2_FieldDefBase
         ];
         $this->default_parameters = [
             'values'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'inline'        => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'flip_values'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
@@ -63,6 +64,15 @@ class ecb2fd_radio extends ecb2_FieldDefBase
         $tpl->assign('options', $options );
         $tpl->assign('separator', $separator );
         $tpl->assign('description', $this->options['description'] );
+        $tpl->assign( 'label', $this->options['label'] );
+        $tpl->assign( 'is_sub_field', $this->is_sub_field );
+        if ( $this->is_sub_field ) {
+            $tpl->assign( 'sub_row_number', $this->sub_row_number );
+            $tpl->assign( 'subFieldName', $this->sub_parent_block.'[r_'.$this->sub_row_number.']['.
+                $this->block_name.']' );
+            $tpl->assign( 'subFieldId', $this->sub_parent_block.'_r_'.$this->sub_row_number.'_'.
+                $this->block_name );
+        }
         return $tpl->fetch();
    
     }

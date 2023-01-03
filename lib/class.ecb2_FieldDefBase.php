@@ -74,7 +74,7 @@ abstract class ecb2_FieldDefBase
         if ( !empty($params['repeater']) ) $this->use_json_format = TRUE;
 
         $json_data = json_decode($value);
-        if ( json_last_error()===JSON_ERROR_NONE ) {
+        if ( json_last_error()===JSON_ERROR_NONE && !is_integer($json_data) ) {
             // JSON is valid - either use $json_data->values OR $json_data->sub_fields - NOT both!
             $this->json_data = $json_data;
             $this->use_json_format = TRUE;
@@ -196,13 +196,31 @@ abstract class ecb2_FieldDefBase
         }
 
         foreach ($sub_params as $sub_field_params) {
-            // test for valid field type & name
-            if ( !isset($sub_field_params['field']) || 
-                 !in_array($sub_field_params['field'], $this->allowed_sub_fields) ||
-                 !isset($sub_field_params['name']) || 
-                 !preg_match('/^[A-Za-z][A-Za-z0-9_]*/', $sub_field_params['name']) ) 
+            // handle Sub Field Aliases
+            if ( isset($sub_field_params['field']) && 
+                 !in_array($sub_field_params['field'], $this->mod::FIELD_TYPES) && 
+                 array_key_exists($sub_field_params['field'], $this->mod::FIELD_ALIASES) ) 
             {
-                $this->error = $this->mod->Lang('error_field_type_name', );
+                $sub_field_params['field_alias_used'] = $sub_field_params['field'];
+                $sub_field_params['field'] = $this->mod::FIELD_ALIASES[$sub_field_params['field']];
+            }
+
+            // test for valid field type & name
+            if ( !isset($sub_field_params['field']) ) {
+                $this->error = $this->mod->Lang('error_sub_field_type_missing');
+                return;  
+            }
+            if ( !in_array($sub_field_params['field'], $this->allowed_sub_fields) ) {
+                $this->error = $this->mod->Lang('error_sub_field_type_not_allowed', $sub_field_params['field']);
+                return;  
+            } 
+            if ( !isset($sub_field_params['name']) ) {
+                $this->error = $this->mod->Lang('error_sub_field_name_missing', $sub_field_params['field']);
+                return;  
+            } 
+            if ( !preg_match('/^[A-Za-z][A-Za-z0-9_]*/', $sub_field_params['name']) ) {
+                $this->error = $this->mod->Lang('error_sub_field_name_format', $sub_field_params['name'],
+                    $sub_field_params['field']);
                 return;  
             } 
 
@@ -216,12 +234,17 @@ abstract class ecb2_FieldDefBase
                     unset( $sub_params[$tmp_param_name] );
                 }
             }
-            $sub_value = '';  // temporary value only - is updated before each field generated
 
+            $sub_value = '';  // temporary value only - is updated before each field generated
             $sub_field = new $sub_type($this->mod, $sub_name, $this->id, $sub_value, $sub_params, $this->adding);
             $sub_field->set_as_subfield($this->block_name); // $parent_block_name
             $sub_fields[] = $sub_field;
         }
+        if ( empty($sub_fields) ) {
+            $this->error = $this->mod->Lang('error_no_sub_fields');
+            return;  
+        } 
+
         $this->sub_fields = $sub_fields;
 
     }
@@ -276,7 +299,16 @@ abstract class ecb2_FieldDefBase
     {
         $this->is_sub_field = TRUE;
         $this->sub_parent_block = $parent_block_name;
+    }
 
+
+
+    /**
+     *  returns the field type 
+     */
+    public function get_type()
+    {
+        return $this->field;
     }
 
 
@@ -488,6 +520,8 @@ abstract class ecb2_FieldDefBase
             $this->values[] = $this->value;
         }
 
+        if ( !empty($this->allowed_sub_fields) ) $this->create_sub_fields( $params );
+
         return $this->get_content_block_input();
 
     }
@@ -496,7 +530,7 @@ abstract class ecb2_FieldDefBase
 
     /**
      *  Data entered by the editor is processed before its saved in props table
-     *  Method can be overidden by child class, e.g. gallery
+     *  Method can be overidden by child class, e.g. gallery, group
      *  
      *  @return string formatted json containing all field data ready to be saved & output
      */

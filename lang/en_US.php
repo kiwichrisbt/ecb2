@@ -25,7 +25,12 @@ $lang['drop_required_items'] = 'Drop %s required items here';
 
 $lang['error_assign_required'] = 'The assign parameter is required to correctly output multiple values.';
 $lang['error_filename'] = 'The file \'%s\' for the \'%s\' parameter could not be found.';
-$lang['error_field_type_name'] = 'A field type or name is invalid.';
+
+$lang['error_sub_field_type_missing'] = 'A sub field type has not been provided.';
+$lang['error_sub_field_type_not_allowed'] = 'The sub field type \'%s\' is not supported.';
+$lang['error_sub_field_name_missing'] = 'The sub field type \'%s\' requires a name to be provided.';
+$lang['error_sub_field_name_format'] = 'The sub field name \'%s\', for the field \'%s\' is incorrect. The name must start with a letter followed by any number of letters, numbers or underscores \'_\'.';
+$lang['error_no_sub_fields'] = 'No sub fields defined.';
 $lang['extended_content_blocks'] = 'Extended Content Blocks';
 
 $lang['fields'] = 'Fields';

@@ -62,6 +62,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
         }
         if ( $this->options['repeater'] && empty($this->values) ) $this->values[] = NULL;
 
+        $class = '';
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign( 'mod', $this->mod );
@@ -79,9 +80,15 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
         $tpl->assign( 'field_alias_used', $this->field_alias_used );
         $tpl->assign( 'use_json_format', $this->use_json_format );
         $tpl->assign( 'is_sub_field', $this->is_sub_field );
-        $tpl->assign( 'sub_parent_block', $this->sub_parent_block );
-        $tpl->assign( 'sub_row_number', $this->sub_row_number );
-        $tpl->assign( 'not_sub_field_template', !is_null($this->sub_row_number) );
+        if ( $this->is_sub_field ) {
+            $tpl->assign( 'sub_row_number', $this->sub_row_number );
+            $tpl->assign( 'subFieldName', $this->sub_parent_block.'[r_'.$this->sub_row_number.']['.
+                $this->block_name.']' );
+            $tpl->assign( 'subFieldId', $this->sub_parent_block.'_r_'.$this->sub_row_number.'_'.
+                $this->block_name );
+            $class .= ' repeater-field';
+        }
+        $tpl->assign('class', $class);  
         return $tpl->fetch();
    
     }

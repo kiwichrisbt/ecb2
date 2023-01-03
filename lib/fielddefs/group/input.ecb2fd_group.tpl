@@ -10,25 +10,28 @@
         {$mod->Lang('error_assign_required')}
     </div><br>
 {/if}
-
-    {* <input type="hidden" id="{$block_name}" name="{$block_name}[type]" value="{$type}"/> *}
     
     <div id="{$block_name}-repeater" class="ecb_repeater sortable {$layout}-layout" data-block-name="{$block_name}" data-highest-row="{$values|@count}" {if $max_blocks>0}data-max-blocks="{$max_blocks}"{/if}>
     
+    {if $layout=='table'}
         <div class="repeater-wrapper-header unsortable">
             <div class="drag-panel-blank"></div>
         {foreach $sub_fields as $field_def}
-            <div class="sub-field-heading" data-heading-for=".sub-field.row1-col{$field_def@iteration}">{$field_def->get_field_label()}</div>
+            <div class="sub-field-heading sub-field-heading-{$field_def->get_type()} col{$field_def@iteration}" data-heading-for=".col{$field_def@iteration}">
+                {$field_def->get_field_label()}
+            </div>
         {/foreach}
-            <div class="right-panel-blank"></div>
+            {* <div class="right-panel-blank"></div> *}
         </div>
+    {/if}
 
         <div class="repeater-wrapper-template" style="display:none;">
             <div class="drag-panel handle">
                 <span class="ecb2-icon-grip-dots-vertical-solid"></span>
             </div>
         {foreach $sub_fields as $field_def}
-            <div class="sub-field">
+            <div class="sub-field sub-field-{$field_def->get_type()}">
+                <label class="sub_field_label">{$field_def->get_field_label()}</label>
                 {$field_def->get_content_block_input()}
             </div>
         {/foreach}
@@ -46,7 +49,8 @@
             </div>
 
         {foreach $sub_fields as $field_def}
-            <div class="sub-field{if $fields@index==0} row1-col{$field_def@iteration}{/if}">
+            <div class="sub-field row{$fields@iteration} col{$field_def@iteration} sub-field-{$field_def->get_type()}">
+                <label class="sub_field_label">{$field_def->get_field_label()}:</label>
                 {$field_def->set_sub_field_value($fields, $row)}
                 {$field_def->get_content_block_input()}
             </div>
