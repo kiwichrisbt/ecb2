@@ -11,9 +11,9 @@
 class ecb2fd_textarea extends ecb2_FieldDefBase 
 {
 
-	public function __construct($mod, $blockName, $id, $value, $params, $adding) 
+	public function __construct($mod, $blockName, $value, $params, $adding, $id=0) 
 	{	
-		parent::__construct($mod, $blockName, $id, $value, $params, $adding);
+		parent::__construct($mod, $blockName, $value, $params, $adding, $id);
 
         if ( isset($this->field_alias_used) && $this->field_alias_used=='editor' ) {
             $this->options['wysiwyg'] = TRUE;

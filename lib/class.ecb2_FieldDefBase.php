@@ -44,7 +44,7 @@ abstract class ecb2_FieldDefBase
      *  @param array $params
      *  @param boolean $adding
      */
-    public function __construct($mod, $blockName, $id, $value, $params, $adding) 
+    public function __construct($mod, $blockName, $value, $params, $adding, $id=0) 
     {
         $this->mod = $mod;
         $this->block_name = $blockName;
@@ -236,7 +236,7 @@ abstract class ecb2_FieldDefBase
             }
 
             $sub_value = '';  // temporary value only - is updated before each field generated
-            $sub_field = new $sub_type($this->mod, $sub_name, $this->id, $sub_value, $sub_params, $this->adding);
+            $sub_field = new $sub_type($this->mod, $sub_name, $sub_value, $sub_params, $this->adding, $this->id);
             $sub_field->set_as_subfield($this->block_name); // $parent_block_name
             $sub_fields[] = $sub_field;
         }

@@ -11,9 +11,9 @@
 class ecb2fd_ZZZ extends ecb2_FieldDefBase 
 {
 
-	public function __construct($mod, $blockName, $id, $value, $params, $adding) 
+	public function __construct($mod, $blockName, $value, $params, $adding, $id=0) 
 	{	
-		parent::__construct($mod, $blockName, $id, $value, $params, $adding);
+		parent::__construct($mod, $blockName, $value, $params, $adding, $id);
 
 	}
 

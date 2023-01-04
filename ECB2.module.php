@@ -27,7 +27,7 @@
 
 class ECB2 extends \CMSModule {
 
-    const MODULE_VERSION = '1.99.6';
+    const MODULE_VERSION = '1.99.7';
     const MANAGE_PERM = 'manage_ecb2';
 
     const FIELD_TYPES = [
@@ -168,10 +168,9 @@ class ECB2 extends \CMSModule {
         $tpl->assign('field_types', self::FIELD_TYPES);
         $tpl->assign('first_admin_only_field', self::FIRST_ADMIN_ONLY_FIELD);
         $field_help = [];
-        $dummy_id = 0;
         foreach(self::FIELD_TYPES as $field_type) {
             $type = self::FIELD_DEF_PREFIX.$field_type;
-            $ecb2 = new $type($this, $this::DEMO_BLOCK_PREFIX.$field_type, $dummy_id, NULL, ['field' => $field_type], TRUE);
+            $ecb2 = new $type($this, $this::DEMO_BLOCK_PREFIX.$field_type, NULL, ['field' => $field_type], TRUE);
             $field_help[$field_type] = $ecb2->get_field_help();
         }
         $tpl->assign('field_help', $field_help);
@@ -249,7 +248,7 @@ class ECB2 extends \CMSModule {
         }
 
         $type = self::FIELD_DEF_PREFIX.$params["field"];
-        $ecb2 = new $type($this, $blockName, $content_obj->Id(), $value, $params, $adding);
+        $ecb2 = new $type($this, $blockName, $value, $params, $adding, $content_obj->Id());
 
         if ( !empty($ecb2->allowed_sub_fields) ) $ecb2->create_sub_fields( $params );
 
@@ -290,7 +289,7 @@ class ECB2 extends \CMSModule {
         $adding = ($id == 0); 
         $this->HandleFieldAliases($blockParams); 
         $type = self::FIELD_DEF_PREFIX.$blockParams['field'];
-        $ecb2 = new $type($this, $blockName, $id, $value, $blockParams, $adding);
+        $ecb2 = new $type($this, $blockName, $value, $blockParams, $adding, $id);
 
         $ecb2_value = $ecb2->get_content_block_value( $inputParams[$blockName] );
         return $ecb2_value;
