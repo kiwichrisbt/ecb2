@@ -42,8 +42,27 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
             'description'      => ['default' => '',     'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
-        // $this->restrict_params = FALSE;    // default: true
+        $this->restrict_params = FALSE;    // default: true
         $this->use_json_format = TRUE;     // default: FALSE - can override e.g. 'groups' type
+        $this->allowed_sub_fields = [
+            'textinput',
+            // 'textarea',
+            // 'dropdown',
+            // 'checkbox',
+            // 'radio',
+            // 'color_picker',
+            // 'date_time_picker',
+            // 'file_selector',
+            // 'page_picker',
+            // 'gallery_picker',
+            'module_picker'     
+        ];
+        $this->sub_fields_ignored_params = [
+            'assign',
+            'repeater',
+            'max_blocks'
+        ];
+
 
     }
 
@@ -104,7 +123,7 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
      */
     public function get_content_block_value( $inputArray ) 
     {
-        $this->set_field_object( $inputArray );
+        $this->create_field_object( $inputArray );
     
         // handle moving files from _tmp into galleryDir, create thumbnails & delete any unwanted files
         $galleryDir = ecb2_FileUtils::ECB2ImagesPath( $this->block_name, $this->id, '', 

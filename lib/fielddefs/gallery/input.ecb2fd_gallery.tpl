@@ -10,8 +10,6 @@
         <input name="file" type="file" multiple />
     </div>
 
-    {* <input type="hidden" class="type" name="{$block_name}[type]" value="{$type}"/> *}
-
     <div class="dropzone-preview-template">
         <div class="dz-preview dz-file-preview" style="display:none;">
             <input id="" name="" class="dz-input-filename" type="hidden" value=""/>
@@ -30,8 +28,7 @@
         </div>
     </div>
 
-{*    <div class="dz-test">TEST - click here</div>*}
-    <div class="dz-upload-prompt ecb2-btn ecb2-btn-default" style="{*if $thumbnail_width}width:{$thumbnail_width}px;{/if*}{if $thumbnail_height} height:{$thumbnail_height}px;{/if}" title="Drop images here or click to upload"><span class="ecb2-icon-plus"></span></div>
+    <div class="dz-upload-prompt ecb2-btn ecb2-btn-default" style="{if $thumbnail_height} height:{$thumbnail_height}px;{/if}" title="Drop images here or click to upload"><span class="ecb2-icon-plus"></span></div>
 
 </div>
 

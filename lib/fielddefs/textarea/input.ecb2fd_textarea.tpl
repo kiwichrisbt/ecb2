@@ -18,7 +18,6 @@
         {cms_textarea name=$block_name enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$value class='wysiwyg'}
 
 {elseif !$repeater && $use_json_format}
-        {* <input type="hidden" name="{$block_name}[type]" value="{$type}"/> *}
         {cms_textarea name="$block_name[]" enablewysiwyg=$wysiwyg rows=$rows cols=$cols value=$values[0]  class=$class}
 
 {else}{* $repeater *}
@@ -27,8 +26,6 @@
             {$mod->Lang('error_assign_required')}
         </div><br>
     {/if}
-
-        {* <input type="hidden" name="{$block_name}[type]" value="{$type}"/> *}
         
         <div id="{$block_name}-repeater" class="ecb_repeater sortable {if $wysiwyg}wysiwyg{/if}" data-block-name="{$block_name}" data-highest-row="{$values|@count}" {if $max_blocks>0}data-max-blocks="{$max_blocks}"{/if}>
 

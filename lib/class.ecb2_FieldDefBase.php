@@ -240,6 +240,7 @@ abstract class ecb2_FieldDefBase
             $sub_field->set_as_subfield($this->block_name); // $parent_block_name
             $sub_fields[] = $sub_field;
         }
+        
         if ( empty($sub_fields) ) {
             $this->error = $this->mod->Lang('error_no_sub_fields');
             return;  

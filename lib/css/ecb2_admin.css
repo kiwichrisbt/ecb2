@@ -138,6 +138,8 @@
 .ecb2-help pre {margin-left:0;}
 .ecb2-help fieldset {min-width:0;}
 
+.ui-datepicker {z-index:10 !important;} /* needed to pull above gallery */
+
 /* colpick Color Picker / https://github.com/josedvq/colpick-jQuery-Color-Picker  http://www.htmldrive.net/items/demo/1358/colpick-A-jQuery-RGB-HEX-and-HSB-Color-Picker-plugin-is-free-lightweight-and-customizable
 */
 
