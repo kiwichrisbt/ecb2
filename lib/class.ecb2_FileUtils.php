@@ -210,23 +210,28 @@ class ecb2_FileUtils
 
 
     /**
-     *  move files from _tmp into $dir, deleting any unwanted files
-     *  existing files with same name will not be overwritten
+     *  adds any additional files in $dir into $values object ($this->values) 
      *
      *  @param array $values - filenames of already selected files in the dir
      *  @param string $dir - directory to be used for this gallery
-     *  @return array $all_filenames - any additional filenames, appended to 
      */
-    public static function autoAddDirImages( $values, $dir)
+    public static function autoAddDirImages( &$values, $dir, $thumbnail_width=0, $thumbnail_height=0)
     {
-        $all_filenames = $values;
+        $all_filenames = [];
+        foreach ($values as $gallery_item) {
+            if ( !empty($gallery_item->filename) ) $all_filenames[] = $gallery_item->filename;
+        }
+        
         foreach ( glob( $dir.'*.*' ) as $filename) {
             $tmp_filename = basename($filename);
-            if ( !self::isECB2Thumb($tmp_filename) && !in_array($tmp_filename, $values) ) {
-                $all_filenames[] = $tmp_filename;
+            if ( !self::isECB2Thumb($tmp_filename) && !in_array($tmp_filename, $all_filenames) ) {
+                $new_item = new stdClass();
+                $new_item->filename = $tmp_filename;
+                $values[] = $new_item;
+                self::create_thumbnail($filename, $thumbnail_width, $thumbnail_height);
             }
         }
-        return $all_filenames;
+
     }
 
 
@@ -317,7 +322,7 @@ class ecb2_FileUtils
             $module = cms_utils::get_module( 'ECB2' );
             $ecb2_thumb_width = $module->GetPreference('thumbnailWidth', '');
             $ecb2_thumb_height = $module->GetPreference('thumbnailHeight', '');
-            if ( isset($ecb2_thumb_width) || isset($ecb2_thumb_height) ) { // use module preferences
+            if ( !empty($ecb2_thumb_width) || !empty($ecb2_thumb_height) ) { // use module preferences
                 $thumb_width = (int)$ecb2_thumb_width;
                 $thumb_height = (int)$ecb2_thumb_height;
 

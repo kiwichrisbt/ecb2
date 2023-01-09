@@ -30,6 +30,7 @@ abstract class ecb2_FieldDefBase
     protected $sub_parent_block;
     protected $sub_row_number;
     protected $sub_fields_ignored_params;
+    protected $sub_fields_required;
     protected $cached_template;
     
     public $use_json_format;
@@ -64,6 +65,7 @@ abstract class ecb2_FieldDefBase
         $this->sub_parent_block = '';
         $this->sub_row_number = NULL;
         $this->sub_fields_ignored_params = [];
+        $this->sub_fields_required = FALSE;
         if ( isset($params['field_alias_used']) ) {
             $this->field_alias_used = $params['field_alias_used'];
         }
@@ -73,27 +75,12 @@ abstract class ecb2_FieldDefBase
         //   once stored as json always stored as jason (output as object not string)
         if ( !empty($params['repeater']) ) $this->use_json_format = TRUE;
 
-        $json_data = json_decode($value);
-        if ( json_last_error()===JSON_ERROR_NONE && !is_integer($json_data) ) {
-            // JSON is valid - either use $json_data->values OR $json_data->sub_fields - NOT both!
-            $this->json_data = $json_data;
-            $this->use_json_format = TRUE;
-            if ( !empty($json_data->values) ) {
-                $this->values = $json_data->values;  
-            } elseif ( !empty($json_data->sub_fields) ) {
-                $this->values = $json_data->sub_fields;
-            }
+//move into individual field defs - for clarity
+        // $this->get_values($value);              // common FieldDefBase method
 
-        } elseif ( $this->use_json_format ) { // but JSON not valid
-            $this->values[] = $value;
+        // $this->set_field_parameters();
 
-        } else { // single string value
-            $this->value = $value;
-
-        }
-
-        $this->set_field_parameters();
-        $this->initialise_options($params);
+        // $this->initialise_options($params);     // common FieldDefBase method
 
     }
 
@@ -102,6 +89,12 @@ abstract class ecb2_FieldDefBase
     /**
      *  ABSTRACT METHODS
      */
+
+
+
+
+
+
 
     /**
      *  sets the allowed parameters for this field type, $this->parameters & $this->restrict_params
@@ -123,7 +116,38 @@ abstract class ecb2_FieldDefBase
      */
 
     /**
+     *  sets $this->value or $this->values from $value saved for the content block - json or string
+     *  Method can be overidden by child class, i.e. gallery
+     *
+     *  @param array $value - saved content block value
+     */
+    protected function get_values($value) 
+    {
+        $json_data = json_decode($value);
+        if ( json_last_error()===JSON_ERROR_NONE && !is_integer($json_data) ) {
+            // JSON is valid - either use $json_data->values OR $json_data->sub_fields - NOT both!
+            $this->json_data = $json_data;
+            $this->use_json_format = TRUE;
+            if ( !empty($json_data->values) ) {
+                $this->values = $json_data->values;  
+            } elseif ( !empty($json_data->sub_fields) ) {
+                $this->values = $json_data->sub_fields;
+            }
+
+        } elseif ( $this->use_json_format ) { // but JSON not valid
+            $this->values[] = $value;
+
+        } else { // single string value
+            $this->value = $value;
+
+        }
+    }
+
+
+
+    /**
      *  sets all defined 'options' and defaults if necessary
+     *  @param array $params - all Content Block params
      */
     protected function initialise_options($params)
     {
@@ -188,6 +212,7 @@ abstract class ecb2_FieldDefBase
     {
         $sub_params = [];
         $sub_field_list = [];
+        $sub_fields = [];
         // get all sub_params that specify sub_fields options
         foreach ($params as $key => $value) {
             if ( preg_match('/^sub([0-9]*)_([A-Za-z0-9_]+)/', $key, $matches) ) {
@@ -240,8 +265,8 @@ abstract class ecb2_FieldDefBase
             $sub_field->set_as_subfield($this->block_name); // $parent_block_name
             $sub_fields[] = $sub_field;
         }
-        
-        if ( empty($sub_fields) ) {
+
+        if ( empty($sub_fields) && $this->sub_fields_required) {
             $this->error = $this->mod->Lang('error_no_sub_fields');
             return;  
         } 
@@ -510,12 +535,17 @@ abstract class ecb2_FieldDefBase
         $this->value = NULL;
         $this->demo_count++;
         $this->block_name = $this->mod::DEMO_BLOCK_PREFIX.$this->field.$this->demo_count; 
+        if ( $this->error==$this->mod->Lang('error_no_sub_fields') ) {
+            $this->error = NULL;    // ignore in demo - create_sub_fields called again below
+        }
 
         // re-initialise with new $params from help call
         $this->initialise_options($params);
 
-        // reset use_json_format depending on $params
-        $this->use_json_format = !empty($params['repeater']);
+        // set use_json_format if input is 'repeater'
+        if ( !$this->use_json_format && !empty($params['repeater']) ) {
+            $this->use_json_format = TRUE;
+        }
 
         if ( $this->use_json_format ) {
             $this->values[] = $this->value;
@@ -570,10 +600,14 @@ abstract class ecb2_FieldDefBase
     protected function create_field_object( $inputArray = [] ) 
     {    
         $field_object = new stdClass();
+        $sub_fields = [];
+        if ( count($inputArray)==1 && isset($inputArray['empty']) ) {
+            $field_object->sub_fields = [];
+        }
+        unset($inputArray['empty']);
         foreach ($inputArray as $key => $value) {
             if ( preg_match('/^(r_)?[0-9]+$/', $key) ) { // is a value or child: r_0 or 0 
                 if ( is_array($value) ) {   // sub_fields
-                    $sub_fields = [];
                     foreach ($value as $field_name => $child_value) {
                         if ( is_array($child_value) ) {
                             $sub_fields[$field_name] = self::create_field_object( $child_value );

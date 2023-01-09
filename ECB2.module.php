@@ -27,7 +27,7 @@
 
 class ECB2 extends \CMSModule {
 
-    const MODULE_VERSION = '1.99.7';
+    const MODULE_VERSION = '1.99.8';
     const MANAGE_PERM = 'manage_ecb2';
 
     const FIELD_TYPES = [
@@ -250,7 +250,7 @@ class ECB2 extends \CMSModule {
         $type = self::FIELD_DEF_PREFIX.$params["field"];
         $ecb2 = new $type($this, $blockName, $value, $params, $adding, $content_obj->Id());
 
-        if ( !empty($ecb2->allowed_sub_fields) ) $ecb2->create_sub_fields( $params );
+        // if ( !empty($ecb2->allowed_sub_fields) ) $ecb2->create_sub_fields( $params );
 
         $ecb2_cb = $ecb2->get_content_block_input();
         return $ecb2_cb;

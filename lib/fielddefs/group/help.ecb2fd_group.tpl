@@ -1,5 +1,5 @@
 {* help.ecb2fd_group.tpl *}
-<p>The group field creates a group of one or more sub fields. An unlimited number of groups can added by the editors, sorted or deleted.</p>
+<p>The group field creates a group of one or more sub fields. An unlimited number of groups can added by the editors, sorted or deleted. Can be displayed in table or block layout.</p>
 
 <fieldset>
     {$fielddef->get_demo_input(['assign'=>'test20',
@@ -13,8 +13,7 @@ sub1_field=textinput sub1_name=height sub1_label='Height' sub1_size=5
 sub2_field=select, sub2_name=fruit, sub2_label='Fruit', sub2_values='Apple,Orange,Kiwifruit', sub2_first_value='--- select one ---' 
 sub3_field=checkbox sub3_name=checkbox1 sub3_label="A checkbox" sub3_default=1
 sub4_field=radio sub4_name=test7radio sub4_label="radio test" sub4_values="Apple,Orange,Kiwifruit" sub4_inline=1}{/literal}</pre>
-{* 
- *}
+
 
 
 <p>Parameters:</p>
@@ -38,6 +37,20 @@ sub4_field=radio sub4_name=test7radio sub4_label="radio test" sub4_values="Apple
     </li>
 
 </ul>
+
+<p>Output format:</p>
+<pre>{literal}
+{if !empty($test20->sub_fields)}{* test if any data exists *}
+    {foreach $test20->sub_fields as $sub_field}
+        {foreach $sub_field as $name => $value}
+            {$name}: {$value}
+        {/foreach}
+        {* or directly access each sub_field *}
+        Height is:{$sub_field->height}
+        Fruit is:{$sub_field->fruit}
+    {/foreach}
+{/if}
+{/literal}</pre><br>
 
 <p>Notes & tips:</p>
 <ol>

@@ -3,13 +3,17 @@
 
 <h3>Version 1.99.???? - 21Jul22 ????</h3>
 <ul>
-   <li>bug fix for using a module call 'mod' parameter - if any parameters being passed through to the module contain a space it would probably cause an error. Fixed.</li>
-   <li>added database to store ecb2_block definitions</li>
-   <li>added repeater functionality - sortable content blocks, optionally limited by 'max_blocks'</li>
-   <li>improved admin layout & added module custom icons</li>
-   <li>input_repeater is now an alias of textinput (fully compatible)</li>
-   <li></li>
-   <li></li>
+    <li>NEW: gallery field type - enables multiple images to added by dragging and dropping or uploading. Thumbnails of the images are displayed and created on the server and images can optionally be automatically resized before they are uploaded.</li>
+    <li>NEW: groups field type - creates a group of one or more sub fields. An unlimited number of groups can added by the editors, sorted or deleted. Can be displayed in table or block layout.</li>
+    <li>bug fix for using a module call 'mod' parameter - if any parameters being passed through to the module contain a space it would probably cause an error. Fixed.</li>
+    <li>added database to store ecb2_block definitions (not yet used)</li>
+    <li>added repeater functionality - sortable content blocks, optionally limited by 'max_blocks'</li>
+    <li>improved admin layout & added module custom icons</li>
+    <li>input_repeater is now an alias of textinput (fully compatible)</li>
+    <li>bug fix for using 'select' as alias of textinput</li>
+    <li>textinputs now correctly escape quotes</li>
+    <li>other minor bug fixes</li>
+    <li>restructured field_def methods - improve clarity and flexibility</li>
 </ul>
 <br>
 

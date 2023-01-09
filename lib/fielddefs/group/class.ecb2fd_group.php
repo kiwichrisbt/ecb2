@@ -13,8 +13,16 @@ class ecb2fd_group extends ecb2_FieldDefBase
 
 	public function __construct($mod, $blockName, $value, $params, $adding, $id=0) 
 	{	
-		parent::__construct($mod, $blockName, $value, $params, $adding, $id);
+		parent::__construct( $mod, $blockName, $value, $params, $adding, $id );
 
+        $this->get_values( $value );              // common FieldDefBase method
+
+        $this->set_field_parameters();
+
+        $this->initialise_options( $params );     // common FieldDefBase method
+
+        $this->create_sub_fields( $params );      // common FieldDefBase method
+        
 	}
 
 
@@ -56,6 +64,7 @@ class ecb2fd_group extends ecb2_FieldDefBase
             'repeater',
             'max_blocks'
         ];
+        $this->sub_fields_required = TRUE;
         $this->layout_options = ['table','block'];  // block, grid ...
 
 
@@ -90,7 +99,7 @@ class ecb2fd_group extends ecb2_FieldDefBase
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign( 'block_name', $this->block_name );
-        $tpl->assign( 'value', $this->value );
+        // $tpl->assign( 'value', $this->value );
         $tpl->assign( 'mod', $this->mod );
         $tpl->assign( 'block_name', $this->block_name );
         $tpl->assign( 'type', $this->field );

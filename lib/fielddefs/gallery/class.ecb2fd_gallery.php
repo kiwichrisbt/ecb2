@@ -13,9 +13,40 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
 
 	public function __construct($mod, $blockName, $value, $params, $adding, $id=0) 
 	{	
-		parent::__construct($mod, $blockName, $value, $params, $adding, $id);
+		parent::__construct( $mod, $blockName, $value, $params, $adding, $id );
 
+        $this->get_values( $value );              // common FieldDefBase method
+
+        $this->set_field_parameters();
+
+        $this->initialise_options( $params );     // common FieldDefBase method
+        
+        $this->create_sub_fields( $params );
 	}
+
+
+
+    /**
+     *  Overides parent class
+     *  sets $this->value or $this->values from $value saved for the content block - json or string
+     *
+     *  @param array $value - saved content block value
+     */
+    protected function get_values($value) 
+    {
+        $json_data = json_decode($value);
+        if ( json_last_error()===JSON_ERROR_NONE && !is_integer($json_data) && 
+             isset($json_data->sub_fields) ) {
+            // JSON is valid - gallery uses $json_data->sub_fields
+            $this->json_data = $json_data;
+            $this->use_json_format = TRUE;
+            $this->values = $json_data->sub_fields;
+
+        } else { // but JSON not valid
+            $this->values[] = $value;
+
+        } 
+    }
 
 
 
@@ -75,7 +106,7 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         $location = ecb2_FileUtils::ECB2ImagesUrl( $this->block_name, $this->id, '', $this->options['dir'] );
         $dir = ecb2_FileUtils::ECB2ImagesPath( $this->block_name, $this->id, '', $this->options['dir'] );
         if ( $this->options['auto_add_delete'] ) {
-            $this->values = ecb2_FileUtils::autoAddDirImages( $this->values, $dir);
+            ecb2_FileUtils::autoAddDirImages( $this->values, $dir, $this->options['thumbnail_width'], $this->options['thumbnail_height']);
         }
         $resize_method = ($this->options['resize_method']=='crop') ? 'crop' : ''; // default: 'contain'
         $thumbnail_width = $this->options['thumbnail_width'];
@@ -90,13 +121,18 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
 
         $actionparms = [];
         $action_url = $this->mod->create_url( 'm1_', 'do_UploadFiles', '', $actionparms);
-        $json_values = json_encode($this->values, JSON_HEX_APOS);
+        $filenames = [];
+        foreach ($this->values as $gallery_item) {
+            if ( !empty($gallery_item->filename) ) $filenames[] = $gallery_item->filename;
+        }
+        $json_filenames = json_encode($filenames, JSON_HEX_APOS);
 
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign( 'block_name', $this->block_name );
         $tpl->assign( 'values', $this->values );
-        $tpl->assign( 'json_values', $json_values );
+        $tpl->assign( 'json_filenames', $json_filenames );
+        $tpl->assign( 'sub_fields', $this->sub_fields );
         $tpl->assign( 'location', $location );
         $tpl->assign( 'resize_width', $this->options['resize_width'] );
         $tpl->assign( 'resize_height', $this->options['resize_height'] );
@@ -123,13 +159,25 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
      */
     public function get_content_block_value( $inputArray ) 
     {
-        $this->create_field_object( $inputArray );
-    
+        $this->field_object = $this->create_field_object( $inputArray );
+        // add 'file_dir' field to all gallery items
+        if ( !empty($this->field_object->sub_fields) ) {
+            $galleryUrl = ecb2_FileUtils::ECB2ImagesUrl( $this->block_name, $this->id, '', 
+                $this->options['dir'] );
+            foreach ($this->field_object->sub_fields as &$row) {
+                if ( !empty($row['filename']) ) $row['file_location'] = $galleryUrl;
+            }
+        }
+
         // handle moving files from _tmp into galleryDir, create thumbnails & delete any unwanted files
         $galleryDir = ecb2_FileUtils::ECB2ImagesPath( $this->block_name, $this->id, '', 
             $this->options['dir'] );
-        ecb2_FileUtils::updateGalleryDir( $this->field_object->values, $galleryDir,
-            $this->options['auto_add_delete'], $this->options['thumbnail_width'], $this->options['thumbnail_height'] );
+        $filenames = [];
+        foreach ($this->field_object->sub_fields as $fileArray) {
+            if ( !empty($fileArray['filename']) ) $filenames[] = $fileArray['filename'];
+        }
+        ecb2_FileUtils::updateGalleryDir( $filenames, $galleryDir, $this->options['auto_add_delete'], 
+            $this->options['thumbnail_width'], $this->options['thumbnail_height'] );
     
         return $this->ECB2_json_encode_field_object(); 
     }

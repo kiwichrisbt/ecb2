@@ -21,7 +21,6 @@
                 {$field_def->get_field_label()}
             </div>
         {/foreach}
-            {* <div class="right-panel-blank"></div> *}
         </div>
     {/if}
 

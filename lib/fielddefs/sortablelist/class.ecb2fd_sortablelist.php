@@ -15,6 +15,12 @@ class ecb2fd_sortablelist extends ecb2_FieldDefBase
 	{	
 		parent::__construct($mod, $blockName, $value, $params, $adding, $id);
 
+        $this->get_values($value);              // common FieldDefBase method
+
+        $this->set_field_parameters();
+
+        $this->initialise_options($params);     // common FieldDefBase method
+        
 	}
 
 
