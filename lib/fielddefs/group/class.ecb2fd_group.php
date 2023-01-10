@@ -41,6 +41,7 @@ class ecb2fd_group extends ecb2_FieldDefBase
             'max_blocks'    => ['default' => 0,       'filter' => FILTER_VALIDATE_INT],
             'layout'        => ['default' => 'table', 'filter' => FILTER_SANITIZE_STRING],
             'description'   => ['default' => '',      'filter' => FILTER_SANITIZE_STRING],
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'assign'        => ['default' => '',      'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
@@ -92,6 +93,11 @@ class ecb2fd_group extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         if ( empty($this->values) ) $this->values[] = NULL;
 
         if ($this->error) return $this->mod->error_msg($this->error);

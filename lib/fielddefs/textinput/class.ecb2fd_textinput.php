@@ -48,6 +48,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
             'repeater'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'max_blocks'    => ['default' => 0,    'filter' => FILTER_VALIDATE_INT],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'assign'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
 
@@ -60,6 +61,11 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         if ( $this->field_alias_used=='input_repeater' ) {
             $this->options['repeater'] = TRUE;
             if ( empty($this->values) ) {

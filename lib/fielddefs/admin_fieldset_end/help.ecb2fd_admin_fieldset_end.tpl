@@ -7,6 +7,7 @@
 <ul>
     <li>field (required) - 'admin_fieldset_end', alias: '<b>fieldset_end</b>'</li>
     <li>block (required) - the name of the content block</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
 </ul>
 
 <p>TIP: set label='&amp;nbsp;' to not show the field label.</p>

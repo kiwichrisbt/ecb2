@@ -44,6 +44,7 @@ class ecb2fd_radio extends ecb2_FieldDefBase
             'inline'        => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'flip_values'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
@@ -57,6 +58,11 @@ class ecb2fd_radio extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         $options = $this->get_array_from_csl( $this->options['values'] );
         if ( $this->options['flip_values'] && !empty($options) ) { 
             $options = array_flip($options);

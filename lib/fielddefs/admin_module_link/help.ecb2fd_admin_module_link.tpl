@@ -15,5 +15,6 @@
     <li>text (optional) - text to use in the link</li>
     <li>target (optional) - default: '_self'</li>
     <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

@@ -41,6 +41,7 @@ class ecb2fd_page_picker extends ecb2_FieldDefBase
         $this->default_parameters = [
             'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
@@ -54,6 +55,11 @@ class ecb2fd_page_picker extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         $contentOps = \ContentOperations::get_instance();
     
         $class = '';

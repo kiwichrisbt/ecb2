@@ -27,7 +27,7 @@
 
 class ECB2 extends \CMSModule {
 
-    const MODULE_VERSION = '1.99.8';
+    const MODULE_VERSION = '2.0';
     const MANAGE_PERM = 'manage_ecb2';
 
     const FIELD_TYPES = [
@@ -241,16 +241,13 @@ class ECB2 extends \CMSModule {
 
         $this->get_admin_css_js( TRUE );   // output css & js - but only once per page
 
-
         $this->HandleFieldAliases($params);       
         if ( !in_array($params["field"], self::FIELD_TYPES ) ) {
             return $this->error_msg( $this->Lang('field_error', $blockName) );
-        }
+        }     
 
         $type = self::FIELD_DEF_PREFIX.$params["field"];
         $ecb2 = new $type($this, $blockName, $value, $params, $adding, $content_obj->Id());
-
-        // if ( !empty($ecb2->allowed_sub_fields) ) $ecb2->create_sub_fields( $params );
 
         $ecb2_cb = $ecb2->get_content_block_input();
         return $ecb2_cb;
@@ -383,7 +380,7 @@ class ECB2 extends \CMSModule {
     /**
      *  shamelessly copied from CustomGS - thanks Rolf & Jos :)
      */
-	function ClearStylesheetCache()
+	private function ClearStylesheetCache()
 	{
 		foreach (glob("../tmp/cache/stylesheet_combined_*.css") as $filename) {
 			touch( $filename, time() - 360000 );

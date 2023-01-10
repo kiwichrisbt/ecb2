@@ -18,6 +18,7 @@
     <li>max_blocks (optional) - the maximum number of repeater fields that can be created</li>
     <li>wysiwyg (optional) - enables a wysiwyg editor on the textarea - default false</li>
     <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
 

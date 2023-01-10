@@ -14,5 +14,6 @@
     <li>link (required) - initial value when creating a new page</li>
     <li>text (optional) - the displayed text</li>
     <li>target (optional) - e.g. '_blank' - default: '_self'</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

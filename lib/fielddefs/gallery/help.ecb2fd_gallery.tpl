@@ -20,5 +20,6 @@
     <li>max_files (optional) - sets a maximum number of files that can be uploaded</li>
     <li>auto_add_delete (optional) default:true - will automatically delete unused files & thumbnails from the directory</li>
     <li>default_value (optional) - initial value when creating a new page</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

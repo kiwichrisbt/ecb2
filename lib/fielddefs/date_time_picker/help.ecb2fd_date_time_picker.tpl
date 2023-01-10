@@ -21,6 +21,7 @@
     <li>change_month (optional) - whether the month should be rendered as a dropdown instead of text - default: false.</li>
     <li>change_year (optional) - whether the year should be rendered as a dropdown instead of text. Use the year_range option to control which years are made available for selection - default: false</li>
     <li>year_range (optional) - the range of years displayed in the year drop-down: either relative to today's year ("-nn:+nn"), relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats ("nnnn:-nn") - default: 'c-10:c+10'</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
 

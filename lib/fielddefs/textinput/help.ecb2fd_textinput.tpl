@@ -17,6 +17,7 @@
     <li>repeater (optional) - enables 1 or more textinput fields to be created and sorted by clicking & dragging. Note: assign must be used to correctly supply the multiple values to the page template as an array.</li>
     <li>max_blocks (optional) - the maximum number of repeater fields that can be created</li>
     <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
 <p>Note: for backwards compatibility, an '<b>input_repeater</b>' field will still be output as a single string, with each seperate field delimited by '||'. To make the output a more useful array use 'explode', e.g. {literal}{"||"|explode:$content_block_name}{/literal}. To output as an array, use the '<b>assign</b>' parameter.</p>

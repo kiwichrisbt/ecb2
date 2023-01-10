@@ -53,6 +53,7 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
             'udt'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'template'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'customgs_field'=> ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->use_json_format = TRUE;    // default: FALSE - can override e.g. 'groups' type
@@ -67,6 +68,11 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         // get the dropdown values/options
         if ( $this->options['mod'] ) {  
             // call module to get values (comma separated list)

@@ -37,6 +37,7 @@ class ecb2fd_admin_image extends ecb2_FieldDefBase
     {
         $this->default_parameters = [
             'image'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
@@ -50,6 +51,11 @@ class ecb2fd_admin_image extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         $help_sample_filename = 'sample_admin_only_image.png';
         $config = cmsms()->GetConfig();
         $img_url = cms_join_path( $config['uploads_url'], $this->options['image'] );

@@ -15,5 +15,6 @@
     <li>no_hash (optional) - if set the hex value displayed and returned does not include a '#'</li>
     <li>clear_css_cache (optional) - if set the css cache is refreshed if the color is changed</li>
     <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

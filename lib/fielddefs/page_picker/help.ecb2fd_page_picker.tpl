@@ -13,5 +13,6 @@
     <li>field (required) - 'page_picker', alias: '<b>pages</b>'</li>
     <li>block (required) - the name of the content block</li>
     <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

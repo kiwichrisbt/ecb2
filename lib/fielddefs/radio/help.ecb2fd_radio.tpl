@@ -15,6 +15,7 @@
     <li>flip_values (optional) - swaps the dropdowns values <-> text</li>
     <li>inline (optional) - if set displays admin radio buttons inline</li>
     <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
 

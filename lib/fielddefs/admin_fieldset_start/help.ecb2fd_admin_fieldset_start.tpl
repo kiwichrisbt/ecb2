@@ -16,4 +16,5 @@
     <li>block (required) - the name of the content block</li>
     <li>legend (optional) - text to show as fieldset legend - default: ''</li>
     <li>description (optional) - adds additional text explanation for editor</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
 </ul>

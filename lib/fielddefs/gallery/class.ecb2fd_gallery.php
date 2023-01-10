@@ -61,16 +61,17 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            'dir'              => ['default' => '',     'filter' => FILTER_SANITIZE_STRING],
-            'resize_width'     => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
-            'resize_height'    => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
-            'resize_method'    => ['default' => '',     'filter' => FILTER_SANITIZE_STRING],
-            'thumbnail_width'  => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
-            'thumbnail_height' => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
-            'max_files'        => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
-            'auto_add_delete'  => ['default' => true,   'filter' => FILTER_VALIDATE_BOOLEAN],
-            'default_value'    => ['default' => '',     'filter' => FILTER_SANITIZE_STRING], 
-            'description'      => ['default' => '',     'filter' => FILTER_SANITIZE_STRING]
+            'dir'               => ['default' => '',     'filter' => FILTER_SANITIZE_STRING],
+            'resize_width'      => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
+            'resize_height'     => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
+            'resize_method'     => ['default' => '',     'filter' => FILTER_SANITIZE_STRING],
+            'thumbnail_width'   => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
+            'thumbnail_height'  => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
+            'max_files'         => ['default' => 0,      'filter' => FILTER_VALIDATE_INT],
+            'auto_add_delete'   => ['default' => true,   'filter' => FILTER_VALIDATE_BOOLEAN],
+            'default_value'     => ['default' => '',     'filter' => FILTER_SANITIZE_STRING], 
+            'admin_groups'      => ['default' => '',     'filter' => FILTER_SANITIZE_STRING],
+            'description'       => ['default' => '',     'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         $this->restrict_params = FALSE;    // default: true
@@ -103,6 +104,11 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         $location = ecb2_FileUtils::ECB2ImagesUrl( $this->block_name, $this->id, '', $this->options['dir'] );
         $dir = ecb2_FileUtils::ECB2ImagesPath( $this->block_name, $this->id, '', $this->options['dir'] );
         if ( $this->options['auto_add_delete'] ) {

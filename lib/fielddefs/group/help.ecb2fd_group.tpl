@@ -22,6 +22,7 @@ sub4_field=radio sub4_name=test7radio sub4_label="radio test" sub4_values="Apple
     <li>block (required) - the name of the content block</li>
     <li>layout (optional) - either 'table' (default), or 'block'.</li>
     <li>max_blocks (optional) - the maximum number of repeater fields that can be created</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
     <li>assign (required) - to pass the sub field data to a smarty variable</li>
 </ul>

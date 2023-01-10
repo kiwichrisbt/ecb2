@@ -29,6 +29,7 @@
     <li>flip_values (optional) - swaps the dropdowns values <-> text</li>
     <li>multiple (optional) - add multiple option select support</li>
     <li>size (optional) - multiple enabled only</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
     <li>compact (optional) - default:false - if set, for multiple only, a summary of the selected options is displayed and the full select is shown/hidden when 'edit/hide' is clicked</li>
     <li>default (optional) - (alias: '<b>default_value</b>') - initial value when creating a new page</li>

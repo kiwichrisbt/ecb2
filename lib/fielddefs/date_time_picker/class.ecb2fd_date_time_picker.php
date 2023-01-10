@@ -48,6 +48,7 @@ class ecb2fd_date_time_picker extends ecb2_FieldDefBase
             'show_time'         => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
             'date_only'         => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
             'time_only'         => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'       => ['default' => '',        'filter' => FILTER_SANITIZE_STRING]
         ];
         $this->parameter_aliases = [ 'time' => 'show_time' ];
@@ -61,6 +62,11 @@ class ecb2fd_date_time_picker extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         // set $class to 'datetimepicker' (default), 'datepicker' or 'timepicker' 
         $class = 'datetimepicker';
         if ( ( isset($this->field_alias_used) && $this->field_alias_used=='timepicker' ) ||

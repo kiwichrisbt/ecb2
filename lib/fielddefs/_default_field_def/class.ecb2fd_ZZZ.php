@@ -42,6 +42,7 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
             ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
@@ -56,9 +57,10 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
-
-
-
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
     
         $class = '';
         $smarty = \CmsApp::get_instance()->GetSmarty();

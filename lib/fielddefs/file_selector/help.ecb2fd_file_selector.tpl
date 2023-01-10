@@ -17,5 +17,6 @@
     <li>recurse (optional) - if set will show all files in sub directories</li>
     <li>sortfiles (optional) - will sort files by filename</li>
     <li>preview (optional) - will show a thumbnail of the image - only for images</li>
+    <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>

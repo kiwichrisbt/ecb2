@@ -53,6 +53,8 @@
 .ecb2-btn .ecb2-icon-minus {font-size:10px;}
 
 
+.inline-label.ecb2-hide-label {margin-top:1rem;}
+
 
 .ecb_repeater * {box-sizing:border-box;}
 .ecb_repeater {position:relative; padding-bottom:2.3rem;}

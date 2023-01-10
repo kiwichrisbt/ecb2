@@ -44,6 +44,7 @@ class ecb2fd_color_picker extends ecb2_FieldDefBase
             'no_hash'           => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'clear_css_cache'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'default'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'admin_groups'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->restrict_params = FALSE;    // default: true
@@ -56,6 +57,11 @@ class ecb2fd_color_picker extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $class = 'colorpicker';
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );

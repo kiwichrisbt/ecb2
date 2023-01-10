@@ -130,6 +130,8 @@ EOD;
 
 $lang['about_c'] = <<<'EOD'
 <p>ECB2 provides additional Content Blocks for use in page templates for CMS Made Simple v2+.</p>
+
+<p>Thanks to Matt @DIGI3 & Simon @Simon66, for the sponsorship of this module that have supported the development of these new features.</p>
 <p>Thanks to Tom Phane @tomph, for his code improvements, optimisations, and help content (especially a great simple smarty tip).</p>
 <p>The ECB2 module is a fork of the module Extended Content Blocks (ECB), for CMSMS v1, developed by Zdeno Kuzmany.</p>
 <br><br>

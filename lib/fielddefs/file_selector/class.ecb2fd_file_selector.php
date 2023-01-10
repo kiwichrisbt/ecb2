@@ -43,6 +43,7 @@ class ecb2fd_file_selector extends ecb2_FieldDefBase
             'sortfiles'     => ['default' => '',    'filter' => FILTER_VALIDATE_BOOLEAN],
             'dir'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'preview'       => ['default' => '',    'filter' => FILTER_VALIDATE_BOOLEAN],
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
@@ -56,6 +57,11 @@ class ecb2fd_file_selector extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         $config = cmsms()->GetConfig();
         $adddir = get_site_preference('contentimage_path');
         if ($this->options['dir']) $adddir = $this->options['dir'];

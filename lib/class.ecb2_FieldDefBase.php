@@ -75,13 +75,6 @@ abstract class ecb2_FieldDefBase
         //   once stored as json always stored as jason (output as object not string)
         if ( !empty($params['repeater']) ) $this->use_json_format = TRUE;
 
-//move into individual field defs - for clarity
-        // $this->get_values($value);              // common FieldDefBase method
-
-        // $this->set_field_parameters();
-
-        // $this->initialise_options($params);     // common FieldDefBase method
-
     }
 
 
@@ -89,10 +82,6 @@ abstract class ecb2_FieldDefBase
     /**
      *  ABSTRACT METHODS
      */
-
-
-
-
 
 
 
@@ -112,7 +101,7 @@ abstract class ecb2_FieldDefBase
 
 
     /**
-     *  COMMON METHODS
+     *  COMMON METHODS - may be overridden by some field types
      */
 
     /**
@@ -644,6 +633,85 @@ abstract class ecb2_FieldDefBase
     {
         return json_encode( $this->field_object, JSON_NUMERIC_CHECK | JSON_PRESERVE_ZERO_FRACTION );
     }
+
+
+
+
+    /**
+     *  Determines if current user is able to view this content block
+     *  
+     *  @param string $valid_admin_groups - comma separated list of admin groups allowed to access this field
+     *  @return bool - true if user can view & edit this field / content block 
+     */
+    protected function is_valid_group_member( $valid_admin_groups=NULL )
+    {
+        if ( !empty($valid_admin_groups) && !$this->mod->CheckPermission('Manage All Content')) {
+            // manage all content is just that... manage everything.
+            // groups are specified, and we don't get superuser privilege.
+            $my_uid = get_userid(FALSE);
+            if ( $my_uid <= 0 ) return FALSE; // not loggedin?
+
+            $allgroups = array();
+            // get a hash of all of the groups and ids.
+            $tmp = CmsApp::get_instance()->GetGroupOperations()->LoadGroups();
+            if ( !is_array($tmp) || count($tmp) == 0 ) return FALSE; // no groups?
+            foreach( $tmp as $one ) {
+                if ( !$one->active ) continue;
+                $allgroups[strtolower($one->name)] = $one->id;
+            }
+
+            // get the gids of all of the groups that this field is visible to.
+            $groups = array();
+            $tmp = explode(',', strtolower($valid_admin_groups) );
+            foreach( $tmp as $one ) {
+                $one = trim($one);
+                if ( $one ) {
+                    if( !isset($allgroups[$one]) ) continue;
+                    $groups[] = $allgroups[$one];
+                }
+            }
+
+            if( count($groups) == 0 ) {
+                // no valid groups specified... user has to be an administrator
+                $groups[] = 1;
+            }
+
+            // now do the check to see if the current user is a member of the specified group(s)
+            $groups = array_unique($groups);
+            $valid = FALSE;
+            foreach( $groups as $gid ) {
+                $users = CmsApp::get_instance()->GetUserOperations()->LoadUsersInGroup($gid);
+                if ( !is_array($users) || !count($users) ) continue;
+                foreach( $users as $user ) {
+                    if ( $user->id == $my_uid ) {
+                        $valid = TRUE;
+                        break;
+                    }
+                }
+                if ( $valid ) break;
+            }
+            if ( !$valid ) {
+                // user is not a member of any of the specified groups
+                return FALSE;
+            }
+        }
+
+        return TRUE;
+    }
+
+
+
+    /**
+     *  returns an empty span that also uses js to hide the content block label
+     *  
+     *  @return string - ecb2 hidden field template 
+     */
+    protected function ecb2_hidden_field() 
+    {
+        $smarty = \CmsApp::get_instance()->GetSmarty();
+        $tpl = $smarty->CreateTemplate( $this->mod->GetTemplateResource('admin_hidden_field.tpl'), null, null, $smarty );
+        return $tpl->fetch();
+    } 
 
 
 

@@ -48,11 +48,12 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
             'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'rows'          => ['default' => 20,    'filter' => FILTER_VALIDATE_INT],
-            'cols'          => ['default' => 80,   'filter' => FILTER_VALIDATE_INT],
-            'wysiwyg'       => ['default' => FALSE,   'filter' => FILTER_VALIDATE_BOOLEAN],
+            'cols'          => ['default' => 80,    'filter' => FILTER_VALIDATE_INT],
+            'wysiwyg'       => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'repeater'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
-            'max_blocks'    => ['default' => 0,    'filter' => FILTER_VALIDATE_INT],
+            'max_blocks'    => ['default' => 0,     'filter' => FILTER_VALIDATE_INT],
             'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'assign'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
 
@@ -65,6 +66,11 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign( 'mod', $this->mod );

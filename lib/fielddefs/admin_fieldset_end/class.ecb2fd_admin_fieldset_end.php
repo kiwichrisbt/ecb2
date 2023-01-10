@@ -35,7 +35,9 @@ class ecb2fd_admin_fieldset_end extends ecb2_FieldDefBase
      */
     public function set_field_parameters() 
     {
-        $this->default_parameters = [];
+        $this->default_parameters = [
+            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+        ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true
 
@@ -47,6 +49,11 @@ class ecb2fd_admin_fieldset_end extends ecb2_FieldDefBase
      */
     public function get_content_block_input() 
     {   
+        if ( !empty($this->options['admin_groups']) && 
+             !$this->is_valid_group_member($this->options['admin_groups']) ) {
+            return $this->ecb2_hidden_field(); 
+        }
+        
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign('is_demo', $this->demo_count>0 );
