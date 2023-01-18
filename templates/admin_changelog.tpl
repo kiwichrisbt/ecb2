@@ -1,6 +1,15 @@
 {* ECB2 admin_changelog.tpl *}
 
 
+<h3>Version 2.??? - ??Jan23</h3>
+<ul>
+    <li>Additions to help files based on user questions.</li>
+    <li>Bug fix for upgrade - will no longer fail if field type not valid</li>
+</ul>
+<br>
+
+
+
 <h3>Version 2.0 - 10Jan23</h3>
 <ul>
     <li>NEW: gallery field type - enables multiple images to added by dragging and dropping or uploading. Thumbnails of the images are displayed and created on the server and images can optionally be automatically resized before they are uploaded.</li>

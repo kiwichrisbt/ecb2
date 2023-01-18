@@ -170,8 +170,10 @@ class ECB2 extends \CMSModule {
         $field_help = [];
         foreach(self::FIELD_TYPES as $field_type) {
             $type = self::FIELD_DEF_PREFIX.$field_type;
-            $ecb2 = new $type($this, $this::DEMO_BLOCK_PREFIX.$field_type, NULL, ['field' => $field_type], TRUE);
-            $field_help[$field_type] = $ecb2->get_field_help();
+            if ( class_exists($type) ) {    // stops errors with old field types on upgrade
+                $ecb2 = new $type($this, $this::DEMO_BLOCK_PREFIX.$field_type, NULL, ['field' => $field_type], TRUE);
+                $field_help[$field_type] = $ecb2->get_field_help();
+            }
         }
         $tpl->assign('field_help', $field_help);
         $output .= $tpl->fetch();

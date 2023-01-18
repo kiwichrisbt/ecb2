@@ -117,12 +117,12 @@ $lang['general_c'] = <<<'EOD'
     <li>block (required) - the name of the content block</li>
     <li>label (optional) - A label for the content block for use when editing the page.</li>
     <li>required (optional) - Allows specifying that the content block must contain some text.</li>
-    <li>tab (optional) - The desired tab to display this field on in the edit form.</li>
+    <li>tab (optional) - The desired tab to display this field on in the edit form.<br>Use the following to show on a core tab: tab='zz_1nav_tab__', 'zz_2logic_tab__', or 'zz_3options_tab__'.</li>
     <li>priority (optional) integer - Allows specifying an integer priority for the block within the tab.</li>
     <li>assign (optional) string - Assign the results to a smarty variable with that name.</li>
 </ul>
 
-<p><b>Smarty tip</b>: parameter values that are single-word strings do not have to be quoted e.g. field=checkbox is the same as field='checkbox'.</p>
+<p><b>Smarty tips</b>: Parameter values that are single-word strings do not have to be quoted e.g. field=checkbox is the same as field='checkbox'. If parameter values are with double quotes simple smarty variables or tags can be included like var="test $foo {counter} test".<br>See <a href="//www.smarty.net/docs/en/language.syntax.quotes.tpl" target="_blank">Smarty docs for details</a>.</p>
 
 <br><br>
 EOD;
@@ -150,6 +150,10 @@ $lang['about_c'] = <<<'EOD'
 <p>Check all are working as expected, then CGContentUtils can be uninstalled.</p>
 <br>
 
+<h3>Implementation</h3>
+<p>ECB2 uses the core content blocks to save all field values, including more complex 'group' and 'gallery' fields with multiple sub-fields and rows. All such data is stored by core functions and retrieved with minimal overhead. Only a json_decode is required for each field for frontend actions.</p>
+<p>Each ECB2 field is stored in the '_content_props' table, using the 'longtext' data type that can store up to 4GB.</p>
+<br>
 
 <h3>Support</h3>
 <p>As per the GPL licence, this software is provided as is. Please read the text of the license for the full disclaimer.
