@@ -153,6 +153,7 @@ $lang['about_c'] = <<<'EOD'
 <h3>Implementation</h3>
 <p>ECB2 uses the core content blocks to save all field values, including more complex 'group' and 'gallery' fields with multiple sub-fields and rows. All such data is stored by core functions and retrieved with minimal overhead. Only a json_decode is required for each field for frontend actions.</p>
 <p>Each ECB2 field is stored in the '_content_props' table, using the 'longtext' data type that can store up to 4GB.</p>
+<p>Content saved in ECB2 fields is automatically indexed by the Search and Admin Search functions.</p>
 <br>
 
 <h3>Support</h3>
