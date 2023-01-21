@@ -581,7 +581,7 @@
     10% {transform:scale(1.1)}
     20% {transform:scale(1)}
 }
-.ecb2-dropzone, .ecb2-dropzone * {box-sizing:border-box}
+.ecb2-dropzone, .ecb2-dropzone * {box-sizing:border-box;}
 .ecb2-dropzone {/*min-height:50px;*/ margin-bottom:-1rem; padding:4px 3px 3px 3px;}
 .ecb2-dropzone.dz-clickable {cursor:pointer}
 .ecb2-dropzone.dz-clickable * {cursor:default}
@@ -601,6 +601,12 @@
 .ecb2-dropzone .dz-preview .dz-remove {line-height:28px; position:absolute; z-index:30; 
     right:2px; bottom:2px; width:32px; padding:0; border:none; cursor:pointer;}
 .ecb2-dropzone .dz-preview .dz-remove .ecb2-icon-trash-can-regular {vertical-align:middle; cursor:inherit;}
+.ecb2-dropzone .dz-preview .dz-handle {line-height:28px; position:absolute; z-index:30; 
+    left:2px; bottom:2px; width:32px; padding:0; border:none; cursor:pointer;}
+.ecb2-dropzone .dz-preview .dz-handle .ecb2-icon-grip-dots-vertical-solid {vertical-align:middle; cursor:inherit;}
+.ecb2-dropzone .ui-sortable-helper {z-index:1001 !important; box-shadow:3px 3px 4px rgba(0,0,0,.5);}
+.ecb2-dropzone .dz-sortable-placeholder {display:inline-block; visibility:visible; vertical-align:top; 
+    margin:0 calc(1rem - 2px) calc(1rem - 2px) 0; border:1px solid #fcefa1; background-color:#fffbe4;}
 
 .ecb2-dropzone .dz-preview:hover .dz-details {opacity:1}
 .ecb2-dropzone .dz-preview .dz-details {font-size:13px; line-height:150%; position:absolute; z-index:20; top:0; left:0; min-width:100%; max-width:100%; padding:2em 1em; text-align:center; opacity:0; color:rgba(0,0,0,.9);}

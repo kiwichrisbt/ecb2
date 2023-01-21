@@ -5,7 +5,7 @@
         {$description}<br>
 {/if}
 
-<div class="ecb2-dropzone dropzone-previews" data-dropzone-url="{$action_url}" data-block-name="{$block_name}" data-location="{$location}" data-dropzone-values="{$json_filenames|cms_escape}" data-dropzone-thumbnail-width="{$thumbnail_width}" data-dropzone-thumbnail-height="{$thumbnail_height}" data-dropzone-thumbnail-prefix="{$thumbnail_prefix}"{if $resize_width} data-dropzone-resize-width="{$resize_width}"{/if}{if $resize_height} data-dropzone-resize-height="{$resize_height}"{/if}{if $resize_method} data-dropzone-resize-method="{$resize_method}"{/if}{if $max_files>0} data-dropzone-max-files="{$max_files}"{/if} data-dropzone-max-files-text="{$max_files_text}" data-highest-row="{$values|@count}">
+<div class="ecb2-dropzone sortable dropzone-previews" data-dropzone-url="{$action_url}" data-block-name="{$block_name}" data-location="{$location}" data-dropzone-values="{$json_filenames|cms_escape}" data-dropzone-thumbnail-width="{$thumbnail_width}" data-dropzone-thumbnail-height="{$thumbnail_height}" data-dropzone-thumbnail-prefix="{$thumbnail_prefix}"{if $resize_width} data-dropzone-resize-width="{$resize_width}"{/if}{if $resize_height} data-dropzone-resize-height="{$resize_height}"{/if}{if $resize_method} data-dropzone-resize-method="{$resize_method}"{/if}{if $max_files>0} data-dropzone-max-files="{$max_files}"{/if} data-dropzone-max-files-text="{$max_files_text}" data-highest-row="{$values|@count}">
     <div class="fallback ecb2-fallback">
         <input name="file" type="file" multiple />
     </div>
@@ -20,6 +20,7 @@
                 <div class="dz-filename"><span data-dz-name></span></div>
                 <div class="dz-size" data-dz-size></div>
             </div>
+            <div class="dz-handle ecb2-btn ecb2-btn-default"><span class="ecb2-icon-grip-dots-vertical-solid"></span></div>
             <button class="dz-remove ecb2-btn ecb2-btn-default" data-dz-remove title="Remove image" role="button" aria-disabled="false"><span class="ecb2-icon-trash-can-regular"></span></button>
             <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
             <div class="dz-success-mark"><i class="ecb2-icon-check"></i></div>
