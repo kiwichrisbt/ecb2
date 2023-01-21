@@ -3,8 +3,11 @@
 
 <h3>Version 2.??? - ??Jan23</h3>
 <ul>
-    <li>Additions to help files based on user questions.</li>
+    <li>Additions to help files based on user questions</li>
+    <li>Added group file 'remove_empty' option - if set will remove any groups where all sub_fields are 'empty'</li>
     <li>Bug fix for upgrade - will no longer fail if field type not valid</li>
+    <li>Bug fix for multiple galleries on one page</li>
+    <li>Bug fix removing 1st image when max_files=1 - can now add another one</li>
 </ul>
 <br>
 

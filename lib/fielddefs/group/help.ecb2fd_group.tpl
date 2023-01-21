@@ -1,5 +1,5 @@
 {* help.ecb2fd_group.tpl *}
-<p>The group field creates a group of one or more sub fields. An unlimited number of groups can added by the editors, sorted or deleted. Can be displayed in table or block layout.</p>
+<p>The group field creates a group of one or more sub fields. An unlimited number of groups can be added by the editors, sorted or deleted. Can be displayed in table or block layout.</p>
 
 <fieldset>
     {$fielddef->get_demo_input(['assign'=>'test20',
@@ -21,6 +21,7 @@ sub4_field=radio sub4_name=test7radio sub4_label="radio test" sub4_values="Apple
     <li>field (required) - 'group'</li>
     <li>block (required) - the name of the content block</li>
     <li>layout (optional) - either 'table' (default), or 'block'.</li>
+    <li>remove_empty (optional) - will remove any groups where all sub_fields are 'empty' - default false</li>
     <li>max_blocks (optional) - the maximum number of repeater fields that can be created</li>
     <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
@@ -56,6 +57,7 @@ sub4_field=radio sub4_name=test7radio sub4_label="radio test" sub4_values="Apple
 <p>Notes & tips:</p>
 <ol>
     <li>change the order of the subX_ parameters to change the order of the fields in the admin page.</li>
-    <li>the default PHP limit for inputs on one page is 1000. This is set by max_input_vars in php.ini. If you may need more than this on a single page you can increase max_input_vars. Each sub field in each group row is 1 input, plus all other fileds on the page.</li>
+    <li>the default PHP limit for inputs on one page is 1000. This is set by max_input_vars in php.ini. If you may need more than this on a single page you can increase max_input_vars. Each sub field in each group row is 1 input, plus all other fields on the page.</li>
     <li>sub field parameters like 'repeater', 'max-blocks' and 'assign' are ignored.</li>
+    <li>if only one group is added and all it's values are empty the ->sub_fields object will be empty</li>
 </ol>

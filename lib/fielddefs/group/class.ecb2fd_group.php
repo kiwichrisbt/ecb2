@@ -40,8 +40,9 @@ class ecb2fd_group extends ecb2_FieldDefBase
         $this->default_parameters = [
             'max_blocks'    => ['default' => 0,       'filter' => FILTER_VALIDATE_INT],
             'layout'        => ['default' => 'table', 'filter' => FILTER_SANITIZE_STRING],
+            'remove_empty'  => ['default' => 0,       'filter' => FILTER_VALIDATE_BOOLEAN],
             'description'   => ['default' => '',      'filter' => FILTER_SANITIZE_STRING],
-            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'admin_groups'  => ['default' => '',      'filter' => FILTER_SANITIZE_STRING],
             'assign'        => ['default' => '',      'filter' => FILTER_SANITIZE_STRING]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
@@ -67,7 +68,6 @@ class ecb2fd_group extends ecb2_FieldDefBase
         ];
         $this->sub_fields_required = TRUE;
         $this->layout_options = ['table','block'];  // block, grid ...
-
 
     }
 
@@ -130,20 +130,42 @@ class ecb2fd_group extends ecb2_FieldDefBase
      */
     public function get_content_block_value( $inputArray ) 
     {
-
-        // if all sub_fields empty then set 'sub_fields' to empty
-        if ( !empty($inputArray) && count($inputArray)==1 ) {
-            $firstRow = current($inputArray);
-            $value_found = FALSE;
-            foreach ($firstRow as $value) {
-                if ( !empty($value) ) $value_found = TRUE;
+        // if remove_empty option set - remove any empty groups (where all sub_fields empty)
+        // or if only 1 group and it's empty return and empty 'sub_fields' object
+        $remove_rows = [];
+        if ( is_array($inputArray) && ( count($inputArray)==1 || $this->options['remove_empty'] ) ) {
+            foreach ($inputArray as $row_number => $groupArray) {
+                if ( self::is_empty_group($groupArray) ) $remove_rows[] = $row_number;
             }
-            if ( !$value_found ) $inputArray = array('sub_fields' => []);
         }
+        foreach ($remove_rows as $row_number) {
+            unset( $inputArray[$row_number] );
+        }
+        if ( empty($inputArray) ) $inputArray = array('sub_fields' => []);
 
         $this->field_object = $this->create_field_object( $inputArray );
     
         return $this->ECB2_json_encode_field_object(); 
+    }
+
+
+
+    /**
+     *  @param array groupArray - an array of all sub_fields for one group row
+     *
+     *  @return boolean true if group is empty
+     */
+    public function is_empty_group( $groupArray=[] ) 
+    {
+        $isEmpty = TRUE;
+        foreach ($groupArray as $value) {
+            if ( !empty($value) ) {
+                $isEmpty = FALSE;
+                break;
+            }
+        }
+        return $isEmpty;
+
     }
 
 

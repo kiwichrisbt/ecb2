@@ -103,6 +103,7 @@ class ECB2 extends \CMSModule {
     public function UninstallPreMessage() { return $this->Lang('really_uninstall');}
 
 
+
     function HasCapability( $capability, $params = [] ) 
     {
         switch ($capability) {
@@ -114,6 +115,8 @@ class ECB2 extends \CMSModule {
         }
     }
 
+
+
     public function __construct() 
     {
         parent::__construct();
@@ -121,6 +124,7 @@ class ECB2 extends \CMSModule {
         spl_autoload_register( array($this, '_autoloader') );
 
         \CMSMS\HookManager::add_hook( 'Core::ContentEditPre', [ $this, 'ContentEditPre' ] );
+
     }
 
 
@@ -352,6 +356,8 @@ class ECB2 extends \CMSModule {
 
 
     /**
+     *  clears Stylesheet cache if that option is required for an ECB2 field where the value has changed
+     *      e.g. color_picker
      */
     public function ContentEditPre( $params )
     {
@@ -402,6 +408,7 @@ class ECB2 extends \CMSModule {
             $params['field'] = self::FIELD_ALIASES[$params['field']];
         }
     }
+
 
 
     /**
