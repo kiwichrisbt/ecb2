@@ -21,7 +21,7 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
 
         $this->initialise_options( $params );     // common FieldDefBase method
         
-        $this->create_sub_fields( $params );
+        $this->create_sub_fields( $params );      // common FieldDefBase method
 	}
 
 
@@ -34,6 +34,8 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
      */
     protected function get_values($value) 
     {
+        if ( empty($value) ) return;
+
         $json_data = json_decode($value);
         if ( json_last_error()===JSON_ERROR_NONE && !is_integer($json_data) && 
              isset($json_data->sub_fields) ) {
@@ -77,22 +79,26 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         $this->restrict_params = FALSE;    // default: true
         $this->use_json_format = TRUE;     // default: FALSE - can override e.g. 'groups' type
         $this->allowed_sub_fields = [
-            'textinput',
-            // 'textarea',
-            // 'dropdown',
-            // 'checkbox',
-            // 'radio',
-            // 'color_picker',
-            // 'date_time_picker',
-            // 'file_selector',
-            // 'page_picker',
-            // 'gallery_picker',
-            'module_picker'     
+                'textinput',
+                'textarea',
+                'dropdown',
+                'checkbox',         // working - indented :)
+                'radio',
+                'color_picker',
+                'date_time_picker',
+                'file_selector',
+                'page_picker',
+                'gallery_picker',
+                'module_picker'     
         ];
         $this->sub_fields_ignored_params = [
             'assign',
             'repeater',
             'max_blocks'
+        ];
+        $this->sub_fields_ignored_names = [
+            'filename',
+            'file_location'
         ];
 
 
@@ -133,6 +139,8 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         }
         $json_filenames = json_encode($filenames, JSON_HEX_APOS);
 
+        if ($this->error) return $this->mod->error_msg($this->error);
+
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
         $tpl->assign( 'block_name', $this->block_name );
@@ -165,6 +173,17 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
      */
     public function get_content_block_value( $inputArray ) 
     {
+        if ( is_array($inputArray) ) {
+            // if a gallery item does not include filename (should not happen) or
+            //      key is 'empty' remove that gallery item
+            foreach ($inputArray as $row_number => $galleryArray) {
+                if ( empty($galleryArray['filename']) || $row_number=='empty' ) {
+                    unset( $inputArray[$row_number] );
+                }
+            }
+        }
+        if ( empty($inputArray) ) $inputArray = array('sub_fields' => []);
+
         $this->field_object = $this->create_field_object( $inputArray );
         // add 'file_dir' field to all gallery items
         if ( !empty($this->field_object->sub_fields) ) {

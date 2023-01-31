@@ -66,6 +66,7 @@ class ecb2fd_group extends ecb2_FieldDefBase
             'repeater',
             'max_blocks'
         ];
+        // $this->sub_fields_ignored_names = [];
         $this->sub_fields_required = TRUE;
         $this->layout_options = ['table','block'];  // block, grid ...
 

@@ -28,7 +28,7 @@ sub4_field=radio sub4_name=test7radio sub4_label="radio test" sub4_values="Apple
     <li>assign (required) - to pass the sub field data to a smarty variable</li>
 </ul>
 <p>Sub field parameters:</p>
-<p>Each sub field can be speficied using 'subX_yyyyy' parameters where X is a number and yyyyy is the parameter. e.g. 'sub1_name=textinput'. Each sub fields has required and optional parameters</p>
+<p>Each sub field can be specified using 'subX_yyyyy' parameters where X is a number and yyyyy is the parameter. e.g. 'sub1_name=textinput'. Each sub fields has required and optional parameters</p>
 <ul>
     <li>subX_field (required) - must be one of the supported sub field types:<br>
         {foreach $fielddef->allowed_sub_fields as $allowed_types}{$allowed_types}, {/foreach}

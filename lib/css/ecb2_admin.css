@@ -29,13 +29,14 @@
 .ecb2-icon-menu2:before {content:'\e9be';}
 .ecb2-icon-plus:before {content:'\ea0a';}
 .ecb2-icon-minus:before {content:'\ea0b';}
-.ecb2-icon-trash-can-regular:before {content:'\e902';} /* used this one */
-.ecb2-icon-trash-regular:before {content:'\e905';}  
+.ecb2-icon-trash-can-regular:before {content:'\e902';}
+.ecb2-icon-trash-regular:before {content:'\e905';}
 .ecb2-icon-trash-can-solid:before {content:'\e906';}
 .ecb2-icon-grip-dots-solid:before {content:'\e903';}
 .ecb2-icon-grip-dots-vertical-solid:before {content:'\e904';}
-.ecb2-icon-xmark:before {content:'\e907';}
-.ecb2-icon-check:before {content:'\e908';}
+.ecb2-icon-pencil:before {content:'\e907';}
+.ecb2-icon-xmark:before {content:'\e908';}
+.ecb2-icon-check:before {content:'\e909';}
 
 
 .ecb2-btn {box-sizing:border-box; display:inline-block; margin:0; padding:.344rem .75rem; 
@@ -140,7 +141,7 @@
 .ecb2-help pre {margin-left:0;}
 .ecb2-help fieldset {min-width:0;}
 
-.ui-datepicker {z-index:10 !important;} /* needed to pull above gallery */
+.ui-datepicker {z-index:1030 !important;} /* needed to pull above gallery */
 
 /* colpick Color Picker / https://github.com/josedvq/colpick-jQuery-Color-Picker  http://www.htmldrive.net/items/demo/1358/colpick-A-jQuery-RGB-HEX-and-HSB-Color-Picker-plugin-is-free-lightweight-and-customizable
 */
@@ -599,11 +600,17 @@
 .ecb2-dropzone .dz-preview.dz-image-preview {background:#fff}
 .ecb2-dropzone .dz-preview.dz-image-preview .dz-details {transition:opacity .2s linear}
 .ecb2-dropzone .dz-preview .dz-remove {line-height:28px; position:absolute; z-index:30; 
-    right:2px; bottom:2px; width:32px; padding:0; border:none; cursor:pointer;}
+    right:2px; top:2px; width:32px; padding:0; border:none; cursor:pointer;}
 .ecb2-dropzone .dz-preview .dz-remove .ecb2-icon-trash-can-regular {vertical-align:middle; cursor:inherit;}
-.ecb2-dropzone .dz-preview .dz-handle {line-height:28px; position:absolute; z-index:30; 
-    left:2px; bottom:2px; width:32px; padding:0; border:none; cursor:pointer;}
+.ecb2-dropzone .dz-preview .dz-handle {display:none; line-height:28px; position:absolute; z-index:30; 
+    left:2px; top:2px; width:32px; padding:0; border:none; cursor:pointer;}
+.ecb2-dropzone.sortable .dz-preview .dz-handle {display:block;}
 .ecb2-dropzone .dz-preview .dz-handle .ecb2-icon-grip-dots-vertical-solid {vertical-align:middle; cursor:inherit;}
+
+.ecb2-dropzone .dz-preview .dz-edit {display:block; line-height:28px; position:absolute; z-index:30; 
+    right:36px; top:2px; width:32px; padding:0; border:none; cursor:pointer;}
+.ecb2-dropzone .dz-preview .dz-edit .ecb2-icon-pencil {vertical-align:middle; cursor:inherit;}
+
 .ecb2-dropzone .ui-sortable-helper {z-index:1001 !important; box-shadow:3px 3px 4px rgba(0,0,0,.5);}
 .ecb2-dropzone .dz-sortable-placeholder {display:inline-block; visibility:visible; vertical-align:top; 
     margin:0 calc(1rem - 2px) calc(1rem - 2px) 0; border:1px solid #fcefa1; background-color:#fffbe4;}
@@ -649,3 +656,11 @@
 .ecb2-dropzone .dz-upload-prompt .ecb2-icon-plus {font-size:1rem; line-height:2rem;}
 .ecb2-dropzone:hover .dz-upload-prompt {background-color:#ffca95; border:1px solid #ffc39d;}
 .ecb2-dropzone .dz-upload-prompt:hover {color:#fff; border:1px solid #fa6704; background:#fa8004;}
+
+.ecb2-dz-sub-fields .sub_field_label, .ui-dialog .sub_field_label { display:block; padding:14px 8px 0 0;
+    font-weight:700;color:#585858;}
+.ecb2-dz-sub-fields {display:none;} 
+.ecb2-dz-sub-fields .dz-sub-fields-template {display:none;} 
+.ui-dialog.ui-front {z-index:1020;}
+.dz-sub-field .sub-field-color_picker .colpick {top:auto !important; left:auto !important;}
+

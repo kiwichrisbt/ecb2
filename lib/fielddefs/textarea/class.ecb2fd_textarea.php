@@ -47,7 +47,7 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
         $this->default_parameters = [
             'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'rows'          => ['default' => 20,    'filter' => FILTER_VALIDATE_INT],
+            'rows'          => ['default' => 4,    'filter' => FILTER_VALIDATE_INT],
             'cols'          => ['default' => 80,    'filter' => FILTER_VALIDATE_INT],
             'wysiwyg'       => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'repeater'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],

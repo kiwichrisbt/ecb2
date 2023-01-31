@@ -30,6 +30,7 @@ abstract class ecb2_FieldDefBase
     protected $sub_parent_block;
     protected $sub_row_number;
     protected $sub_fields_ignored_params;
+    protected $sub_fields_ignored_names;
     protected $sub_fields_required;
     protected $cached_template;
     
@@ -65,6 +66,7 @@ abstract class ecb2_FieldDefBase
         $this->sub_parent_block = '';
         $this->sub_row_number = NULL;
         $this->sub_fields_ignored_params = [];
+        $this->sub_fields_ignored_names = [];
         $this->sub_fields_required = FALSE;
         if ( isset($params['field_alias_used']) ) {
             $this->field_alias_used = $params['field_alias_used'];
@@ -228,7 +230,8 @@ abstract class ecb2_FieldDefBase
                 $this->error = $this->mod->Lang('error_sub_field_type_not_allowed', $sub_field_params['field']);
                 return;  
             } 
-            if ( !isset($sub_field_params['name']) ) {
+            if ( !isset($sub_field_params['name']) || 
+                 in_array( $sub_field_params['name'], $this->sub_fields_ignored_names) ) {
                 $this->error = $this->mod->Lang('error_sub_field_name_missing', $sub_field_params['field']);
                 return;  
             } 
@@ -302,6 +305,17 @@ abstract class ecb2_FieldDefBase
         $label = ( !empty($this->options['label']) ) ? $this->options['label'] : $this->block_name;
         return $label;
 
+    }
+
+
+
+    /**
+     *  @return stringif i.e. 'inline_label' set return FALSE - default TRUE
+     */
+    public function is_field_label_visible()
+    {
+        $visible = ( empty($this->options['inline_label']) ) ? TRUE : FALSE;
+        return $visible;
     }
 
 
@@ -593,7 +607,7 @@ abstract class ecb2_FieldDefBase
         if ( count($inputArray)==1 && isset($inputArray['empty']) ) {
             $field_object->sub_fields = [];
         }
-        unset($inputArray['empty']);
+        // unset($inputArray['empty']);    // moved back into gallery ::get_content_block_value
         foreach ($inputArray as $key => $value) {
             if ( preg_match('/^(r_)?[0-9]+$/', $key) ) { // is a value or child: r_0 or 0 
                 if ( is_array($value) ) {   // sub_fields

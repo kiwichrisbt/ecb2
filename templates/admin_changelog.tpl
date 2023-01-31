@@ -1,10 +1,13 @@
 {* ECB2 admin_changelog.tpl *}
 
 
-<h3>Version 2.??? - ??Jan23</h3>
+<h3>Version 2.1 - 01Feb23</h3>
 <ul>
+    <li>gallery field - images can now be reordered by dragging and dropping</li>
+    <li>gallery field - images can now have multiple sub-fields, e.g. title, description, etc.</li>
     <li>Additions to help files based on user questions</li>
     <li>Added group file 'remove_empty' option - if set will remove any groups where all sub_fields are 'empty'</li>
+    <li>textarea, rows default changed to 3 - was 20</li>
     <li>Bug fix for upgrade - will no longer fail if field type not valid</li>
     <li>Bug fix for multiple galleries on one page</li>
     <li>Bug fix removing 1st image when max_files=1 - can now add another one</li>
