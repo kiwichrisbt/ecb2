@@ -77,6 +77,32 @@ class ecb2_FileUtils
 
 
     /**
+     *  @return string url relative to the website root to either a subdir of /uploads, or a unique 
+     *                 ECB2 images sub dir:  /ECB2_IMAGE_DIR/blockname_module_id
+     *  @param string $blockname - name of props blockname
+     *  @param string $id - content id - i.e. page id
+     *  @param string $module - if not Content page (default) - not actually used yet
+     *  @param string $uploads_dir - if set is a subdir of /uploads to use
+     */
+    public static function ECB2ImagesRelativeUrl( $blockname, $id, $module='', $uploads_dir='' ) 
+    {
+        $config = cmsms()->GetConfig();
+        $relativeUploadsDir = str_replace(CMS_ROOT_URL, '', $config['image_uploads_url']);
+        if ( !empty($uploads_dir) ) {
+            $ecb2Url = cms_join_path( $relativeUploadsDir, $uploads_dir );
+            return $ecb2Url.DIRECTORY_SEPARATOR;
+        }
+
+        if ( empty($blockname) ) return FALSE;
+
+        $ecb2Url = cms_join_path( $relativeUploadsDir, self::ECB2_IMAGE_DIR ).DIRECTORY_SEPARATOR;
+        $dirname = munge_string_to_url( $blockname. ($module ? '_'.$module : '') . ($id ? '_'.$id : '') );
+        return $ecb2Url.$dirname.DIRECTORY_SEPARATOR;
+    }
+
+
+
+    /**
      *  creates the unique ECB2 images sub dir - if it doesn't already exist: 
      *          /ECB2_IMAGE_DIR/blockname_module_id
      *      or the ECB2_IMAGE_DIR/ECB2_IMAGE_TEMP_DIR if params all empty

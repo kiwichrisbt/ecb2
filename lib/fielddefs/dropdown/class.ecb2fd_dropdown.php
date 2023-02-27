@@ -151,4 +151,25 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
 
 
 
+    /**
+     *  Data entered by the editor is processed before its saved in props table
+     *  Method IS overidden by this child class, e.g. gallery, group, dropdown
+     *  
+     *  @return string formatted json containing all field data ready to be saved & output
+     */
+    public function get_content_block_value( $inputArray ) 
+    {
+        if (!$this->is_sub_field) {
+            // return comma separated list
+            $value = implode(',', $inputArray);
+            return $value;
+        }
+
+        // else is sub_field so return object
+        $this->field_object = $this->create_field_object( $inputArray );
+        return $this->ECB2_json_encode_field_object();
+    }
+
+
+
 }

@@ -58,20 +58,6 @@ sub4_field=page_picker sub4_name=link_to sub4_label='Select a page'}{/literal}</
 {/if}
 {/literal}</pre><br>
 
-<p>Output format:</p>
-<pre>{literal}
-{if !empty($test20a->sub_fields)}{* test if any data exists *}
-    {foreach $test20->sub_fields as $sub_field}
-        {foreach $sub_field as $name => $value}
-            {$name}: {$value}
-        {/foreach}
-        {* or directly access each sub_field *}
-        filename is:{$sub_field->filename}
-        file_location is:{$sub_field->file_location}
-    {/foreach}
-{/if}
-{/literal}</pre><br>
-
 <p>Notes & tips:</p>
 <ol>
     <li>change the order of the subX_ parameters to change the order of the fields in the admin page.</li>

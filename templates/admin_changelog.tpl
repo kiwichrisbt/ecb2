@@ -1,6 +1,15 @@
 {* ECB2 admin_changelog.tpl *}
 
 
+<h3>Version 2.1.1 - 24Feb23</h3>
+<ul>
+    <li>'gallery' file_location changed to relative dir, when a page is next saved. This makes saved values more portable when moving from one domain to another. This should not cause an issue - if it does please contact me and I'll help find a solution.</li>
+    <li>tweak 'gallery' type help text</li>
+    <li>Bug fix for 'dropdown' multiple for output to be comma separated list as previously (was broken in v2.0 when group type added).</li>
+</ul>
+<br>
+
+
 <h3>Version 2.1 - 01Feb23</h3>
 <ul>
     <li>gallery field - images can now be reordered by dragging and dropping</li>

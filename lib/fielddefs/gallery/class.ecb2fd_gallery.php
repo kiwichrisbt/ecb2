@@ -185,12 +185,12 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
         if ( empty($inputArray) ) $inputArray = array('sub_fields' => []);
 
         $this->field_object = $this->create_field_object( $inputArray );
-        // add 'file_dir' field to all gallery items
+        // add 'file_location' field to all gallery items
         if ( !empty($this->field_object->sub_fields) ) {
-            $galleryUrl = ecb2_FileUtils::ECB2ImagesUrl( $this->block_name, $this->id, '', 
+            $galleryRelativeUrl = ecb2_FileUtils::ECB2ImagesRelativeUrl( $this->block_name, $this->id, '', 
                 $this->options['dir'] );
             foreach ($this->field_object->sub_fields as &$row) {
-                if ( !empty($row['filename']) ) $row['file_location'] = $galleryUrl;
+                if ( !empty($row['filename']) ) $row['file_location'] = $galleryRelativeUrl;
             }
         }
 

@@ -564,7 +564,7 @@ abstract class ecb2_FieldDefBase
 
     /**
      *  Data entered by the editor is processed before its saved in props table
-     *  Method can be overidden by child class, e.g. gallery, group
+     *  Method can be overidden by child class, e.g. gallery, group, dropdown
      *  
      *  @return string formatted json containing all field data ready to be saved & output
      */
