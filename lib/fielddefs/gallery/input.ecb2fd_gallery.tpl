@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div class="dz-upload-prompt ecb2-btn ecb2-btn-default" style="{if $thumbnail_height} height:{$thumbnail_height}px;{/if}" title="Drop images here or click to upload">
+    <div id="{$block_name}-upload-prompt" class="dz-upload-prompt ecb2-btn ecb2-btn-default" style="{if $thumbnail_height} height:{$thumbnail_height}px;{/if}" title="Drop images here or click to upload">
         <span class="ecb2-icon-plus"></span>
         <input id="" name="{$block_name}[empty]" class="dz-input-filename" type="hidden" value=""/>{* force input array even if empty - so any deleted images can, if required, be removed from dir *}
     </div>

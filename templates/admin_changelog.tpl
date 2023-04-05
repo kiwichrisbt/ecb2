@@ -1,5 +1,10 @@
 {* ECB2 admin_changelog.tpl *}
 
+<h3>Version 2.2.1 - 05Apr23</h3>
+<ul>
+    <li>'gallery' Bug Fix - when using multiple gallery fields on the one page the upload dialog now adds the image/s to the correct gallery</li>
+</ul>
+<br>
 
 <h3>Version 2.2 - 27Feb23</h3>
 <ul>
