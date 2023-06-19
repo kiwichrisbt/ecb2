@@ -3,16 +3,16 @@
 
 <fieldset>
     {$fielddef->get_demo_input(['assign' => 'test20a',
-        'sub2_field' => 'textinput', 'sub2_name' => 'title', 'sub2_label' => 'Title',
-        'sub3_field' => 'editor', 'sub3_name' => 'description', 'sub3_label' => 'Description',
-        'sub4_field' => 'page_picker', 'sub4_name' => 'link_to', 'sub4_label' => 'Select a page'
+        'sub1_field' => 'textinput', 'sub1_name' => 'title', 'sub1_label' => 'Title',
+        'sub2_field' => 'editor', 'sub2_name' => 'description', 'sub2_label' => 'Description',
+        'sub3_field' => 'page_picker', 'sub3_name' => 'link_to', 'sub3_label' => 'Select a page'
     ])}
 </fieldset>
 
 <pre>{literal}{content_module module=ECB2 field=gallery block=test20a label='A sample Gallery' assign=test20a
-sub2_field=textinput sub2_name=title sub2_label='Title'
-sub3_field=editor sub3_name=description sub3_label='Description'
-sub4_field=page_picker sub4_name=link_to sub4_label='Select a page'}{/literal}</pre>
+sub1_field=textinput sub1_name=title sub1_label='Title'
+sub2_field=editor sub2_name=description sub2_label='Description'
+sub3_field=page_picker sub3_name=link_to sub3_label='Select a page'}{/literal}</pre>
 
 <p>Parameters:</p>
 <ul>
@@ -46,8 +46,8 @@ sub4_field=page_picker sub4_name=link_to sub4_label='Select a page'}{/literal}</
 
 <p>Output format:</p>
 <pre>{literal}
-{if !empty($test20->sub_fields)}{* test if any data exists *}
-    {foreach $test20->sub_fields as $sub_field}
+{if !empty($test20a->sub_fields)}{* test if any data exists *}
+    {foreach $test20a->sub_fields as $sub_field}
         {foreach $sub_field as $name => $value}
             {$name}: {$value}
         {/foreach}
