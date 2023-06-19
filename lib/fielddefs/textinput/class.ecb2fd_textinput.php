@@ -15,12 +15,19 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
 	{	
 		parent::__construct($mod, $blockName, $value, $params, $adding, $id);
 
+        // set use_json_format (if necessary) before get_values()
+        if ( !empty($params['repeater']) || 
+             ( isset($params['field_alias_used']) && $params['field_alias_used']=='input_repeater') ) {
+            $this->use_json_format = TRUE;
+        }
+
         $this->get_values($value);              // common FieldDefBase method
 
         $this->set_field_parameters();
 
         $this->initialise_options($params);     // common FieldDefBase method
         
+
 	}
 
 
@@ -35,8 +42,6 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
      */
     public function set_field_parameters() 
     {
-        // $this->restrict_params = FALSE;    // default: true
-        // $this->use_json_format = TRUE;    // default: FALSE - can override e.g. 'groups' type
         $this->parameter_aliases = [
             'default_value' => 'default'
         ];
@@ -51,6 +56,10 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
             'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'assign'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
         ];
+        // $this->restrict_params = FALSE;    // default: true
+        // $this->use_json_format = TRUE;    // default: FALSE - can override e.g. 'groups' type
+
+
 
     }
 

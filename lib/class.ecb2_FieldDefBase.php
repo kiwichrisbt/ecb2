@@ -74,8 +74,8 @@ abstract class ecb2_FieldDefBase
         $this->parameter_aliases = [];
         $this->demo_count = 0;
         $this->use_json_format = FALSE;     // single value stored as string ECB2 v1 format for simple fields
-        //   once stored as json always stored as jason (output as object not string)
-        if ( !empty($params['repeater']) ) $this->use_json_format = TRUE;
+        //   once stored as json always stored as jason (output as object not string) - changed to output set by fieldtype
+        //if ( !empty($params['repeater']) ) $this->use_json_format = TRUE; // move into fielddef
 
     }
 
@@ -571,6 +571,9 @@ abstract class ecb2_FieldDefBase
     public function get_content_block_value( $inputArray ) 
     {
         $this->field_object = $this->create_field_object( $inputArray );
+
+        // in case fieldtype has changed and now only string output required - just use first value
+        if ($this->use_json_format==FALSE) return $this->field_object->values[0];
 
         return $this->ECB2_json_encode_field_object();
     }

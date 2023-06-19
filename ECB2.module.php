@@ -78,6 +78,16 @@ class ECB2 extends \CMSModule {
         'input_repeater' => 'textinput',
         'image' => 'gallery'
     ];
+    const OUTPUT_FORMAT_DEFAULT = 'string';
+    const OUTPUT_FORMAT = [ // 'string' (default), 'array', 'array_or_string' or 'object'.
+        'gallery' => 'object',
+        'group' => 'object',
+        'textinput' => 'array_or_string',
+        'input' => 'array_or_string',
+        'textarea' => 'array_or_string',
+        'editor' => 'array_or_string',
+        'input_repeater' => 'string_separated'
+    ];
 
     const FIELD_DEF_PREFIX = 'ecb2fd_';
     const FIELD_DEF_CLASS_PREFIX = 'class.';
@@ -278,13 +288,14 @@ class ECB2 extends \CMSModule {
     public function GetContentBlockFieldValue( $blockName, $blockParams, $inputParams, ContentBase $content_obj )
     {
         // returned strings are stored in the default 'content_props' table as a string
-        // arrays are always stored as json in 'content_props' - once json always json
+        // arrays are always stored as json in 'content_props'
         if ( !isset($inputParams[$blockName]) ) {     // prob new page
             return '';
 
-        } elseif ( is_string($inputParams[$blockName]) ) {
+        } elseif ( is_string($inputParams[$blockName]) && $this->OutputFormat($blockParams)=='string' ) {
             return $inputParams[$blockName];
-        }
+
+        } 
         
         // else array of inputs returned - get fieldDef class to manipulate input values - if necessary
         $id = $content_obj->Id();
@@ -316,22 +327,48 @@ class ECB2 extends \CMSModule {
      */
     public function RenderContentBlockField( $blockName, $value, $blockparams, ContentBase $content_obj ) 
     {
-
         $json_data = json_decode($value);
-        if (json_last_error()===JSON_ERROR_NONE) {  
-            // JSON is valid
+        if ( json_last_error()===JSON_ERROR_NONE && $json_data!=$value ) {  
+            // JSON is valid and not just a simple string (also valid JSON)
             // a hack for backwards compatibility for input_repeater - if assign not used
-            if ( $blockparams['field']=='input_repeater' && empty($blockparams['assign']) ) {
-                return implode('||', $json_data->values);
-            }
-            return $json_data;
+            switch ( $this->OutputFormat($blockparams) ) {
+                case 'string':
+                    return $json_data->values[0];
+                    break;
 
-        } else {    // just a string
-            return $value;  
-            
+                case 'string_separated':      // e.g. 'input_repeater' & 'assign' not set
+                    return implode('||', $json_data->values);
+                    break;
+
+                case 'array':
+                    return isset($json_data->values) ? $json_data->values : [];
+                    break;
+
+                case 'object':
+                    return $json_data;
+                    break;
+            }
+
+        } else {    // $value is a string 
+            switch ( $this->OutputFormat($blockparams) ) {
+                case 'string': 
+                    return $value;
+                    break;
+
+                case 'array':
+                    return explode('||', $value);
+                    break;
+
+                case 'object':
+                    $field_object = new stdClass();
+                    $field_object->values[] = $value;
+                    return $field_object;
+                    break;
+            }
+
         }
-        
-     }
+
+    }
 
 
 
@@ -407,6 +444,39 @@ class ECB2 extends \CMSModule {
             $params['field_alias_used'] = $params['field'];
             $params['field'] = self::FIELD_ALIASES[$params['field']];
         }
+    }
+
+
+
+    /**
+     *  @return string 'string' (default), 'string_separated', 'array' or 'object'.
+     *                  note: not 'array_or_string' - this method decides which is required
+     *  @param array $blockparams - options set for this field block
+     */
+    private function OutputFormat( $blockparams )
+    {
+        if ( !isset(self::OUTPUT_FORMAT[ $blockparams['field'] ]) ) return self::OUTPUT_FORMAT_DEFAULT;
+
+        switch ( self::OUTPUT_FORMAT[ $blockparams['field'] ] ) {
+            case 'string':
+            case 'string_separated':
+            case 'array':
+            case 'object':
+                return self::OUTPUT_FORMAT[ $blockparams['field'] ];
+                break;
+            
+            case 'array_or_string' :
+                if ( empty($blockparams['repeater']) ) {
+                    return 'string';
+                } else {
+                    return 'array';
+                }
+                break;
+
+            default:
+                return self::OUTPUT_FORMAT_DEFAULT; 
+        }
+
     }
 
 

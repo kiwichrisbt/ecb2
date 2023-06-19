@@ -15,6 +15,8 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
 	{	
 		parent::__construct($mod, $blockName, $value, $params, $adding, $id);
 
+        if ( !empty($params['repeater']) ) $this->use_json_format = TRUE;
+
         $this->get_values($value);              // common FieldDefBase method
 
         $this->set_field_parameters();
@@ -24,7 +26,7 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
         if ( isset($this->field_alias_used) && $this->field_alias_used=='editor' ) {
             $this->options['wysiwyg'] = TRUE;
         }
-        
+
 	}
 
 
