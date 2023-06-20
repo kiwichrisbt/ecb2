@@ -4,6 +4,7 @@
 <h3>Version 2.3b1 - 19Jun23</h3>
 <ul>
     <li>Bug Fix - make output values more robust, including handling change of field type and options, e.g. input_repeater to input.</li>
+    <li>minor help tweaks</li>
 </ul>
 <br>
 

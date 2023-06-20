@@ -607,30 +607,31 @@ abstract class ecb2_FieldDefBase
     {    
         $field_object = new stdClass();
         $sub_fields = [];
-        if ( count($inputArray)==1 && isset($inputArray['empty']) ) {
+        if ( empty($inputArray) || (count($inputArray)==1 && isset($inputArray['empty'])) ) {
             $field_object->sub_fields = [];
         }
-        // unset($inputArray['empty']);    // moved back into gallery ::get_content_block_value
-        foreach ($inputArray as $key => $value) {
-            if ( preg_match('/^(r_)?[0-9]+$/', $key) ) { // is a value or child: r_0 or 0 
-                if ( is_array($value) ) {   // sub_fields
-                    foreach ($value as $field_name => $child_value) {
-                        if ( is_array($child_value) ) {
-                            $sub_fields[$field_name] = self::create_field_object( $child_value );
-                        } else {
-                            $sub_fields[$field_name] = $child_value;
+        if ( !empty($inputArray) ) {
+            foreach ($inputArray as $key => $value) {
+                if ( preg_match('/^(r_)?[0-9]+$/', $key) ) { // is a value or child: r_0 or 0 
+                    if ( is_array($value) ) {   // sub_fields
+                        foreach ($value as $field_name => $child_value) {
+                            if ( is_array($child_value) ) {
+                                $sub_fields[$field_name] = self::create_field_object( $child_value );
+                            } else {
+                                $sub_fields[$field_name] = $child_value;
+                            }
                         }
-                    }
-                    $field_object->sub_fields[] = $sub_fields;
+                        $field_object->sub_fields[] = $sub_fields;
 
-                } else {    // value
-                    $field_object->values[] = $value;
+                    } else {    // value
+                        $field_object->values[] = $value;
+
+                    }
+                
+                } else { // is other data
+                    $field_object->$key = $value;
 
                 }
-            
-            } else { // is other data
-                $field_object->$key = $value;
-
             }
         }
 
