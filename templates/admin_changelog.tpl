@@ -1,10 +1,22 @@
 {* ECB2 admin_changelog.tpl *}
 
 
-<h3>Version 2.3b1 - 19Jun23</h3>
+<h3>Version 2.3.1b1 - 29Jun23</h3>
 <ul>
-    <li>Bug Fix - make output values more robust, including handling change of field type and options, e.g. input_repeater to input.</li>
+    <li></li>
+</ul>
+<br>
+
+
+<h3>Version 2.3 - 24Jun23</h3>
+<ul>
+    <li>NEW field type: file_picker - implements the core FilePicker but with the added addition of a thumbnail</li>
     <li>minor help tweaks</li>
+    <li>Bug fix - make output values more robust, including handling change of field type and options, e.g. input_repeater to input.</li>
+    <li>Bug fix - 'dropdown' compact option - update selection on change + minor layout tweak</li>
+    <li>Bug fix - 'group' sub field labels - tweaked css to stop them wrapping</li>
+    <li>Bug fix - 'file_selector' field - fix showing thumbnails if no image selected or non-image file type</li>
+    <li>Bug Fix - when upgrading from older ECB2 version (< v1.99.3)</li>
 </ul>
 <br>
 
