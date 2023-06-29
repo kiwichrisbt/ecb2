@@ -11,6 +11,8 @@
 class ecb2fd_file_selector extends ecb2_FieldDefBase 
 {
 
+    const SUPPORTED_EXTENSIONS = 'jpg,jpeg,png,gif';
+
 	public function __construct($mod, $blockName, $value, $params, $adding, $id=0) 
 	{	
 		parent::__construct($mod, $blockName, $value, $params, $adding, $id);
@@ -124,6 +126,7 @@ class ecb2fd_file_selector extends ecb2_FieldDefBase
         $class .= ' repeater-field';
         }
         $tpl->assign('class', $class); 
+        $tpl->assign('supported_extensions', self::SUPPORTED_EXTENSIONS); 
         return $tpl->fetch();
    
     }

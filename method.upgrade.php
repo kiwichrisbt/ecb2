@@ -10,6 +10,8 @@
 
 if (!isset($gCms)) exit;
 
+define('MANAGE_PERM', 'manage_ecb2');   // duplicated from ECB2.module.php
+
 // remove permission USE_ECB2
 define('USE_ECB2', 'Use Extended Content Blocks');
 $db = $this->GetDb();
@@ -59,7 +61,7 @@ if ( version_compare($oldversion, '2.0') < 0 ) {
 }
 
 if ( version_compare($oldversion, '1.99.3') < 0 ) {
-    $this->CreatePermission(ECB2::MANAGE_PERM,'Extended Content Blocks 2 - Manage');
+    $this->CreatePermission(MANAGE_PERM,'Extended Content Blocks 2 - Manage');
 }
 
 if ( version_compare($oldversion, '1.99.5') < 0 ) {

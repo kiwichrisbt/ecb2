@@ -10,7 +10,7 @@
 
 {if $is_sub_field}
     {if $multiple}
-        <div class="ecb_multiple_select_json cms_dropdown {if $compact}ecb_compact{/if}">
+        <div class="ecb_multiple_select json cms_dropdown {if $compact}ecb_compact{/if}">
         {if $compact}
             {$none_selected=$mod->Lang('none_selected')}
             <div class="ecb_select_summary">
@@ -38,7 +38,7 @@
 
 {else}{* not $is_sub_field *}
     {if $multiple}
-        <div class="ecb_multiple_select{if $use_json_format}_json{/if} cms_dropdown {if $compact}ecb_compact{/if}">
+        <div class="ecb_multiple_select {if $use_json_format}json{/if} cms_dropdown {if $compact}ecb_compact{/if}">
         {if $compact}
             {$none_selected=$mod->Lang('none_selected')}
             <div class="ecb_select_summary">

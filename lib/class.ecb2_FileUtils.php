@@ -274,7 +274,7 @@ class ecb2_FileUtils
 
 
     /**
-     *  Creates a thumbnail for the $src file if it doesn't already exist
+     *  Creates a thumbnail for the $src file if it doesn't already exist, or is not the required size
      *
      *  @param string $src - filename of file to create thumbnail for
      *  @param int $thumb_width - width of thumbnail to be created (default: module pref, sitepref)
@@ -286,7 +286,7 @@ class ecb2_FileUtils
      */
     public static function create_thumbnail($src, $thumb_width=0, $thumb_height=0, $dest=NULL, $force=FALSE)
     {
-        if ( !file_exists($src) ) return FALSE;
+        if ( !file_exists($src) || !is_file($src) ) return FALSE;
         if ( !$dest ) {
             $bn = basename($src);
             $dn = dirname($src);
@@ -296,7 +296,6 @@ class ecb2_FileUtils
         if ( !$force && (file_exists($dest) && !is_writable($dest) ) ) return FALSE;
         
         $info = getimagesize($src);
-        // list($src_width, $src_height, $mime) = getimagesize($src);
         if ( !$info || !isset($info['mime']) ) return FALSE;
         $src_width = $info[0];
         $src_height = $info[1];
@@ -305,6 +304,15 @@ class ecb2_FileUtils
 
         self::get_thumbnail_size($src_width, $src_height, $thumb_width, $thumb_height, $src_x, $src_y);
 
+        // if thumbnail exists and is of correct size - leave as is, unless $force set
+        $thumb_info = getimagesize($dest);
+        if ( !$force || !$thumb_info || !isset($thumb_info['mime']) ) {
+            if ( $thumb_info[0]==$thumb_width && $thumb_info[1]==$thumb_height ) {
+                return true;
+            }
+        }
+
+        // create new thumbnail
         $i_src = imagecreatefromstring(file_get_contents($src));
         $i_dest = imagecreatetruecolor($thumb_width, $thumb_height);
         imagealphablending($i_dest, FALSE);
@@ -405,6 +413,47 @@ class ecb2_FileUtils
             $src_height = (int)($src_width / $ratio_thumb);
 
         }
+
+    }
+
+
+
+    /**
+     *  converts File system path to URL
+     *  
+     *  @return string url to access given $file
+     */
+    public static function path2url($file, $Protocol='https://') 
+    {
+        return $Protocol.$_SERVER['HTTP_HOST'].str_replace($_SERVER['DOCUMENT_ROOT'], '', $file);
+    }
+
+
+
+    /**
+     *  provides thumbnail url for $src file, it's created if it doesn't already exist & correct size
+     *
+     *  @param string $src - filename of file to create thumbnail for
+     *  @param int $thumb_width - width of thumbnail to be created (default: module pref, sitepref)
+     *  @param int $thumb_height - height of thumbnail to be created (default: module pref, sitepref)
+     *  @param string $dest - alternative filename for new thumbnail
+     *  @param boolean $force - if set to TRUE will overwrite any existing thumbnail filename
+     *  @return string thumbnail url for given $src image or '' if it doesn't exist
+     */
+    public static function get_thumbnail_url($src, $thumb_width=0, $thumb_height=0, $dest=NULL, $force=FALSE)
+    {
+        $created = self::create_thumbnail($src, $thumb_width, $thumb_height, $dest, $force);
+
+        if ( !$created ) return '';
+
+        if ( !$dest ) {
+            $bn = basename($src);
+            $dn = dirname($src);
+            $dest = $dn.DIRECTORY_SEPARATOR.self::THUMB_PREFIX.$bn;
+        }
+        if ( !file_exists($dest) ) return '';
+
+        return self::path2url($dest);
 
     }
 

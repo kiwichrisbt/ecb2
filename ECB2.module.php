@@ -27,8 +27,8 @@
 
 class ECB2 extends \CMSModule {
 
-    const MODULE_VERSION = '2.3b1';
-    const MANAGE_PERM = 'manage_ecb2';
+    const MODULE_VERSION = '2.3';
+    const MANAGE_PERM = 'manage_ecb2';      // duplicated in upgrade action
 
     const FIELD_TYPES = [
         'textinput',
@@ -41,6 +41,7 @@ class ECB2 extends \CMSModule {
         'color_picker',
         'date_time_picker',
         'file_selector',
+        'file_picker',
         'page_picker',
         'gallery_picker',
         'module_picker',
@@ -296,7 +297,7 @@ class ECB2 extends \CMSModule {
             return $inputParams[$blockName];
 
         } 
-        
+          
         // else array of inputs returned - get fieldDef class to manipulate input values - if necessary
         $id = $content_obj->Id();
         $value = '';    // just use dummy value here, pass input array into get_content_block_value()

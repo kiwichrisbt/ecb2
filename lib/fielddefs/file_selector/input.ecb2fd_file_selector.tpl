@@ -30,5 +30,5 @@
 {/if}
 
 {if $preview}      
-        <img style="max-width:130px;" class="file_selector_preview" data-uploadsurl="{$uploads_url}" {if isset($value)}src="{$uploads_url}/{$value}"{/if} alt="{$block_name}">
+        <img style="max-width:130px;" class="ecb_file_selector_preview {if !empty($value)}show{/if}" {if !empty($value)}src="{$uploads_url}/{$value}"{/if} alt="{$block_name}" data-uploadsurl="{$uploads_url}" data-supported-extensions="{$supported_extensions}">
 {/if}
