@@ -8,9 +8,8 @@
 #---------------------------------------------------------------------------------------------------
 
 
-if (!isset($gCms))
-    exit;
+if ( !defined('CMS_VERSION') ) exit;
 
 ## nothing - should not get here
 
-?>
+
