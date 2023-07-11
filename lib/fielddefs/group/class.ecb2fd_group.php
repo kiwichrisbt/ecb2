@@ -161,7 +161,7 @@ class ecb2fd_group extends ecb2_FieldDefBase
     {
         $isEmpty = TRUE;
         foreach ($groupArray as $value) {
-            if ( !empty($value) ) {
+            if (!empty($value) && (int)$value!=-1) {
                 $isEmpty = FALSE;
                 break;
             }

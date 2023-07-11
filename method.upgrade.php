@@ -68,7 +68,18 @@ if ( version_compare($oldversion, '1.99.5') < 0 ) {
     //  create module_ecb2_blocks table
     $blocks_table = new ecb2Blocks();
     $blocks_table->create_database();
-    
 }
 
-
+if ( version_compare($oldversion, '2.3') < 0 ) {
+    $dirsToRemove = ['/test'];
+    foreach ($dirsToRemove as $delDir) {
+        if ( file_exists($module_path.$delDir) ) {
+            foreach (glob($module_path.$delDir.'/*.*') as $filename) @unlink($filename);
+            @rmdir($module_path.$delDir);
+        }
+    }
+    $filesToRemove = ['/templates/ECB2_Test_Template.tpl'];
+    foreach ($filesToRemove as $delFile) {
+        @unlink($module_path.$delFile);
+    }
+}
