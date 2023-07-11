@@ -1,9 +1,12 @@
 {* ECB2 admin_changelog.tpl *}
 
 
-<h3>Version 2.3.1b1 - 29Jun23</h3>
+<h3>Version 2.3.1 - 11Jul23</h3>
 <ul>
-    <li></li>
+    <li>Group - bug fix - dropdown multiple options stopped new groups being added and saved correctly</li>
+    <li>Group - bug fix - testing for empty group now correctly tests page_picker</li>
+    <li>Gallery - bug fix - after sorting, only show upload prompt if max_files not exceeded</li>
+    <li>removed test templates & notes from within module folders</li>
 </ul>
 <br>
 

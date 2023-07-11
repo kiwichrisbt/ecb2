@@ -114,6 +114,8 @@
 /* .ecb_repeater .sub_field_label {font-weight:700; display:inline-block; width:150px; padding:6px 8px;
     color:#585858;} */
 .ecb_repeater.table-layout .sub_field_label {display:none;}
+.ecb_repeater.block-layout .sub-field {margin-bottom:5px;}
+.ecb_repeater.block-layout .sub_field_label {display:block; padding-bottom:0;}
 .ecb_repeater.block-layout .repeater-wrapper {display:flex; flex-direction:column; padding-bottom:1rem;}
 
 
@@ -126,6 +128,7 @@
 .repeater-wrapper .ecb_compact .ecb_select_summary {margin-left:8px;}
 
 .ecb_file_selector_preview:not(.show) {display:none;}
+.sub-field .ecb_file_selector_preview {margin-left:8px;}
 .ecb_file_picker_preview {margin-top:.25rem; border-radius:.25rem;}
 .ecb_file_picker_preview:not(.show) {display:none;}
 

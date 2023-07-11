@@ -2,16 +2,15 @@
 #---------------------------------------------------------------------------------------------------
 # Module: ECB2 - Extended Content Blocks 2
 # Author: Chris Taylor
-# Copyright: (C) 2016 Chris Taylor, chris@binnovative.co.uk
+# Copyright: (C) 2016-2023 Chris Taylor, chris@binnovative.co.uk
 # Licence: GNU General Public License version 3
-#          see /ECB2/lang/LICENCE.txt or <http://www.gnu.org/licenses/>
+#          see /ECB2/lang/LICENCE.txt or <http://www.gnu.org/licenses/gpl-3.0.html>
 #---------------------------------------------------------------------------------------------------
 # A fork of module: Extended Content Blocks (ECB)
 # Original Author: Zdeno Kuzmany (zdeno@kuzmany.biz) / kuzmany.biz  / twitter.com/kuzmany
 #---------------------------------------------------------------------------------------------------
-# CMS - CMS Made Simple is (c) 2011 by Ted Kulp (wishy@cmsmadesimple.org)
-# Project's homepage is: http://www.cmsmadesimple.org
-# Module's homepage is: http://dev.cmsmadesimple.org/projects/ecb2
+# CMS Made Simple (C) 2004-2023 CMS Made Simple Foundation <foundation@cmsmadesimple.org>
+# Homepage: https://www.cmsmadesimple.org
 #---------------------------------------------------------------------------------------------------
 # This program is free software; you can redistribute it and/or modify it under the terms of the
 # GNU General Public License as published by the Free Software Foundation; either version 3
@@ -25,9 +24,9 @@
 # If not, see <http://www.gnu.org/licenses/>.
 #---------------------------------------------------------------------------------------------------
 
-class ECB2 extends \CMSModule {
+class ECB2 extends CMSModule {
 
-    const MODULE_VERSION = '2.3';
+    const MODULE_VERSION = '2.3.1';
     const MANAGE_PERM = 'manage_ecb2';      // duplicated in upgrade action
 
     const FIELD_TYPES = [
@@ -80,7 +79,7 @@ class ECB2 extends \CMSModule {
         'image' => 'gallery'
     ];
     const OUTPUT_FORMAT_DEFAULT = 'string';
-    const OUTPUT_FORMAT = [ // 'string' (default), 'array', 'array_or_string' or 'object'.
+    const OUTPUT_FORMAT = [ // 'string' (default), 'array','array_or_string','object','string_separated'
         'gallery' => 'object',
         'group' => 'object',
         'textinput' => 'array_or_string',
@@ -100,7 +99,7 @@ class ECB2 extends \CMSModule {
     public function GetFriendlyName() { return $this->Lang('friendlyname'); }
     public function GetVersion() { return self::MODULE_VERSION; }
     public function MinimumCMSVersion() { return '2.0'; }
-    public function LazyLoadFrontend() { return true; }         // ??????????????
+    // public function LazyLoadFrontend() { return true; }         // is probably required for most pages
     public function GetAuthor() { return 'Chris Taylor'; }
     public function GetAuthorEmail() { return 'chris@binnovative.co.uk'; }
     public function GetChangeLog() { return $this->ProcessTemplate('admin_changelog.tpl'); }
@@ -115,10 +114,11 @@ class ECB2 extends \CMSModule {
 
 
 
-    function HasCapability( $capability, $params = [] ) 
+    public function HasCapability( $capability, $params = [] ) 
     {
         switch ($capability) {
-            case 'contentblocks':
+            case CmsCoreCapabilities::CONTENT_BLOCKS:
+            case CmsCoreCapabilities::PLUGIN_MODULE:
                 return TRUE;
 
             default:
