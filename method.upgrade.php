@@ -70,7 +70,7 @@ if ( version_compare($oldversion, '1.99.5') < 0 ) {
     $blocks_table->create_database();
 }
 
-if ( version_compare($oldversion, '2.3') < 0 ) {
+if ( version_compare($oldversion, '2.3') <= 0 ) { // if v2.3 or lower
     $dirsToRemove = ['/test'];
     foreach ($dirsToRemove as $delDir) {
         if ( file_exists($module_path.$delDir) ) {
