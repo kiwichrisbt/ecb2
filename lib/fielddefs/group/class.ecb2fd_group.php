@@ -41,9 +41,9 @@ class ecb2fd_group extends ecb2_FieldDefBase
             'max_blocks'    => ['default' => 0,       'filter' => FILTER_VALIDATE_INT],
             'layout'        => ['default' => 'table', 'filter' => FILTER_SANITIZE_STRING],
             'remove_empty'  => ['default' => 0,       'filter' => FILTER_VALIDATE_BOOLEAN],
-            'description'   => ['default' => '',      'filter' => FILTER_SANITIZE_STRING],
             'admin_groups'  => ['default' => '',      'filter' => FILTER_SANITIZE_STRING],
-            'assign'        => ['default' => '',      'filter' => FILTER_SANITIZE_STRING]
+            'assign'        => ['default' => '',      'filter' => FILTER_SANITIZE_STRING],
+            'description'   => ['default' => '',      'filter' => FILTER_DEFAULT]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         $this->restrict_params = FALSE;    // default: true

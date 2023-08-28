@@ -45,7 +45,7 @@ class ecb2fd_color_picker extends ecb2_FieldDefBase
             'clear_css_cache'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'default'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'admin_groups'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'description'       => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->restrict_params = FALSE;    // default: true
 

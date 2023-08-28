@@ -51,10 +51,10 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
             'size'          => ['default' => 30,    'filter' => FILTER_VALIDATE_INT],
             'max_length'    => ['default' => 255,   'filter' => FILTER_VALIDATE_INT],
             'repeater'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
-            'max_blocks'    => ['default' => 0,    'filter' => FILTER_VALIDATE_INT],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'max_blocks'    => ['default' => 0,     'filter' => FILTER_VALIDATE_INT],
             'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'assign'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'assign'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->restrict_params = FALSE;    // default: true
         // $this->use_json_format = TRUE;    // default: FALSE - can override e.g. 'groups' type

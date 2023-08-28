@@ -44,7 +44,7 @@ class ecb2fd_ZZZ extends ecb2_FieldDefBase
             ''              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'default_value' => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true

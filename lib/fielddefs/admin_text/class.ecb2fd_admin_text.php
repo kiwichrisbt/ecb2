@@ -39,7 +39,7 @@ class ecb2fd_admin_text extends ecb2_FieldDefBase
         $this->default_parameters = [
             'text'          => ['default' => '',    'filter' => FILTER_DEFAULT],
             'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         $this->restrict_params = FALSE;    // default: true  - to enable text to include html

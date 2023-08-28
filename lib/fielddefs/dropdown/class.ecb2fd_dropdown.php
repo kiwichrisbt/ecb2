@@ -54,7 +54,7 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
             'template'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'customgs_field'=> ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->use_json_format = TRUE;    // default: FALSE - can override e.g. 'groups' type
     }

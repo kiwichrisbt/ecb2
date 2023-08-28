@@ -47,7 +47,7 @@ class ecb2fd_file_picker extends ecb2_FieldDefBase
             'thumbnail_height'  => ['default' => 0,     'filter' => FILTER_VALIDATE_INT],
             'default_value'     => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'admin_groups'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'description'       => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true

@@ -48,8 +48,8 @@ class ecb2fd_date_time_picker extends ecb2_FieldDefBase
             'show_time'         => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
             'date_only'         => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
             'time_only'         => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
-            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'       => ['default' => '',        'filter' => FILTER_SANITIZE_STRING]
+            'admin_groups'      => ['default' => '',        'filter' => FILTER_SANITIZE_STRING],
+            'description'       => ['default' => '',        'filter' => FILTER_DEFAULT]
         ];
         $this->parameter_aliases = [ 'time' => 'show_time' ];
         // $this->restrict_params = FALSE;    // default: true

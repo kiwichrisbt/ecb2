@@ -46,7 +46,7 @@ class ecb2fd_file_selector extends ecb2_FieldDefBase
             'dir'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'preview'       => ['default' => '',    'filter' => FILTER_VALIDATE_BOOLEAN],
             'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true

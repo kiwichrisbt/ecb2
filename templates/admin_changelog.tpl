@@ -1,11 +1,19 @@
 {* ECB2 admin_changelog.tpl *}
 
 
-<h3>Version 2.3.? - ??Jul23</h3>
+<h3>Version 2.3.? - 12Aug23</h3>
+<ul>
+    <li></li>
+    <li></li>
+</ul>
+<br>
+
+
+<h3>Version 2.3.2 - 12Aug23</h3>
 <ul>
     <li>bug fix - Admin Description now works - thanks @tomph</li>
     <li>admin_text - will now accept html tags to be displayed on the admin page</li>
-    <li></li>
+    <li>all 'descriptions' can now include html tags (were previously removed)</li>
 </ul>
 <br>
 
