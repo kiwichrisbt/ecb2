@@ -115,7 +115,7 @@ abstract class ecb2_FieldDefBase
     protected function get_values($value) 
     {
         $json_data = json_decode($value);
-        if ( json_last_error()===JSON_ERROR_NONE && !is_integer($json_data) ) {
+        if ( json_last_error()===JSON_ERROR_NONE && !is_numeric($json_data) ) {
             // JSON is valid - either use $json_data->values OR $json_data->sub_fields - NOT both!
             $this->json_data = $json_data;
             $this->use_json_format = TRUE;

@@ -1,10 +1,18 @@
 {* ECB2 admin_changelog.tpl *}
 
-
+{*
 <h3>Version 2.3.? - 12Aug23</h3>
 <ul>
     <li></li>
     <li></li>
+</ul>
+<br>
+*}
+
+
+<h3>Version 2.3.2.1 - 29Aug23</h3>
+<ul>
+    <li>bug fix - some floating point values no longer ignored</li>
 </ul>
 <br>
 
