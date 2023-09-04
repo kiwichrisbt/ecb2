@@ -1,13 +1,21 @@
 {* ECB2 admin_changelog.tpl *}
 
 {*
-<h3>Version 2.3.? - 12Aug23</h3>
+<h3>Version 2.? - 12Aug23</h3>
 <ul>
     <li></li>
     <li></li>
 </ul>
 <br>
+
+
 *}
+<h3>Version 2.3.? - 04Sep23</h3>
+<ul>
+    <li>Gallery - dir option help updated - to correct top level path to be image_uploads_path (default is: /uploads/images)</li>
+    <li></li>
+</ul>
+<br>
 
 
 <h3>Version 2.3.2.1 - 29Aug23</h3>
