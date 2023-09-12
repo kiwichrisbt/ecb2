@@ -127,6 +127,7 @@
 .ecb_compact:not(.show) select {display:none;}
 .repeater-wrapper .ecb_compact .ecb_select_summary {margin-left:8px;}
 
+.ecb_file_selector_preview {display:block;}
 .ecb_file_selector_preview:not(.show) {display:none;}
 .sub-field .ecb_file_selector_preview {margin-left:8px;}
 .ecb_file_picker_preview {margin-top:.25rem; border-radius:.25rem;}
@@ -625,7 +626,7 @@
     margin:0 calc(1rem - 2px) calc(1rem - 2px) 0; border:1px solid #fcefa1; background-color:#fffbe4;}
 
 .ecb2-dropzone .dz-preview:hover .dz-details {opacity:1}
-.ecb2-dropzone .dz-preview .dz-details {font-size:13px; line-height:150%; position:absolute; z-index:20; top:0; left:0; min-width:100%; max-width:100%; padding:2em 1em; text-align:center; opacity:0; color:rgba(0,0,0,.9);}
+.ecb2-dropzone .dz-preview .dz-details {font-size:13px; line-height:150%; position:absolute; z-index:20; top:0; left:0; min-width:100%; max-width:100%; padding:3em 1em 2em; text-align:center; opacity:0; color:rgba(0,0,0,.9);}
 .ecb2-dropzone .dz-preview .dz-details .dz-size {font-size:16px;margin-bottom:1em; display:none;}
 .ecb2-dropzone .dz-preview .dz-details .dz-filename {white-space:nowrap}
 .ecb2-dropzone .dz-preview .dz-details .dz-filename:hover span {border:1px solid rgba(200,200,200,.8); background-color:rgba(255,255,255,.8)}
@@ -643,6 +644,7 @@
 .ecb2-dropzone .dz-preview .dz-success-mark, .ecb2-dropzone .dz-preview .dz-error-mark {position:absolute; z-index:500; top:50%; left:50%; display:block; margin-top:-27px; margin-left:-27px; pointer-events:none; opacity:0; border-radius:50%;background:rgba(0,0,0,.8);}
 .ecb2-dropzone .dz-preview .dz-success-mark svg, .ecb2-dropzone .dz-preview .dz-error-mark svg {display:block; width:54px; height:54px; fill:#fff}
 .ecb2-dropzone .dz-preview .dz-success-mark .ecb2-icon-check, .ecb2-dropzone .dz-preview .dz-error-mark .ecb2-icon-xmark {font-size:40px; line-height:54px; color:#fff;}
+.ecb2-dropzone .dz-preview.dz-thumb-sm .dz-edit {top:auto; bottom:2px; right:2px;}
 
 .ecb2-dropzone .dz-preview.dz-processing .dz-progress {transition:all .2s linear;opacity:1;}
 .ecb2-dropzone .dz-preview.dz-complete .dz-progress {transition:opacity .4s ease-in;opacity:0;}
