@@ -29,6 +29,12 @@
         </div>
 {/if}
 
-{if $preview}      
+{* {if $preview}      
         <img style="max-width:130px;" class="ecb_file_selector_preview {if !empty($value)}show{/if}" {if !empty($value)}src="{$uploads_url}/{$value}"{/if} alt="{$block_name}" data-uploadsurl="{$uploads_url}" data-supported-extensions="{$supported_extensions}">
+{/if} *}
+
+{if $preview}
+        <img class="ecb_file_selector_preview {if !empty($thumbnail_url)}show{/if}" {if !empty($thumbnail_url)}src="{$thumbnail_url}?{$smarty.now}"{/if} alt="{$block_name}" data-ajax-url="{$ajax_url}" data-top-dir="{$top_dir}" data-thumbnail-width="{$thumbnail_width}" data-thumbnail-height="{$thumbnail_height}">
 {/if}
+
+

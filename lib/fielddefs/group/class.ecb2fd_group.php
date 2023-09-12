@@ -57,7 +57,7 @@ class ecb2fd_group extends ecb2_FieldDefBase
             'color_picker',
             'date_time_picker',
             'file_selector',
-            // 'file_picker',
+            'file_picker',
             'page_picker',
             'gallery_picker',
             'module_picker'     

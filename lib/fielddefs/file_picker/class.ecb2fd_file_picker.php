@@ -7,6 +7,7 @@
 #          see /ECB2/lang/LICENCE.txt or <http://www.gnu.org/licenses/gpl-3.0.html>
 #---------------------------------------------------------------------------------------------------
 
+use \FilePicker\TemporaryProfileStorage;
 
 class ecb2fd_file_picker extends ecb2_FieldDefBase 
 {
@@ -68,16 +69,17 @@ class ecb2fd_file_picker extends ecb2_FieldDefBase
     
         $thumbnail_url = '';
         $ajax_url = '';
+        $FPmod = cms_utils::get_module('FilePicker');
+        $FPprofile = $FPmod->get_profile_or_default( $this->options['profile'] );
         if ( $this->options['preview'] ) {  // get thumbnail
             $config = cmsms()->GetConfig();
-            $FPmod = cms_utils::get_module('FilePicker');
-            $profile = $FPmod->get_profile_or_default( $this->options['profile'] );
-            $top_dir = $this->options['top'] ? $this->options['top'] : $profile->reltop;
+            $top_dir = $this->options['top'] ? $this->options['top'] : $FPprofile->reltop;
             $img_src = cms_join_path( $config['uploads_path'], $top_dir, $this->value );
             $thumbnail_url = ecb2_FileUtils::get_thumbnail_url($img_src, 
                 $this->options['thumbnail_width'], $this->options['thumbnail_height']);
             $ajax_url = $this->mod->create_url('m1_', 'admin_ajax_get_thumb');
         }
+
 
         $class = '';
         $smarty = \CmsApp::get_instance()->GetSmarty();
@@ -103,6 +105,9 @@ class ecb2fd_file_picker extends ecb2_FieldDefBase
                 $this->block_name.']' );
             $tpl->assign( 'subFieldId', $this->sub_parent_block.'_r_'.$this->sub_row_number.'_'.
                 $this->block_name );
+            $profile_sig = TemporaryProfileStorage::set( $FPprofile );
+            $tpl->assign( 'profile_sig', $profile_sig );
+            $tpl->assign( 'lang_clear', $FPmod->Lang('clear') );
             $class .= ' repeater-field';
         }
         $tpl->assign('class', $class);  

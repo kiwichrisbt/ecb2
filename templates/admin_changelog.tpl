@@ -10,9 +10,12 @@
 
 
 *}
-<h3>Version 2.3.? - 04Sep23</h3>
+<h3>Version 2.4 - 04Sep23</h3>
 <ul>
+    <li>file_picker can now be used as a sub field in 'group' and 'gallery'</li>
     <li>Gallery - dir option help updated - to correct top level path to be image_uploads_path (default is: /uploads/images)</li>
+    <li></li>
+    <li></li>
     <li></li>
 </ul>
 <br>
