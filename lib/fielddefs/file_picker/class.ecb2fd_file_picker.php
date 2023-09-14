@@ -80,7 +80,6 @@ class ecb2fd_file_picker extends ecb2_FieldDefBase
             $ajax_url = $this->mod->create_url('m1_', 'admin_ajax_get_thumb');
         }
 
-
         $class = '';
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
