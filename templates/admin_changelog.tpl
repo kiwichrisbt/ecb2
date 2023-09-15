@@ -10,14 +10,14 @@
 
 
 *}
-<h3>Version 2.4 - 04Sep23</h3>
+<h3>Version 2.4 - 14Sep23</h3>
 <ul>
     <li>file_picker can now be used as a sub field in 'group' and 'gallery'</li>
     <li>file_picker - improved layout, with similar style to 'gallery' plus shows a simple file icon if a thumbnail cannot be generated</li>
     <li>file_selector - now uses actual thumbnails & bug fix for when used as gallery sub field</li>
     <li>Gallery - dir option help updated - to correct top level path to be image_uploads_path (default is: /uploads/images)</li>
     <li>group - page_picker sub field bug fix - deleting last group row now works correctly</li>
-    <li>group - table layout significantly improved</li>
+    <li>page_picker - parameters 'allow_all' & 'allowcurrent' added to match core functionality (bug in core to be fixed for next release)</li>
 </ul>
 <br>
 

@@ -1,4 +1,4 @@
-{* input.ecb2fd_group.tpl - v1.0 - 25Jun22 
+{* input.ecb2fd_group.tpl - v1.1 - 14Sep23 
 
 ***************************************************************************************************}
 {if !empty($description)}
@@ -99,14 +99,6 @@
                         <button class="ecb2-repeater-remove ecb2-btn ecb2-btn-default ecb2-icon-only" data-repeater="#{$block_name}-repeater" title="{$mod->Lang('remove_line')}" role="button" aria-disabled="false"><span class="ecb2-icon-trash-can-regular"></span></button>
                     </td>
                 </tr>
-
-{* {if $fields@index==1}
-                <tr class="repeater-placeholder" style="height:40px">
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-{/if} *}
-
             {/foreach}
             </tbody>
         </table>      
