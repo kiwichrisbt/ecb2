@@ -73,24 +73,24 @@ class ecb2fd_gallery extends ecb2_FieldDefBase
             'auto_add_delete'   => ['default' => true,   'filter' => FILTER_VALIDATE_BOOLEAN],
             'default_value'     => ['default' => '',     'filter' => FILTER_SANITIZE_STRING], 
             'admin_groups'      => ['default' => '',     'filter' => FILTER_SANITIZE_STRING],
-            'description'       => ['default' => '',     'filter' => FILTER_SANITIZE_STRING]
+            'description'       => ['default' => '',     'filter' => FILTER_DEFAULT]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         $this->restrict_params = FALSE;    // default: true
         $this->use_json_format = TRUE;     // default: FALSE - can override e.g. 'groups' type
         $this->allowed_sub_fields = [
-                'textinput',
-                'textarea',
-                'dropdown',
-                'checkbox',         // working - indented :)
-                'radio',
-                'color_picker',
-                'date_time_picker',
-                'file_selector',
-    // 'file_picker',
-                'page_picker',
-                'gallery_picker',
-                'module_picker'     
+            'textinput',
+            'textarea',
+            'dropdown',
+            'checkbox',
+            'radio',
+            'color_picker',
+            'date_time_picker',
+            'file_selector',
+            'file_picker',
+            'page_picker',
+            'gallery_picker',
+            'module_picker'     
         ];
         $this->sub_fields_ignored_params = [
             'assign',

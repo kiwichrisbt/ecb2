@@ -42,7 +42,7 @@ class ecb2fd_sortablelist extends ecb2_FieldDefBase
         $this->default_parameters = [
             'values'            => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'default'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'allowduplicates'   => ['default' => FALSE,    'filter' => FILTER_SANITIZE_STRING],
+            'allowduplicates'   => ['default' => FALSE, 'filter' => FILTER_SANITIZE_STRING],
             'max_selected'      => ['default' => -1,    'filter' => FILTER_VALIDATE_INT],
             'max_number'        => ['default' => '',    'filter' => FILTER_VALIDATE_INT], 
             'required_number'   => ['default' => '',    'filter' => FILTER_VALIDATE_INT], 
@@ -53,8 +53,8 @@ class ecb2fd_sortablelist extends ecb2_FieldDefBase
             'udt'               => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'template'          => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'customgs_field'    => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'admin_groups'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'description'       => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
 
     }

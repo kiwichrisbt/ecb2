@@ -54,9 +54,9 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
             'wysiwyg'       => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'repeater'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'max_blocks'    => ['default' => 0,     'filter' => FILTER_VALIDATE_INT],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'assign'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'assign'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
 
     }

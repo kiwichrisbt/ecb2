@@ -40,7 +40,7 @@ class ecb2fd_admin_link extends ecb2_FieldDefBase
             'target'        => ['default' => '_self',    'filter' => FILTER_SANITIZE_STRING],
             'link'          => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
             'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true

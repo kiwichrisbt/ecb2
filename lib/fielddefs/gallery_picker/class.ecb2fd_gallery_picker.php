@@ -39,7 +39,7 @@ class ecb2fd_gallery_picker extends ecb2_FieldDefBase
             'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'dir'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'description'   => ['default' => '',    'filter' => FILTER_SANITIZE_STRING]
+            'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];
         // $this->restrict_params = FALSE;    // default: true

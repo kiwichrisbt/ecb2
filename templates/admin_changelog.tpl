@@ -1,5 +1,42 @@
 {* ECB2 admin_changelog.tpl *}
 
+{*
+<h3>Version 2.? - 12Aug23</h3>
+<ul>
+    <li></li>
+    <li></li>
+</ul>
+<br>
+
+
+*}
+<h3>Version 2.4 - 14Sep23</h3>
+<ul>
+    <li>file_picker can now be used as a sub field in 'group' and 'gallery'</li>
+    <li>file_picker - improved layout, with similar style to 'gallery' plus shows a simple file icon if a thumbnail cannot be generated</li>
+    <li>file_selector - now uses actual thumbnails & bug fix for when used as gallery sub field</li>
+    <li>Gallery - dir option help updated - to correct top level path to be image_uploads_path (default is: /uploads/images)</li>
+    <li>group - page_picker sub field bug fix - deleting last group row now works correctly</li>
+    <li>page_picker - parameters 'allow_all' & 'allowcurrent' added to match core functionality (bug in core to be fixed for next release)</li>
+</ul>
+<br>
+
+
+<h3>Version 2.3.2.1 - 29Aug23</h3>
+<ul>
+    <li>bug fix - some floating point values no longer ignored</li>
+</ul>
+<br>
+
+
+<h3>Version 2.3.2 - 12Aug23</h3>
+<ul>
+    <li>bug fix - Admin Description now works - thanks @tomph</li>
+    <li>admin_text - will now accept html tags to be displayed on the admin page</li>
+    <li>all 'descriptions' can now include html tags (were previously removed)</li>
+</ul>
+<br>
+
 
 <h3>Version 2.3.1 - 11Jul23</h3>
 <ul>

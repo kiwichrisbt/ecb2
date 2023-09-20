@@ -26,7 +26,7 @@
 
 class ECB2 extends CMSModule {
 
-    const MODULE_VERSION = '2.3.1';
+    const MODULE_VERSION = '2.4';
     const MANAGE_PERM = 'manage_ecb2';      // duplicated in upgrade action
 
     const FIELD_TYPES = [
@@ -103,7 +103,7 @@ class ECB2 extends CMSModule {
     public function GetAuthor() { return 'Chris Taylor'; }
     public function GetAuthorEmail() { return 'chris@binnovative.co.uk'; }
     public function GetChangeLog() { return $this->ProcessTemplate('admin_changelog.tpl'); }
-    public function GetDescription() { return $this->Lang('module_description'); }
+    public function GetAdminDescription() { return $this->Lang('module_description'); }
     public function GetHelp() { return $this->get_admin(TRUE); }
     public function HasAdmin() { return true;}
     public function VisibleToAdminUser() { return ( $this->CheckPermission(self::MANAGE_PERM) ); }

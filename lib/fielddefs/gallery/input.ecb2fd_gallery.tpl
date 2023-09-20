@@ -11,7 +11,7 @@
     </div>
 
     <div class="dropzone-preview-template">
-        <div class="dz-preview dz-file-preview" style="display:none;" data-row="">
+        <div class="dz-preview dz-file-preview {if $thumbnail_width<104}dz-thumb-sm{/if}" style="display:none;" data-row="">
             <input id="" name="" class="dz-input-filename" type="hidden" value=""/>
             <div class="dz-image" style="{if $thumbnail_width}width:{$thumbnail_width}px;{/if}{if $thumbnail_height} height:{$thumbnail_height}px;{/if}">
                 <img data-dz-thumbnail="">

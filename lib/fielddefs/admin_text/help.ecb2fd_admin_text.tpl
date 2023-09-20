@@ -11,7 +11,7 @@
 <ul>
     <li>field (required) - 'admin_text', alias: '<b>text</b>'</li>
     <li>block (required) - the name of the content block</li>
-    <li>text (required) - text in admin (add information for users)</li>
+    <li>text (required) - text in admin, can include html (add information for users)</li>
     <li>admin_groups (optional) - a comma separated list of admin groups that can view & edit this field</li>
     <li>description (optional) - adds additional text explanation for editor</li>
 </ul>
