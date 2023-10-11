@@ -158,7 +158,6 @@ class ECB2 extends CMSModule {
     public function InitializeFrontend() 
     {
         $this->RegisterModulePlugin();
-
     }
 
 
