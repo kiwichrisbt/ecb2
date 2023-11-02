@@ -419,13 +419,15 @@ class ecb2_FileUtils
 
 
     /**
-     *  converts File system path to URL
+     *  converts File system path to relative admin URL
      *  
-     *  @return string url to access given $file
+     *  @return string relative url to access given $file
      */
-    public static function path2url($file, $Protocol='https://') 
+    public static function admin_path2url($file, $Protocol='https://') 
     {
-        return $Protocol.$_SERVER['HTTP_HOST'].str_replace($_SERVER['DOCUMENT_ROOT'], '', $file);
+        $config = cmsms()->GetConfig();
+        $relative_admin_path = '..'.str_replace($config['root_path'], '', $file);
+        return $relative_admin_path;
     }
 
 
@@ -453,7 +455,7 @@ class ecb2_FileUtils
         }
         if ( !file_exists($dest) ) return '';
 
-        return self::path2url($dest);
+        return self::admin_path2url($dest);
 
     }
 
