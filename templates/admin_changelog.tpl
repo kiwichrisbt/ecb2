@@ -1,6 +1,6 @@
 {* ECB2 admin_changelog.tpl *}
 
-<h3>Version 2.4.2.beta1 - 02Nov23</h3>
+<h3>Version 2.4.2 - 02Nov23</h3>
 <ul>
     <li>sortablelist - bug fix for when values being retrieved from another module and result is being assigned</li>
     <li>image thumbnail - improve thumbnail url generation & change to relative admin url</li>
