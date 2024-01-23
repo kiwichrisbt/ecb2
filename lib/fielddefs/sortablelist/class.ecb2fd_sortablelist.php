@@ -73,10 +73,7 @@ class ecb2fd_sortablelist extends ecb2_FieldDefBase
         // get the dropdown values/options
         if ( $this->options['mod'] ) {  
             // call module to get values (comma separated list)
-            $exclude_options = ['size','multiple','values','default_value','first_value','description',
-                'compact','field','mod','flip_values','template','udt','gbc','customgs_field'];
-
-            $exclude_options = ['values','udt','default_value','first_value','description','label_left','label_right','max_number','required_number','mod','flip_values','compact','field','allowduplicates','max_selected'];
+            $exclude_options = ['values','udt','default_value','first_value','description','label_left','label_right','max_number','required_number','mod','flip_values','compact','field','allowduplicates','max_selected','assign'];
             
             $options = $this->get_values_from_module($this->options['mod'], [], $exclude_options);            
 

@@ -77,7 +77,7 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
         if ( $this->options['mod'] ) {  
             // call module to get values (comma separated list)
             $exclude_options = ['size','multiple','values','default_value','first_value','description',
-                'compact','field','mod','flip_values','template','udt','gbc','customgs_field'];
+                'compact','field','mod','flip_values','template','udt','gbc','customgs_field','assign'];
             $options = $this->get_values_from_module($this->options['mod'], [], $exclude_options);
 
         } elseif ( $this->options['udt'] ) {  

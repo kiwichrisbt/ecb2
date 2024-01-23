@@ -1,15 +1,21 @@
 {* ECB2 admin_changelog.tpl *}
 
-{*
-<h3>Version 2.? - 12Aug23</h3>
+<h3>Version 2.4.2 - 02Nov23</h3>
 <ul>
-    <li></li>
-    <li></li>
+    <li>sortablelist - bug fix for when values being retrieved from another module and result is being assigned</li>
+    <li>image thumbnail - improve thumbnail url generation & change to relative admin url</li>
 </ul>
 <br>
 
 
-*}
+<h3>Version 2.4.1 - 30Oct23</h3>
+<ul>
+    <li>dropdown - bug fix for when values being retrieved from another module and result is being assigned</li>
+</ul>
+<br>
+
+
+
 <h3>Version 2.4 - 14Sep23</h3>
 <ul>
     <li>file_picker can now be used as a sub field in 'group' and 'gallery'</li>
