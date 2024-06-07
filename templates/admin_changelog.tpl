@@ -1,5 +1,13 @@
 {* ECB2 admin_changelog.tpl *}
 
+<h3>Version 2.4.3beta1 - 06Nov24</h3>
+<ul>
+    <li>file_picker - bug fix for the 'type' parameter - parameter is now called 'filetype'. The 'type' parameter clashed with a core parameter and did not function. </li>
+    <li>...</li>
+</ul>
+<br>
+
+
 <h3>Version 2.4.2 - 02Nov23</h3>
 <ul>
     <li>sortablelist - bug fix for when values being retrieved from another module and result is being assigned</li>

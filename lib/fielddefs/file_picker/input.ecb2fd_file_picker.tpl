@@ -14,12 +14,12 @@
         <input type="text" name="" value="{$value}" class="repeater-field ecb2-file-picker-template" data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}" data-cmsfp-instance="" data-fp-profile="{$profile_sig}" data-lang-clear="{$lang_clear}" size="80"/>
 
     {else}{* sub_field *}
-        {cms_filepicker id=$subFieldId name=$subFieldName value=$value profile=$profile top=$top type=$type}
+        {cms_filepicker id=$subFieldId name=$subFieldName value=$value profile=$profile top=$top type=$filetype}
 
     {/if}
 
 {else}
-        {cms_filepicker name=$block_name value=$value profile=$profile top=$top type=$type}
+        {cms_filepicker name=$block_name value=$value profile=$profile top=$top type=$filetype}
 
 {/if}
 

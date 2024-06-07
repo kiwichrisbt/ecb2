@@ -26,7 +26,7 @@
 
 class ECB2 extends CMSModule {
 
-    const MODULE_VERSION = '2.4.2';
+    const MODULE_VERSION = '2.4.3beta1';
     const MANAGE_PERM = 'manage_ecb2';      // duplicated in upgrade action
 
     const FIELD_TYPES = [

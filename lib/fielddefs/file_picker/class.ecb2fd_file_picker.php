@@ -42,7 +42,7 @@ class ecb2fd_file_picker extends ecb2_FieldDefBase
             'label'             => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'profile'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'top'               => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'type'              => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'filetype'          => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
             'preview'           => ['default' => TRUE,  'filter' => FILTER_VALIDATE_BOOLEAN],
             'thumbnail_width'   => ['default' => 0,     'filter' => FILTER_VALIDATE_INT],
             'thumbnail_height'  => ['default' => 0,     'filter' => FILTER_VALIDATE_INT],
@@ -90,7 +90,7 @@ class ecb2fd_file_picker extends ecb2_FieldDefBase
         $tpl->assign( 'label', $this->options['label'] );
         $tpl->assign( 'profile', $this->options['profile'] );
         $tpl->assign( 'top', $this->options['top'] );
-        $tpl->assign( 'type', $this->options['type'] );
+        $tpl->assign( 'filetype', $this->options['filetype'] );
         $tpl->assign( 'preview', $this->options['preview'] );
         $tpl->assign( 'thumbnail_url', $thumbnail_url );
         $tpl->assign( 'top_dir', $top_dir );
