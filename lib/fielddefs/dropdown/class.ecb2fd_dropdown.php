@@ -127,6 +127,7 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
         $tpl->assign( 'sub_row_number', $this->sub_row_number );
         $tpl->assign( 'not_sub_field_template', !is_null($this->sub_row_number) );
         $tpl->assign( 'use_json_format', $this->use_json_format );
+        $tpl->assign( 'default', $this->options['default'] );
 
         if ( $this->options['multiple'] ) {
             $selected_values = [];

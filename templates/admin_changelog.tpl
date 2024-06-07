@@ -3,7 +3,7 @@
 <h3>Version 2.4.3beta1 - 06Nov24</h3>
 <ul>
     <li>file_picker - bug fix for the 'type' parameter - parameter is now called 'filetype'. The 'type' parameter clashed with a core parameter and did not function. </li>
-    <li>...</li>
+    <li>group & gallery - now use default values when adding new items for the sub_fields: textinput, textarea, dropdown, checkbox - BR12672</li>
 </ul>
 <br>
 

@@ -7,7 +7,7 @@
 
 {if $is_sub_field}
     {if is_null($sub_row_number)}{* output template field *}
-        <input type="text" id="" name="" class="{$class}" value="" size="{$size}" maxlength="{$max_length}" data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}"/>
+        <input type="text" id="" name="" class="{$class}" value="{$default}" size="{$size}" maxlength="{$max_length}" data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}" />
 
     {else}    
         <input type="text" id="{$subFieldId}" name="{$subFieldName}" class="{$class}" value="{$value|escape}" size="{$size}" maxlength="{$max_length}"/>

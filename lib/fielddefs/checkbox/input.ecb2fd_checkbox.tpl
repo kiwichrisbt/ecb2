@@ -8,7 +8,7 @@
 {if $is_sub_field}
     {if is_null($sub_row_number)}{* output template field *}
         <input type="hidden" name="" value="0">
-        <input type="checkbox" name="" id="" value="1" class="cms_checkbox {if $inline_label}inline-label ecb2-hide-label{/if} repeater-field" data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}">
+        <input type="checkbox" name="" id="" value="1" class="cms_checkbox {if $inline_label}inline-label ecb2-hide-label{/if} repeater-field" {if $default}checked="checked"{/if} data-repeater="#{$block_name}-repeater" data-field-name="{$block_name}">
         {if $inline_label}<label for="">{$inline_label}&nbsp;</label>{/if}
 
     {else}    

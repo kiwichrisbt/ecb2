@@ -101,6 +101,7 @@ class ecb2fd_textinput extends ecb2_FieldDefBase
         $tpl->assign( 'field_alias_used', $this->field_alias_used );
         $tpl->assign( 'use_json_format', $this->use_json_format );
         $tpl->assign( 'is_sub_field', $this->is_sub_field );
+        $tpl->assign( 'default', $this->options['default'] );
         if ( $this->is_sub_field ) {
             $tpl->assign( 'sub_row_number', $this->sub_row_number );
             $tpl->assign( 'subFieldName', $this->sub_parent_block.'[r_'.$this->sub_row_number.']['.

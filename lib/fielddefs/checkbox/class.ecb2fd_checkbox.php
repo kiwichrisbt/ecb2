@@ -63,12 +63,13 @@ class ecb2fd_checkbox extends ecb2_FieldDefBase
 
         $smarty = \CmsApp::get_instance()->GetSmarty();
         $tpl = $smarty->CreateTemplate( 'string:'.$this->get_template(), null, null, $smarty );
-        $tpl->assign('block_name', $this->block_name );
-        $tpl->assign('value', $this->value );
-        $tpl->assign('inline_label', $this->options['inline_label'] );
-        $tpl->assign('description', $this->options['description'] );
+        $tpl->assign( 'block_name', $this->block_name );
+        $tpl->assign( 'value', $this->value );
+        $tpl->assign( 'inline_label', $this->options['inline_label'] );
+        $tpl->assign( 'description', $this->options['description'] );
         $tpl->assign( 'label', $this->options['label'] );
         $tpl->assign( 'is_sub_field', $this->is_sub_field );
+        $tpl->assign( 'default', $this->options['default'] );
         if ( $this->is_sub_field ) {
             $tpl->assign( 'sub_row_number', $this->sub_row_number );
             $tpl->assign( 'subFieldName', $this->sub_parent_block.'[r_'.$this->sub_row_number.']['.

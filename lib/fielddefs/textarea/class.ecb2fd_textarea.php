@@ -90,6 +90,7 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
         $tpl->assign( 'use_json_format', $this->use_json_format );
         $tpl->assign( 'label', $this->options['label'] );
         $tpl->assign( 'is_sub_field', $this->is_sub_field );
+        $tpl->assign( 'default', $this->options['default'] );
         $class = '';
         if ( $this->options['wysiwyg'] ) $class .= ' wysiwyg';
         if ( $this->is_sub_field ) {
