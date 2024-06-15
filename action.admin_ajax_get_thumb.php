@@ -10,10 +10,10 @@
 
 if ( !defined('CMS_VERSION') ) exit;
 
-$file_name = filter_var( get_parameter_value($_POST,'file_name'), FILTER_SANITIZE_STRING );
-$top_dir = filter_var( get_parameter_value($_POST,'top_dir'), FILTER_SANITIZE_STRING );
-$thumbnail_width = filter_var( get_parameter_value($_POST,'thumbnail_width'), FILTER_SANITIZE_STRING );
-$thumbnail_height = filter_var( get_parameter_value($_POST,'thumbnail_height'), FILTER_SANITIZE_STRING );
+$file_name = $this->ecb2_sanitize_string( get_parameter_value($_POST,'file_name') );
+$top_dir = $this->ecb2_sanitize_string( get_parameter_value($_POST,'top_dir') );
+$thumbnail_width = $this->ecb2_sanitize_string( get_parameter_value($_POST,'thumbnail_width') );
+$thumbnail_height = $this->ecb2_sanitize_string( get_parameter_value($_POST,'thumbnail_height') );
 
 if ( strtolower($_SERVER['REQUEST_METHOD'])!='post' || empty($file_name) ) exit;
 

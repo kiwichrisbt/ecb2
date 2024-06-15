@@ -29,16 +29,16 @@ class ecb2fd_gallery_picker extends ecb2_FieldDefBase
      *  sets the allowed parameters for this field type
      *
      *  $this->default_parameters - array of parameter_names => [ default_value, filter_type ]
-     *      FILTER_SANITIZE_STRING, FILTER_VALIDATE_INT, FILTER_VALIDATE_BOOLEAN, FILTER_SANITIZE_EMAIL 
+     *      self::ECB2_SANITIZE_STRING, FILTER_VALIDATE_INT, FILTER_VALIDATE_BOOLEAN, FILTER_SANITIZE_EMAIL 
      *      see: https://www.php.net/manual/en/filter.filters.php
      *  $this->restrict_params - optionally allow any other parameters to be included, e.g. module calls
      */
     public function set_field_parameters() 
     {
         $this->default_parameters = [
-            'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'dir'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'label'         => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'dir'           => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'admin_groups'  => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->parameter_aliases = [ 'alias' => 'parameter' ];

@@ -29,7 +29,7 @@ class ecb2fd_sortablelist extends ecb2_FieldDefBase
      *  sets the allowed parameters for this field type
      *
      *  $this->default_parameters - array of parameter_names => [ default_value, filter_type ]
-     *      FILTER_SANITIZE_STRING, FILTER_VALIDATE_INT, FILTER_VALIDATE_BOOLEAN, FILTER_SANITIZE_EMAIL 
+     *      self::ECB2_SANITIZE_STRING, FILTER_VALIDATE_INT, FILTER_VALIDATE_BOOLEAN, FILTER_SANITIZE_EMAIL 
      *      see: https://www.php.net/manual/en/filter.filters.php
      *  $this->restrict_params - optionally allow any other parameters to be included, e.g. module calls
      */
@@ -40,20 +40,20 @@ class ecb2fd_sortablelist extends ecb2_FieldDefBase
             'default_value' => 'default'
         ];
         $this->default_parameters = [
-            'values'            => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'default'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'allowduplicates'   => ['default' => FALSE, 'filter' => FILTER_SANITIZE_STRING],
+            'values'            => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING], 
+            'default'           => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING], 
+            'allowduplicates'   => ['default' => FALSE, 'filter' => self::ECB2_SANITIZE_STRING],
             'max_selected'      => ['default' => -1,    'filter' => FILTER_VALIDATE_INT],
             'max_number'        => ['default' => '',    'filter' => FILTER_VALIDATE_INT], 
             'required_number'   => ['default' => '',    'filter' => FILTER_VALIDATE_INT], 
-            'label_left'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'label_right'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'label_left'        => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'label_right'       => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
             'flip_values'       => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
-            'mod'               => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'udt'               => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'template'          => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'customgs_field'    => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'admin_groups'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'mod'               => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'udt'               => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'template'          => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'customgs_field'    => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'admin_groups'      => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
             'description'       => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
 

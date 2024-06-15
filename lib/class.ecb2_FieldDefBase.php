@@ -9,6 +9,8 @@
 
 abstract class ecb2_FieldDefBase 
 {
+    const ECB2_SANITIZE_STRING = 1001;     // FILTER_SANITIZE_STRING replacement
+
     protected $mod;
     protected $block_name;
     protected $id;
@@ -170,7 +172,11 @@ abstract class ecb2_FieldDefBase
             foreach ($params as $key => $value) {
                 if ( isSet($this->options[$key]) && !empty($value) ) {
                     $filter_type = $this->default_parameters[$key]['filter'];
-                    $this->options[$key] = filter_var( $value, $filter_type); 
+                    if ( $filter_type==self::ECB2_SANITIZE_STRING ) {
+                        $this->options[$key] = $this->mod->ecb2_sanitize_string( $value );
+                    } else {
+                        $this->options[$key] = filter_var( $value, $filter_type ); 
+                    }
                 }
             }
         

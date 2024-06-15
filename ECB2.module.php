@@ -491,6 +491,18 @@ class ECB2 extends CMSModule {
 
 
 
+    /**
+     *  EC2B FILTER_SANITIZE_STRING replacement - removes null bytes and html tags and encodes quotes
+     *  @param string $value - the string to sanitize
+     *  @return string
+     */
+    public function ecb2_sanitize_string($value) 
+    {
+        $value = preg_replace('/\x00|<[^>]*>?/', '', $value);
+        return str_replace(["'", '"'], ['&#39;', '&#34;'], $value);
+    }
+
+
 }
 
 

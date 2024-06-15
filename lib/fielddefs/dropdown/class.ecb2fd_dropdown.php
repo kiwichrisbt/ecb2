@@ -29,7 +29,7 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
      *  sets the allowed parameters for this field type
      *
      *  $this->default_parameters - array of parameter_names => [ default_value, filter_type ]
-     *      FILTER_SANITIZE_STRING, FILTER_VALIDATE_INT, FILTER_VALIDATE_BOOLEAN, FILTER_SANITIZE_EMAIL 
+     *      self::ECB2_SANITIZE_STRING, FILTER_VALIDATE_INT, FILTER_VALIDATE_BOOLEAN, FILTER_SANITIZE_EMAIL 
      *      see: https://www.php.net/manual/en/filter.filters.php
      *  $this->restrict_params - optionally allow any other parameters to be included, e.g. module calls 
      */
@@ -41,19 +41,19 @@ class ecb2fd_dropdown extends ecb2_FieldDefBase
             'default_value' => 'default'
         ];
         $this->default_parameters = [
-            'values'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
+            'values'        => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING], 
+            'default'       => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING], 
+            'label'         => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING], 
             'size'          => ['default' => 5,     'filter' => FILTER_VALIDATE_INT],
             'multiple'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'first_value'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'compact'       => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'flip_values'   => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
-            'mod'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'udt'           => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'template'      => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'customgs_field'=> ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'mod'           => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'udt'           => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'template'      => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'customgs_field'=> ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'admin_groups'  => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
         // $this->use_json_format = TRUE;    // default: FALSE - can override e.g. 'groups' type

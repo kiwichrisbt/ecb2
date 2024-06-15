@@ -35,7 +35,7 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
      *  sets the allowed parameters for this field type
      *
      *  $this->default_parameters - array of parameter_names => [ default_value, filter_type ]
-     *      FILTER_SANITIZE_STRING, FILTER_VALIDATE_INT, FILTER_VALIDATE_BOOLEAN, FILTER_SANITIZE_EMAIL 
+     *      self::ECB2_SANITIZE_STRING, FILTER_VALIDATE_INT, FILTER_VALIDATE_BOOLEAN, FILTER_SANITIZE_EMAIL 
      *      see: https://www.php.net/manual/en/filter.filters.php
      *  $this->restrict_params - optionally allow any other parameters to be included, e.g. module calls
      */
@@ -47,15 +47,15 @@ class ecb2fd_textarea extends ecb2_FieldDefBase
             'default_value' => 'default'
         ];
         $this->default_parameters = [
-            'default'       => ['default' => '',    'filter' => FILTER_SANITIZE_STRING], 
-            'label'         => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'default'       => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING], 
+            'label'         => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
             'rows'          => ['default' => 4,    'filter' => FILTER_VALIDATE_INT],
             'cols'          => ['default' => 80,    'filter' => FILTER_VALIDATE_INT],
             'wysiwyg'       => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'repeater'      => ['default' => FALSE, 'filter' => FILTER_VALIDATE_BOOLEAN],
             'max_blocks'    => ['default' => 0,     'filter' => FILTER_VALIDATE_INT],
-            'admin_groups'  => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
-            'assign'        => ['default' => '',    'filter' => FILTER_SANITIZE_STRING],
+            'admin_groups'  => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
+            'assign'        => ['default' => '',    'filter' => self::ECB2_SANITIZE_STRING],
             'description'   => ['default' => '',    'filter' => FILTER_DEFAULT]
         ];
 

@@ -29,7 +29,7 @@ class ecb2fd_date_time_picker extends ecb2_FieldDefBase
      *  sets the allowed parameters for this field type
      *
      *  $this->default_parameters - array of parameter_names => [ default_value, filter_type ]
-     *      FILTER_SANITIZE_STRING, FILTER_VALIDATE_INT, FILTER_VALIDATE_BOOLEAN, FILTER_SANITIZE_EMAIL 
+     *      self::ECB2_SANITIZE_STRING, FILTER_VALIDATE_INT, FILTER_VALIDATE_BOOLEAN, FILTER_SANITIZE_EMAIL 
      *      see: https://www.php.net/manual/en/filter.filters.php
      *  $this->restrict_params - optionally allow any other parameters to be included, e.g. module calls
      */
@@ -37,18 +37,18 @@ class ecb2fd_date_time_picker extends ecb2_FieldDefBase
     {
         $this->default_parameters = [
             'size'              => ['default' => 20,        'filter' => FILTER_VALIDATE_INT],
-            'label'             => ['default' => '',        'filter' => FILTER_SANITIZE_STRING],
+            'label'             => ['default' => '',        'filter' => self::ECB2_SANITIZE_STRING],
             'max_length'        => ['default' => 20,        'filter' => FILTER_VALIDATE_INT],
-            'date_format'       => ['default' => 'yy-mm-dd','filter' => FILTER_SANITIZE_STRING],
-            'time_format'       => ['default' => 'HH:mm',   'filter' => FILTER_SANITIZE_STRING],
-            'time'              => ['default' => '',        'filter' => FILTER_SANITIZE_STRING],
+            'date_format'       => ['default' => 'yy-mm-dd','filter' => self::ECB2_SANITIZE_STRING],
+            'time_format'       => ['default' => 'HH:mm',   'filter' => self::ECB2_SANITIZE_STRING],
+            'time'              => ['default' => '',        'filter' => self::ECB2_SANITIZE_STRING],
             'change_month'      => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
             'change_year'       => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
-            'year_range'        => ['default' => '',        'filter' => FILTER_SANITIZE_STRING],
+            'year_range'        => ['default' => '',        'filter' => self::ECB2_SANITIZE_STRING],
             'show_time'         => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
             'date_only'         => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
             'time_only'         => ['default' => FALSE,     'filter' => FILTER_VALIDATE_BOOLEAN],
-            'admin_groups'      => ['default' => '',        'filter' => FILTER_SANITIZE_STRING],
+            'admin_groups'      => ['default' => '',        'filter' => self::ECB2_SANITIZE_STRING],
             'description'       => ['default' => '',        'filter' => FILTER_DEFAULT]
         ];
         $this->parameter_aliases = [ 'time' => 'show_time' ];
